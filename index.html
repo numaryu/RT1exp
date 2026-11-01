@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>RT-1 Plasma Calculator</title>
+<style>body{margin:0;padding:24px;background:light-dark(#f0f3ef,#121714);font-family:system-ui,sans-serif}#rt1-prototype{max-width:1100px;margin:auto}button,summary{cursor:pointer}@media(max-width:650px){body{padding:8px}}</style>
+</head>
+<body>
+<div id="rt1-prototype">
+<style>
+#rt1-prototype{--paper:light-dark(#fafbf9,#171d1b);--panel:light-dark(#ffffff,#212a26);--ink:light-dark(#233c32,#e3eae5);--sub:light-dark(#607568,#adbbb1);--edge:light-dark(#d8e2da,#415247);--accent:light-dark(#286b50,#88c4a0);color:var(--ink);background:var(--paper);font:14px/1.6 system-ui,sans-serif;border-radius:10px;overflow:hidden}#rt1-prototype *{box-sizing:border-box}#rt1-prototype header{padding:22px 26px;background:var(--panel);border-bottom:1px solid var(--edge);display:flex;align-items:center;gap:18px;flex-wrap:wrap}#rt1-prototype h2{font-size:19px;margin:0;font-weight:500}#rt1-prototype .tag{font-size:12px;color:var(--sub)}#rt1-prototype .layout{display:grid;grid-template-columns:270px minmax(0,1fr)}#rt1-prototype aside{background:var(--panel);border-right:1px solid var(--edge);padding:22px}#rt1-prototype .result{padding:22px;min-width:0}#rt1-prototype h3{font-size:14px;font-weight:500;margin:0 0 16px}#rt1-prototype label{display:block;margin-bottom:16px;font-size:12px;color:var(--sub)}#rt1-prototype input,#rt1-prototype select{font:14px system-ui;color:var(--ink);background:var(--paper);border:1px solid var(--edge);border-radius:5px;width:100%;padding:9px;margin-top:5px;min-width:0}#rt1-prototype .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}#rt1-prototype .note{font-size:12px;color:var(--sub);margin:0 0 18px}#rt1-prototype .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}#rt1-prototype button{font:13px system-ui;padding:8px 12px;border:1px solid var(--edge);background:var(--panel);color:var(--ink);border-radius:5px}#rt1-prototype button[aria-pressed=true]{background:var(--accent);color:var(--paper);border-color:var(--accent)}#rt1-prototype table{border-collapse:collapse;width:100%;font-size:13px}#rt1-prototype th{font-weight:400;color:var(--sub);text-align:left;font-size:12px;padding:8px;border-bottom:1px solid var(--edge)}#rt1-prototype td{padding:13px 8px;border-bottom:1px solid var(--edge)}#rt1-prototype td:nth-child(2){text-align:right;font:14px ui-monospace,monospace;font-variant-numeric:tabular-nums}#rt1-prototype td:last-child{color:var(--sub);font-size:12px}#rt1-prototype .symbol{display:block;color:var(--sub);font-size:12px}#rt1-prototype .below{margin-top:22px}#rt1-prototype .strip{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}#rt1-prototype .strip select{width:auto}#rt1-prototype svg{width:100%;display:block}#rt1-prototype details{border-top:1px solid var(--edge);padding:16px 26px;font-size:12px}#rt1-prototype summary{color:var(--accent)}#rt1-prototype .error{color:light-dark(#9e402a,#ffac8f);font-size:12px}#rt1-prototype [hidden]{display:none!important}@media(max-width:650px){#rt1-prototype .layout{grid-template-columns:1fr}#rt1-prototype aside{border-right:0;border-bottom:1px solid var(--edge)}#rt1-prototype .fields{display:grid;grid-template-columns:1fr 1fr;gap:0 14px}#rt1-prototype .pair{grid-template-columns:1fr}#rt1-prototype .result{padding:16px}#rt1-prototype td{padding:10px 4px}}
+</style>
+<header><h2>RT-1 Plasma Calculator</h2><span class="tag">プロトタイプ · 局所パラメータ評価</span></header>
+<div class="layout"><aside><h3>入力</h3><div class="fields">
+<label>電子密度 nₑ [m⁻³]<input name="ne" type="number" step="any" value="1e17"></label>
+<div class="pair"><label>電子温度 Tₑ [eV]<input name="Te" type="number" step="any" value="10"></label><label>イオン温度 Tᵢ [eV]<input name="Ti" type="number" step="any" value="1"></label></div>
+<div class="pair"><label>局所磁場 B [T]<input name="B" type="number" step="any" value="0.01"></label><label>代表長さ L [m]<input name="L" type="number" step="any" value="1"></label></div>
+<label>イオン種<select name="ion"><option value="4">He⁺</option><option value="1">H⁺</option><option value="2">D⁺</option></select></label>
+<label>Coulomb対数<select name="mode"><option value="auto">自動計算（NRL近似）</option><option value="manual">手動指定</option></select></label>
+<div class="pair manual" hidden><label>ln Λₑᵢ<input name="logEI" type="number" step="any" value="15"></label><label>ln Λᵢᵢ<input name="logII" type="number" step="any" value="12"></label></div>
+</div><p class="note">初期値は例示値です．特定の放電の実測値ではありません．</p><div class="error" role="alert"></div></aside>
+<section class="result"><div class="tabs"><button class="cursor-interaction" type="button" data-tab="collision" aria-pressed="true">衝突・緩和</button><button class="cursor-interaction" type="button" data-tab="scale" aria-pressed="false">周波数・長さ</button><button class="cursor-interaction" type="button" data-tab="ratio" aria-pressed="false">無次元量</button></div>
+<table aria-label="計算結果"><thead><tr><th>量</th><th style="text-align:right">計算値</th><th>単位</th></tr></thead><tbody class="values" aria-live="polite"></tbody></table>
+<div class="below"><div class="strip"><h3>パラメータ依存性</h3><label>走査する量<select class="scan"><option value="Te">電子温度 Tₑ</option><option value="ne">電子密度 nₑ</option></select></label></div><div class="chart"></div></div></section></div>
+<details><summary>定義とモデル</summary><p>単一温度・等方Maxwell電子と単一イオン種，準中性 nᵢ = nₑ/Z を仮定．ここでは Z = 1．高温・低温電子の共存，中性粒子衝突，磁場形状とバウンス平均は未実装．</p><p>νₑᵢ：電子–イオンの運動量緩和率．τᴱₑᵢ：dTₑ/dt = (Tᵢ−Tₑ)/τᴱₑᵢ における電子温度平衡化時間．vₜ = √(2eT/m)，λₑ = vₜₑ/νₑᵢ，λᵢ = vₜᵢ/νᵢᵢ．ν は s⁻¹，f = Ω/(2π) は Hz．</p><p>衝突率・Coulomb対数：2023 NRL Plasma Formulary, pp. 28–34．非相対論・弱結合・電子熱速度優勢の近似．</p></details>
+</div>
+
+<script>
+(()=>{
+// SI internally; input temperatures are energies expressed in eV.
+const C = Object.freeze({e:1.602176634e-19, me:9.1093837139e-31, mp:1.67262192595e-27, eps:8.8541878188e-12, mu0:1.25663706127e-6, c:299792458});
+const defaults = Object.freeze({ne:1e17,Te:10,Ti:1,B:0.01,L:1,mu:4,Z:1,logMode:'auto',logEI:15,logII:12});
+function calculate(p) {
+  for (const k of ['ne','Te','Ti','B','L','mu','Z']) if (!Number.isFinite(p[k]) || p[k]<=0) throw new Error(`${k} は正の有限値を入力してください．`);
+  if (!Number.isInteger(p.Z)) throw new Error('Z は正の整数で指定してください．');
+  if (!['auto','manual'].includes(p.logMode)) throw new Error('Coulomb対数のモードが不正です．');
+  const {e,me,mp,eps,mu0,c}=C, {ne,Te,Ti,B,L,mu,Z}=p, mi=mu*mp, ni=ne/Z, nc=ne/1e6, nic=ni/1e6;
+  const warnings=[];
+  const logEI=p.logMode==='manual'?p.logEI:(Te<10*Z*Z?23-Math.log(Math.sqrt(nc)*Z/Te**1.5):24-Math.log(Math.sqrt(nc)/Te));
+  const logII=p.logMode==='manual'?p.logII:23-Math.log(Math.sqrt(2*nic)*Z**3/Ti**1.5);
+  if (![logEI,logII].every(v=>Number.isFinite(v)&&v>0)) throw new Error('Coulomb対数が正でありません．この近似の適用範囲を確認してください．');
+  if (Math.min(logEI,logII)<3) warnings.push('ln Λ < 3：弱結合近似の精度が低下しています．');
+  if (Te<=10*Ti*me/mi) warnings.push('Tₑ が Tᵢ mₑ/mᵢ に近いかそれ以下です．νₑᵢ と自動 ln Λₑᵢ の電子熱速度優勢近似は適用範囲外です．');
+  if (Te>=5000) warnings.push('Tₑ ≥ 5 keV：非相対論近似の誤差に注意してください．RT-1の高温電子分布を直接表すモデルではありません．');
+  const k=e*e/(4*Math.PI*eps);
+  const nuEI=4*Math.sqrt(2*Math.PI)/3*ni*Z**2*k*k*logEI/(Math.sqrt(me)*(e*Te)**1.5);
+  const nuII=4*Math.sqrt(Math.PI)/3*ni*Z**4*k*k*logII/(Math.sqrt(mi)*(e*Ti)**1.5);
+  const nuIE=Z*me/mi*nuEI;
+  const tauE=3*me*mi/(8*Math.sqrt(2*Math.PI)*ni*Z**2*k*k*logEI)*(e*Te/me+e*Ti/mi)**1.5;
+  const vte=Math.sqrt(2*e*Te/me),vti=Math.sqrt(2*e*Ti/mi),oce=e*B/me,oci=Z*e*B/mi;
+  const wpe=Math.sqrt(ne*e*e/(eps*me)),wpi=Math.sqrt(ni*(Z*e)**2/(eps*mi));
+  const debye=Math.sqrt(eps*e*Te/(ne*e*e));
+  const values={ni,logEI,logII,nuEI,nuIE,nuII,tauE,tauDelta:tauE/(1+Z),
+    vte,vti,oce,oci,fce:oce/(2*Math.PI),fci:oci/(2*Math.PI),wpe,wpi,fpe:wpe/(2*Math.PI),fpi:wpi/(2*Math.PI),
+    rhoe:vte/oce,rhoi:vti/oci,rhos:Math.sqrt(Z*e*Te/mi)/oci,
+    lambdaE:vte/nuEI,lambdaI:vti/nuII,KnE:vte/nuEI/L,KnI:vti/nuII/L,
+    debye,skinE:c/wpe,skinI:c/wpi,betaE:2*mu0*ne*e*Te/B**2,betaI:2*mu0*ni*e*Ti/B**2,
+    vA:B/Math.sqrt(mu0*ni*mi),magE:oce/nuEI,magI:oci/nuII,rhoStar:vti/oci/L};
+  values.beta=values.betaE+values.betaI;
+  if (!Object.values(values).every(Number.isFinite)) throw new Error('数値範囲を超えました．入力の桁数を確認してください．');
+  return {values,warnings};
+}
+
+const root=document.getElementById('rt1-prototype'),q=s=>root.querySelector(s);
+const rows={collision:[['nuEI','νₑᵢ','電子–イオン衝突率','s⁻¹'],['nuII','νᵢᵢ','イオン–イオン衝突率','s⁻¹'],['tauE','τᴱₑᵢ','電子温度平衡化時間','s'],['lambdaE','λₑ','電子の代表自由行程','m'],['lambdaI','λᵢ','イオンの代表自由行程','m'],['logEI','ln Λₑᵢ','電子–イオン Coulomb対数',''],['logII','ln Λᵢᵢ','イオン–イオン Coulomb対数','']],scale:[['fce','f꜀ₑ','電子サイクロトロン周波数','Hz'],['fci','f꜀ᵢ','イオンサイクロトロン周波数','Hz'],['fpe','fₚₑ','電子プラズマ周波数','Hz'],['rhoe','ρₑ','電子ラーマー半径','m'],['rhoi','ρᵢ','イオンラーマー半径','m'],['debye','λDₑ','電子Debye長','m'],['vA','vA','Alfvén速度','m s⁻¹']],ratio:[['betaE','βₑ','電子β',''],['betaI','βᵢ','イオンβ',''],['magE','Ωₑ/νₑᵢ','電子磁化パラメータ',''],['magI','Ωᵢ/νᵢᵢ','イオン磁化パラメータ',''],['KnE','λₑ/L','電子Knudsen数',''],['KnI','λᵢ/L','イオンKnudsen数',''],['rhoStar','ρᵢ/L','規格化ラーマー半径','']]};
+let active='collision';
+const fmt=v=>v>=.01&&v<1000?Number(v.toPrecision(4)).toString():v.toExponential(3);
+function input(){const p={...defaults};for(const k of ['ne','Te','Ti','B','L','logEI','logII'])p[k]=Number(q(`[name=${k}]`).value);p.mu=Number(q('[name=ion]').value);p.logMode=q('[name=mode]').value;return p;}
+function chart(p){const key=q('.scan').value,el=q('.chart'),width=Math.max(260,el.getBoundingClientRect().width),height=210,l=80,r=25,t=24,b=45;let pts=[];
+for(let i=0;i<=60;i++){const x=Math.log10(p[key])-1+i/30;try{pts.push([x,Math.log10(calculate({...p,[key]:10**x}).values.nuEI)]);}catch{}}
+if(pts.length<2){el.textContent='走査範囲を計算できません．';return;}
+const xmin=Math.log10(p[key])-1,xmax=xmin+2,ymin=Math.min(...pts.map(a=>a[1]))-.12,ymax=Math.max(...pts.map(a=>a[1]))+.12;
+const X=x=>l+(x-xmin)/2*(width-l-r),Y=y=>t+(ymax-y)/(ymax-ymin)*(height-t-b);let grid='',labels='';
+for(let i=0;i<3;i++){let x=xmin+i,y=ymin+(ymax-ymin)*i/2;grid+=`<line x1="${l}" x2="${width-r}" y1="${Y(y)}" y2="${Y(y)}" stroke="var(--edge)"/>`;labels+=`<text x="${l-10}" y="${Y(y)+4}" text-anchor="end">${(10**y).toExponential(1)}</text><text x="${X(x)}" y="${height-24}" text-anchor="${i===2?'end':i===0?'start':'middle'}">${(10**x).toExponential(1)}</text>`;}
+const curve=pts.map(([x,y],i)=>`${i?'L':'M'}${X(x)},${Y(y)}`).join(' ');const dot=calculate(p).values.nuEI;
+el.innerHTML=`<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="電子イオン衝突率の両対数パラメータ走査"><g fill="var(--sub)" font-family="system-ui" font-size="12">${grid}${labels}<text x="${l}" y="14">νₑᵢ [s⁻¹]</text><text x="${width/2}" y="${height-3}" text-anchor="middle">${key==='Te'?'Tₑ [eV]':'nₑ [m⁻³]'} · log scale</text></g><path d="${curve}" fill="none" stroke="var(--accent)" stroke-width="2"/><circle cx="${X(Math.log10(p[key]))}" cy="${Y(Math.log10(dot))}" r="4" fill="var(--accent)"/></svg>`;
+}
+function render(){q('.manual').hidden=q('[name=mode]').value!=='manual';try{const p=input(),{values:v,warnings}=calculate(p);q('.error').textContent=warnings.join(' ');q('.values').innerHTML=rows[active].map(([k,s,label,u])=>`<tr><td>${label}<span class="symbol">${s}</span></td><td>${fmt(v[k])}</td><td>${u}</td></tr>`).join('');chart(p);}catch(e){q('.error').textContent=e.message;q('.values').innerHTML='<tr><td colspan="3">有効な値を入力してください．</td></tr>';q('.chart').textContent='';}}
+root.addEventListener('input',render);root.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>{active=btn.dataset.tab;root.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));render();}));new ResizeObserver(()=>{try{chart(input());}catch{}}).observe(q('.chart'));render();
+})();
+</script>
+
+</body>
+</html>
