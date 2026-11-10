@@ -138,3 +138,4 @@
 
     window.RT1Physics = Object.freeze({ constants: C, defaults, calculate });
 })();
+

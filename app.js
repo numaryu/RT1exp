@@ -1,36 +1,12 @@
-/* Input handling, result display and parameter-scan chart. */
+/* 入力取得・計算結果の反映・表示切替・グラフの更新．固定の内容はindex.html． */
 (() => {
   "use strict";
 
   const { defaults, calculate } = window.RT1Physics;
-  const { groups, formulas } = window.RT1Definitions;
   const root = document.getElementById("rt1-prototype");
   const find = (selector) => root.querySelector(selector);
-  let activeGroup = "collision";
-  let renderVersion = 0;
-  let mathQueue = Promise.resolve();
-
-  // index.html loads MathJax after this script. Wait for all deferred scripts
-  // and MathJax's initial page typesetting before processing dynamic content.
-  const mathReady = new Promise((resolve) => {
-    const ready = () => {
-      const mathJax = window.MathJax;
-      if (!mathJax?.startup?.promise) {
-        resolve(null);
-        return;
-      }
-      mathJax.startup.promise.then(() => resolve(mathJax)).catch(() => resolve(null));
-    };
-    if (document.readyState === "complete") ready();
-    else document.addEventListener("DOMContentLoaded", ready, { once: true });
-  });
-
-  const escapeHTML = (text) => String(text).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-  })[character]);
-
-  const inlineMath = (tex) => escapeHTML(String.raw`\(${tex}\)`);
-  const displayMath = (tex) => escapeHTML(String.raw`\[${tex}\]`);
+  const outputs = root.querySelectorAll("[data-value]");
+  const svgNamespace = "http://www.w3.org/2000/svg";
 
   function format(value) {
     return value >= 0.01 && value < 1000
@@ -40,75 +16,55 @@
 
   function readInputs() {
     const inputs = { ...defaults };
-    for (const key of ["ne", "Te", "Ti", "B", "L", "logEI", "logII"]) {
-      inputs[key] = Number(find(`[name="${key}"]`).value);
-    }
+    root.querySelectorAll(".fields input[name]").forEach((field) => {
+      inputs[field.name] = Number(field.value);
+    });
     inputs.mu = Number(find('[name="ion"]').value);
     inputs.logMode = find('[name="mode"]').value;
     return inputs;
   }
 
-  function renderDefinitions(group) {
-    find(".formula-list").innerHTML = groups[group].map(
-      ([key, symbol, label]) => {
-        const { tex, note } = formulas[key];
-        return `
-          <div class="formula-item">
-            <div class="formula-label">${escapeHTML(label)} · ${inlineMath(symbol)}</div>
-            <div class="formula-expression" aria-label="${escapeHTML(label)}の定義式">
-              ${displayMath(tex)}
-            </div>
-            <p class="formula-note">${escapeHTML(note)}</p>
-          </div>`;
-      }
-    ).join("");
-  }
-
-  function renderResults(values, group) {
-    find(".values").innerHTML = groups[group].map(
-      ([key, symbol, label, unit]) => `
-        <tr>
-          <td>${escapeHTML(label)}<span class="symbol">${inlineMath(symbol)}</span></td>
-          <td>${format(values[key])}</td>
-          <td>${escapeHTML(unit)}</td>
-        </tr>`
-    ).join("");
-  }
-
-  // Serialize DOM replacements and typesetting. Rapid edits keep the latest
-  // input, and removed equations are cleared from MathJax before replacement.
-  function updateMathContent(values, group) {
-    const version = ++renderVersion;
-    mathQueue = mathQueue.then(async () => {
-      const mathJax = await mathReady;
-      if (version !== renderVersion) return;
-
-      const containers = [find(".formula-list"), find(".values")];
-      if (mathJax) mathJax.typesetClear(containers);
-      renderDefinitions(group);
-      if (values) renderResults(values, group);
-      else find(".values").innerHTML =
-        '<tr><td colspan="3">有効な値を入力してください．</td></tr>';
-
-      if (mathJax) await mathJax.typesetPromise(containers);
-      else find(".error").textContent +=
-        " MathJaxを読み込めませんでした．ネット接続とHTMLの読み込み設定を確認してください．";
-    }).catch((error) => {
-      console.error("MathJax typesetting failed:", error);
-      find(".error").textContent = "数式を描画できませんでした．LaTeX記法を確認してください．";
+  // 値の欄だけを更新する．行名・記号・単位・数式のDOMは作り直さない．
+  function updateValues(values) {
+    outputs.forEach((cell) => {
+      const value = values?.[cell.id];
+      cell.textContent = Number.isFinite(value) ? format(value) : "—";
     });
+  }
+
+  function selectGroup(group) {
+    root.querySelectorAll("[data-group]").forEach((section) => {
+      section.hidden = section.dataset.group !== group;
+    });
+    root.querySelectorAll("[data-tab]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.tab === group));
+    });
+  }
+
+  function setAttributes(element, attributes) {
+    for (const [name, value] of Object.entries(attributes)) {
+      element.setAttribute(name, String(value));
+    }
+  }
+
+  // 目盛など，入力値に応じて変わるSVG要素だけを作成する．
+  function svgElement(tag, attributes, text) {
+    const element = document.createElementNS(svgNamespace, tag);
+    setAttributes(element, attributes);
+    if (text !== undefined) element.textContent = text;
+    return element;
   }
 
   function drawChart(inputs) {
     const key = find(".scan").value;
-    const chart = find(".chart");
-    const width = Math.max(260, chart.getBoundingClientRect().width);
+    const chart = find(".scan-chart");
+    const width = Math.max(260, find(".chart").getBoundingClientRect().width);
     const height = 210;
     const margin = { left: 80, right: 25, top: 24, bottom: 45 };
     const xMin = Math.log10(inputs[key]) - 1;
     const points = [];
 
-    // Two decades centered on the current input; all other inputs stay fixed.
+    // 現在の値を中心とする前後1桁を走査．その他のパラメータは固定．
     for (let index = 0; index <= 60; index++) {
       const x = xMin + index / 30;
       try {
@@ -116,13 +72,13 @@
         const frequency = calculate(scannedInputs).values.nuEI;
         points.push([x, Math.log10(frequency)]);
       } catch {
-        // Omit scan samples outside the formula's valid numerical range.
+        // 数値計算できない走査点を省く．
       }
     }
-    if (points.length < 2) {
-      chart.textContent = "走査範囲を計算できません．";
-      return;
-    }
+
+    chart.toggleAttribute("hidden", points.length < 2);
+    find(".chart-message").hidden = points.length >= 2;
+    if (points.length < 2) return;
 
     const yMin = Math.min(...points.map((point) => point[1])) - 0.12;
     const yMax = Math.max(...points.map((point) => point[1])) + 0.12;
@@ -131,44 +87,42 @@
     const yPixel = (y) => margin.top +
       (yMax - y) / (yMax - yMin) * (height - margin.top - margin.bottom);
 
-    let grid = "";
-    let labels = "";
+    chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    const grid = document.createDocumentFragment();
+    const ticks = document.createDocumentFragment();
     for (let index = 0; index < 3; index++) {
       const x = xMin + index;
       const y = yMin + (yMax - yMin) * index / 2;
       const anchor = index === 2 ? "end" : index === 0 ? "start" : "middle";
-      grid += `<line x1="${margin.left}" x2="${width - margin.right}"
-                     y1="${yPixel(y)}" y2="${yPixel(y)}" stroke="var(--edge)"/>`;
-      labels += `
-        <text x="${margin.left - 10}" y="${yPixel(y) + 4}" text-anchor="end">
-          ${(10 ** y).toExponential(1)}
-        </text>
-        <text x="${xPixel(x)}" y="${height - 24}" text-anchor="${anchor}">
-          ${(10 ** x).toExponential(1)}
-        </text>`;
+      grid.append(svgElement("line", {
+        x1: margin.left, x2: width - margin.right,
+        y1: yPixel(y), y2: yPixel(y),
+      }));
+      ticks.append(svgElement("text", {
+        x: margin.left - 10, y: yPixel(y) + 4, "text-anchor": "end",
+      }, (10 ** y).toExponential(1)));
+      ticks.append(svgElement("text", {
+        x: xPixel(x), y: height - 24, "text-anchor": anchor,
+      }, (10 ** x).toExponential(1)));
     }
+    find(".chart-grid").replaceChildren(grid);
+    find(".chart-ticks").replaceChildren(ticks);
+
+    // 軸名はHTMLにあるものを切り替え，位置だけを更新する．
+    setAttributes(find(".chart-y-title"), { x: margin.left, y: 14 });
+    root.querySelectorAll("[data-scan-axis]").forEach((title) => {
+      title.toggleAttribute("hidden", title.dataset.scanAxis !== key);
+      setAttributes(title, { x: width / 2, y: height - 3 });
+    });
 
     const path = points.map(([x, y], index) =>
       `${index ? "L" : "M"}${xPixel(x)},${yPixel(y)}`
     ).join(" ");
-    const currentFrequency = calculate(inputs).values.nuEI;
-    const xLabel = key === "Te" ? "Tₑ [eV]" : "nₑ [m⁻³]";
-
-    chart.innerHTML = `
-      <svg viewBox="0 0 ${width} ${height}" role="img"
-           aria-label="電子イオン衝突率の両対数パラメータ走査">
-        <g fill="var(--sub)" font-family="system-ui" font-size="12">
-          ${grid}${labels}
-          <text x="${margin.left}" y="14">νₑᵢ [s⁻¹]</text>
-          <text x="${width / 2}" y="${height - 3}" text-anchor="middle">
-            ${xLabel} · log scale
-          </text>
-        </g>
-        <path d="${path}" fill="none" stroke="var(--accent)" stroke-width="2"/>
-        <circle cx="${xPixel(Math.log10(inputs[key]))}"
-                cy="${yPixel(Math.log10(currentFrequency))}"
-                r="4" fill="var(--accent)"/>
-      </svg>`;
+    find(".chart-curve").setAttribute("d", path);
+    setAttributes(find(".chart-current"), {
+      cx: xPixel(Math.log10(inputs[key])),
+      cy: yPixel(Math.log10(calculate(inputs).values.nuEI)),
+    });
   }
 
   function render() {
@@ -177,34 +131,30 @@
       const inputs = readInputs();
       const { values, warnings } = calculate(inputs);
       find(".error").textContent = warnings.join(" ");
-      updateMathContent(values, activeGroup);
+      updateValues(values);
       drawChart(inputs);
     } catch (error) {
       find(".error").textContent = error.message;
-      updateMathContent(null, activeGroup);
-      find(".chart").textContent = "";
+      updateValues(null);
+      find(".scan-chart").toggleAttribute("hidden", true);
+      find(".chart-message").hidden = true;
     }
   }
 
-  root.addEventListener("input", render);
+  root.addEventListener("input", (event) => {
+    if (event.target.matches("input, select")) render();
+  });
   root.querySelectorAll("[data-tab]").forEach((button) => {
-    button.addEventListener("click", () => {
-      activeGroup = button.dataset.tab;
-      root.querySelectorAll("[data-tab]").forEach((item) => {
-        item.setAttribute("aria-pressed", String(item === button));
-      });
-      render();
-    });
+    button.addEventListener("click", () => selectGroup(button.dataset.tab));
   });
 
   new ResizeObserver(() => {
     try {
       drawChart(readInputs());
     } catch {
-      // An invalid input is already reported by render().
+      // 不正な入力はrender()が表示する．
     }
   }).observe(find(".chart"));
 
   render();
 })();
-
