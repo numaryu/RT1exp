@@ -39,21 +39,21 @@
                     </label>
                     <div class="pair">
                         <label>
-                            電子温度 \(T_{\mathrm{e}}\) [eV]
+                            電子温度 \(T_{\mathrm{e}}\) [\(\mathrm{eV}\)]
                             <input name="Te" type="number" step="any" value="10">
                         </label>
                         <label>
-                            イオン温度 \(T_{\mathrm{i}}\) [eV]
+                            イオン温度 \(T_{\mathrm{i}}\) [\(\mathrm{eV}\)]
                             <input name="Ti" type="number" step="any" value="1">
                         </label>
                     </div>
                     <div class="pair">
                         <label>
-                            局所磁場 \(B\) [T]
+                            局所磁場 \(B\) [\(\mathrm{T}\)]
                             <input name="B" type="number" step="any" value="0.01">
                         </label>
                         <label>
-                            代表長さ \(L\) [m]
+                            代表長さ \(L\) [\(\mathrm{m}\)]
                             <input name="L" type="number" step="any" value="1">
                         </label>
                     </div>
@@ -130,27 +130,27 @@
                         <tr>
                             <td>電子–イオン衝突率<span class="symbol">\(\nu_{\mathrm{ei}}\)</span></td>
                             <td id="nuEI" data-value>—</td>
-                            <td>s⁻¹</td>
+                            <td>\(\mathrm{s}^{-1}\)</td>
                         </tr>
                         <tr>
                             <td>イオン–イオン衝突率<span class="symbol">\(\nu_{\mathrm{ii}}\)</span></td>
                             <td id="nuII" data-value>—</td>
-                            <td>s⁻¹</td>
+                            <td>\(\mathrm{s}^{-1}\)</td>
                         </tr>
                         <tr>
                             <td>電子温度平衡化時間<span class="symbol">\(\tau^{E}_{\mathrm{ei}}\)</span></td>
                             <td id="tauE" data-value>—</td>
-                            <td>s</td>
+                            <td>\(\mathrm{s}\)</td>
                         </tr>
                         <tr>
                             <td>電子の代表自由行程<span class="symbol">\(\lambda_{\mathrm{e}}\)</span></td>
                             <td id="lambdaE" data-value>—</td>
-                            <td>m</td>
+                            <td>\(\mathrm{m}\)</td>
                         </tr>
                         <tr>
                             <td>イオンの代表自由行程<span class="symbol">\(\lambda_{\mathrm{i}}\)</span></td>
                             <td id="lambdaI" data-value>—</td>
-                            <td>m</td>
+                            <td>\(\mathrm{m}\)</td>
                         </tr>
                         <tr>
                             <td>電子–イオン Coulomb対数<span class="symbol">\(\ln\Lambda_{\mathrm{ei}}\)</span></td>
@@ -168,37 +168,37 @@
                         <tr>
                             <td>電子サイクロトロン周波数<span class="symbol">\(f_{\mathrm{ce}}\)</span></td>
                             <td id="fce" data-value>—</td>
-                            <td>Hz</td>
+                            <td>\(\mathrm{Hz}\)</td>
                         </tr>
                         <tr>
                             <td>イオンサイクロトロン周波数<span class="symbol">\(f_{\mathrm{ci}}\)</span></td>
                             <td id="fci" data-value>—</td>
-                            <td>Hz</td>
+                            <td>\(\mathrm{Hz}\)</td>
                         </tr>
                         <tr>
                             <td>電子プラズマ周波数<span class="symbol">\(f_{\mathrm{pe}}\)</span></td>
                             <td id="fpe" data-value>—</td>
-                            <td>Hz</td>
+                            <td>\(\mathrm{Hz}\)</td>
                         </tr>
                         <tr>
                             <td>電子ラーマー半径<span class="symbol">\(\rho_{\mathrm{e}}\)</span></td>
                             <td id="rhoe" data-value>—</td>
-                            <td>m</td>
+                            <td>\(\mathrm{m}\)</td>
                         </tr>
                         <tr>
                             <td>イオンラーマー半径<span class="symbol">\(\rho_{\mathrm{i}}\)</span></td>
                             <td id="rhoi" data-value>—</td>
-                            <td>m</td>
+                            <td>\(\mathrm{m}\)</td>
                         </tr>
                         <tr>
                             <td>電子Debye長<span class="symbol">\(\lambda_{\mathrm{De}}\)</span></td>
                             <td id="debye" data-value>—</td>
-                            <td>m</td>
+                            <td>\(\mathrm{m}\)</td>
                         </tr>
                         <tr>
                             <td>Alfvén速度<span class="symbol">\(v_{\mathrm{A}}\)</span></td>
                             <td id="vA" data-value>—</td>
-                            <td>m s⁻¹</td>
+                            <td>\(\mathrm{m}/\mathrm{s}\)</td>
                         </tr>
                     </tbody>
                     <!-- ratio: 固定の行・記号・単位．JSはidに対応する数値だけを更新する． -->
@@ -259,14 +259,18 @@
                     </div>
                     <div class="chart">
                         <!-- 軸名・構造は固定．曲線・点・数値目盛と座標だけをJSが更新する． -->
-                        <svg class="scan-chart" viewBox="0 0 600 210" role="img"
-                             aria-label="電子イオン衝突率の両対数パラメータ走査">
+                        <svg class="scan-chart" viewBox="0 0 600 210" role="img" aria-label="電子イオン衝突率の両対数パラメータ走査">
                             <g class="chart-grid" stroke="var(--edge)"></g>
                             <g class="chart-ticks" fill="var(--sub)"></g>
                             <g fill="var(--sub)">
-                                <text class="chart-y-title">νₑᵢ [s⁻¹]</text>
-                                <text class="chart-x-title" data-scan-axis="Te" text-anchor="middle">Tₑ [eV] · log scale</text>
-                                <text class="chart-x-title" data-scan-axis="ne" text-anchor="middle" hidden>nₑ [m⁻³] · log scale</text>
+                                <text class="chart-y-title">&nu;<tspan baseline-shift="sub" font-size="70%">ei</tspan>
+                                    [s<tspan baseline-shift="super" font-size="70%">−1</tspan>]</text>
+                                <text class="chart-x-title" data-scan-axis="Te" text-anchor="middle">T<tspan
+                                        baseline-shift="sub" font-size="70%">e</tspan>
+                                    [eV] · log scale</text>
+                                <text class="chart-x-title" data-scan-axis="ne" text-anchor="middle" hidden>n<tspan
+                                        baseline-shift="sub" font-size="70%">e</tspan>
+                                    [m<tspan baseline-shift="super" font-size="70%">−3</tspan>] · log scale</text>
                             </g>
                             <path class="chart-curve" fill="none" stroke="var(--accent)" stroke-width="2"></path>
                             <circle class="chart-current" r="4" fill="var(--accent)"></circle>
@@ -335,8 +339,8 @@
                         \[
                         \nu_{\mathrm{ei}}
                         = \frac{4\sqrt{2\pi}}{3}
-                          \frac{n_{\mathrm{i}} Z^2 K^2 \ln\Lambda_{\mathrm{ei}}}
-                               {\sqrt{m_{\mathrm{e}}}\,\theta_{\mathrm{e}}^{3/2}}
+                        \frac{n_{\mathrm{i}} Z^2 K^2 \ln\Lambda_{\mathrm{ei}}}
+                        {\sqrt{m_{\mathrm{e}}}\,\theta_{\mathrm{e}}^{3/2}}
                         \]
                     </div>
                     <p class="formula-note">
@@ -350,8 +354,8 @@
                         \[
                         \nu_{\mathrm{ii}}
                         = \frac{4\sqrt{\pi}}{3}
-                          \frac{n_{\mathrm{i}} Z^4 K^2 \ln\Lambda_{\mathrm{ii}}}
-                               {\sqrt{m_{\mathrm{i}}}\,\theta_{\mathrm{i}}^{3/2}}
+                        \frac{n_{\mathrm{i}} Z^4 K^2 \ln\Lambda_{\mathrm{ii}}}
+                        {\sqrt{m_{\mathrm{i}}}\,\theta_{\mathrm{i}}^{3/2}}
                         \]
                     </div>
                     <p class="formula-note">
@@ -365,15 +369,17 @@
                         \[
                         \tau^{E}_{\mathrm{ei}}
                         = \frac{3m_{\mathrm{e}}m_{\mathrm{i}}}
-                               {8\sqrt{2\pi}\,n_{\mathrm{i}}Z^2K^2\ln\Lambda_{\mathrm{ei}}}
-                          \left(
-                            \frac{\theta_{\mathrm{e}}}{m_{\mathrm{e}}}
-                            + \frac{\theta_{\mathrm{i}}}{m_{\mathrm{i}}}
-                          \right)^{3/2}
+                        {8\sqrt{2\pi}\,n_{\mathrm{i}}Z^2K^2\ln\Lambda_{\mathrm{ei}}}
+                        \left(
+                        \frac{\theta_{\mathrm{e}}}{m_{\mathrm{e}}}
+                        + \frac{\theta_{\mathrm{i}}}{m_{\mathrm{i}}}
+                        \right)^{3/2}
                         \]
                     </div>
                     <p class="formula-note">
-                        電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t = (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手の温度を固定したときの電子温度の平衡化時間を表す．両種が変化するとき，温度差の瞬時緩和時間は \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
+                        電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
+                        (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手の温度を固定したときの電子温度の平衡化時間を表す．両種が変化するとき，温度差の瞬時緩和時間は
+                        \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
                     </p>
                 </section>
                 <!-- lambdaE -->
@@ -407,15 +413,16 @@
                         \[
                         \ln\Lambda_{\mathrm{ei}} =
                         \begin{cases}
-                          23 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}\,Z}{T_{\mathrm{e}}^{3/2}}\right),
-                          &amp; T_{\mathrm{e}} &lt; 10Z^2\,\mathrm{eV}, \\[6pt]
-                          24 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}}{T_{\mathrm{e}}}\right),
-                          &amp; T_{\mathrm{e}} \ge 10Z^2\,\mathrm{eV}.
+                        23 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}\,Z}{T_{\mathrm{e}}^{3/2}}\right),
+                        &amp; T_{\mathrm{e}} &lt; 10Z^2\,\mathrm{eV}, \\[6pt]
+                        24 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}}{T_{\mathrm{e}}}\right),
+                        &amp; T_{\mathrm{e}} \ge 10Z^2\,\mathrm{eV}.
                         \end{cases}
                         \]
                     </div>
                     <p class="formula-note">
-                        自動モードの式．\(n_{\mathrm{e,c}}\) は \(\mathrm{cm}^{-3}\) 単位の電子密度の数値（入力 \(n_{\mathrm{e}}\) の \(10^{-6}\) 倍），\(T_{\mathrm{e}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．
+                        自動モードの式．\(n_{\mathrm{e,c}}\) は \(\mathrm{cm}^{-3}\) 単位の電子密度の数値（入力 \(n_{\mathrm{e}}\) の
+                        \(10^{-6}\) 倍），\(T_{\mathrm{e}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．
                     </p>
                 </section>
                 <!-- logII -->
@@ -425,12 +432,13 @@
                         \[
                         \ln\Lambda_{\mathrm{ii}}
                         = 23 - \ln\!\left(
-                          \frac{\sqrt{2n_{\mathrm{i,c}}}\,Z^3}{T_{\mathrm{i}}^{3/2}}
+                        \frac{\sqrt{2n_{\mathrm{i,c}}}\,Z^3}{T_{\mathrm{i}}^{3/2}}
                         \right)
                         \]
                     </div>
                     <p class="formula-note">
-                        自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．
+                        自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\)
+                        はeV単位の数値．手動モードでは入力値をそのまま使用．
                     </p>
                 </section>
             </div>
@@ -469,7 +477,8 @@
                         \]
                     </div>
                     <p class="formula-note">
-                        \(\omega_{\mathrm{pe}} = \sqrt{n_{\mathrm{e}}e^2/(\varepsilon_0 m_{\mathrm{e}})}\)，\(f_{\mathrm{pe}} = \omega_{\mathrm{pe}}/(2\pi)\)．
+                        \(\omega_{\mathrm{pe}} = \sqrt{n_{\mathrm{e}}e^2/(\varepsilon_0
+                        m_{\mathrm{e}})}\)，\(f_{\mathrm{pe}} = \omega_{\mathrm{pe}}/(2\pi)\)．
                     </p>
                 </section>
                 <!-- rhoe -->
@@ -477,7 +486,8 @@
                     <div class="formula-label">電子ラーマー半径 · \(\rho_{\mathrm{e}}\)</div>
                     <div class="formula-expression" aria-label="電子ラーマー半径の定義式">
                         \[
-                        \rho_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\Omega_{\mathrm{e}}} = \frac{\sqrt{2m_{\mathrm{e}}\theta_{\mathrm{e}}}}{eB}
+                        \rho_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\Omega_{\mathrm{e}}} =
+                        \frac{\sqrt{2m_{\mathrm{e}}\theta_{\mathrm{e}}}}{eB}
                         \]
                     </div>
                     <p class="formula-note">
@@ -489,7 +499,8 @@
                     <div class="formula-label">イオンラーマー半径 · \(\rho_{\mathrm{i}}\)</div>
                     <div class="formula-expression" aria-label="イオンラーマー半径の定義式">
                         \[
-                        \rho_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}} = \frac{\sqrt{2m_{\mathrm{i}}\theta_{\mathrm{i}}}}{ZeB}
+                        \rho_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}} =
+                        \frac{\sqrt{2m_{\mathrm{i}}\theta_{\mathrm{i}}}}{ZeB}
                         \]
                     </div>
                     <p class="formula-note">
@@ -576,7 +587,8 @@
                     <div class="formula-label">電子Knudsen数 · \(\lambda_{\mathrm{e}}/L\)</div>
                     <div class="formula-expression" aria-label="電子Knudsen数の定義式">
                         \[
-                        \mathrm{Kn}_{\mathrm{e}} = \frac{\lambda_{\mathrm{e}}}{L} = \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}L}
+                        \mathrm{Kn}_{\mathrm{e}} = \frac{\lambda_{\mathrm{e}}}{L} =
+                        \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}L}
                         \]
                     </div>
                     <p class="formula-note">
@@ -588,7 +600,8 @@
                     <div class="formula-label">イオンKnudsen数 · \(\lambda_{\mathrm{i}}/L\)</div>
                     <div class="formula-expression" aria-label="イオンKnudsen数の定義式">
                         \[
-                        \mathrm{Kn}_{\mathrm{i}} = \frac{\lambda_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}L}
+                        \mathrm{Kn}_{\mathrm{i}} = \frac{\lambda_{\mathrm{i}}}{L} =
+                        \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}L}
                         \]
                     </div>
                     <p class="formula-note">
@@ -613,7 +626,9 @@
                 <h3>参考文献</h3>
                 <p>
                     A. Beresnyak,
-                    <a href="https://homepage.physics.uiowa.edu/~ghowes/teach/phys4731/resources/NRL_Plasma_Formulary_2023.pdf">2023 NRL Plasma Formulary</a>,
+                    <a
+                        href="https://homepage.physics.uiowa.edu/~ghowes/teach/phys4731/resources/NRL_Plasma_Formulary_2023.pdf">2023
+                        NRL Plasma Formulary</a>,
                     pp. 28–34．
                 </p>
             </div>
