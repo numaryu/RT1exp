@@ -19,7 +19,7 @@
         root.querySelectorAll(".fields input[name]").forEach((field) => {
             inputs[field.name] = Number(field.value);
         });
-        inputs.mu = Number(find('[name="ion"]').value);
+        inputs.mass_number = Number(find('[name="ion"]').value);
         inputs.logMode = find('[name="mode"]').value;
         return inputs;
     }

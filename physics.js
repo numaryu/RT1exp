@@ -17,7 +17,7 @@
         Ti: 1,
         B: 0.01,
         L: 1,
-        mu: 4,                 // ion mass / proton mass
+        mass_number: 4,                 // ion mass / proton mass
         Z: 1,
         logMode: "auto",
         logEI: 15,
@@ -25,7 +25,7 @@
     });
 
     function calculate(inputs) {
-        for (const key of ["ne", "Te", "Ti", "B", "L", "mu", "Z"]) {
+        for (const key of ["ne", "Te", "Ti", "B", "L", "mass_number", "Z"]) {
             if (!Number.isFinite(inputs[key]) || inputs[key] <= 0) {
                 throw new Error(`${key} は正の有限値を入力してください．`);
             }
@@ -38,8 +38,8 @@
         }
 
         const { e, me, mp, eps, mu0, c } = C;
-        const { ne, Te, Ti, B, L, mu, Z } = inputs;
-        const mi = mu * mp;
+        const { ne, Te, Ti, B, L, mass_number, Z } = inputs;
+        const mi = mass_number * mp;
         const ni = ne / Z;
         const nc = ne / 1e6;     // electron density in cm^-3 (NRL logarithms only)
         const nic = ni / 1e6;    // ion density in cm^-3
