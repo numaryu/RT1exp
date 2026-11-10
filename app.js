@@ -39,6 +39,7 @@
         root.querySelectorAll("[data-tab]").forEach((button) => {
             button.setAttribute("aria-pressed", String(button.dataset.tab === group));
         });
+        sessionStorage.setItem("rt1-tab", group);
     }
 
     function setAttributes(element, attributes) {
@@ -156,5 +157,6 @@
         }
     }).observe(find(".chart"));
 
+    selectGroup(sessionStorage.getItem("rt1-tab") || "collision");
     render();
 })();
