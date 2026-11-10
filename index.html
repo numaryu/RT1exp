@@ -246,7 +246,7 @@
                             パラメータ依存性
                         </h3>
                         <label>
-                            走査する量
+                            横軸（走査する量）
                             <select class="scan">
                                 <option value="Te">
                                     電子温度 Te
@@ -256,15 +256,67 @@
                                 </option>
                             </select>
                         </label>
+                        <label>
+                            縦軸（計算する量）
+                            <select class="scan-y">
+                                <optgroup label="衝突・緩和">
+                                    <option value="nuEI">電子–イオン衝突周波数</option>
+                                    <option value="nuII">イオン–イオン衝突周波数</option>
+                                    <option value="tauE">電子温度平衡化時間</option>
+                                    <option value="logEI">電子–イオン Coulomb対数</option>
+                                    <option value="logII">イオン–イオン Coulomb対数</option>
+                                    <option value="lambdaE">電子の平均自由行程</option>
+                                    <option value="lambdaI">イオンの平均自由行程</option>
+                                </optgroup>
+                                <optgroup label="周波数・長さ">
+                                    <option value="fce">電子サイクロトロン周波数</option>
+                                    <option value="fci">イオンサイクロトロン周波数</option>
+                                    <option value="fpe">電子プラズマ周波数</option>
+                                    <option value="rhoe">電子ラーマ半径</option>
+                                    <option value="rhoi">イオンラーマ半径</option>
+                                    <option value="debye">電子Debye長</option>
+                                    <option value="vA">Alfvén速度</option>
+                                </optgroup>
+                                <optgroup label="無次元量">
+                                    <option value="betaE">電子ベータ</option>
+                                    <option value="betaI">イオンベータ</option>
+                                    <option value="magE">電子磁化パラメータ</option>
+                                    <option value="magI">イオン磁化パラメータ</option>
+                                    <option value="KnE">電子Knudsen数</option>
+                                    <option value="KnI">イオンKnudsen数</option>
+                                    <option value="rhoStar">規格化ラーマ半径</option>
+                                </optgroup>
+                            </select>
+                        </label>
                     </div>
                     <div class="chart">
                         <!-- 軸名・構造は固定．曲線・点・数値目盛と座標だけをJSが更新する． -->
-                        <svg class="scan-chart" viewBox="0 0 600 210" role="img" aria-label="電子イオン衝突周波数の両対数パラメータ走査">
+                        <svg class="scan-chart" viewBox="0 0 600 210" role="img" aria-label="パラメータ依存性の両対数グラフ">
                             <g class="chart-grid" stroke="var(--edge)"></g>
                             <g class="chart-ticks" fill="var(--sub)"></g>
                             <g fill="var(--sub)">
-                                <text class="chart-y-title">&nu;<tspan baseline-shift="sub" font-size="70%">ei</tspan>
+                                <text class="chart-y-title" data-scan-result="nuEI">&nu;<tspan baseline-shift="sub" font-size="70%">ei</tspan>
                                     [s<tspan baseline-shift="super" font-size="70%">−1</tspan>]</text>
+                                <text class="chart-y-title" data-scan-result="nuII" hidden>ν<tspan baseline-shift="sub" font-size="70%">ii</tspan> [s<tspan baseline-shift="super" font-size="70%">−1</tspan>]</text>
+                                <text class="chart-y-title" data-scan-result="tauE" hidden>τ<tspan baseline-shift="sub" font-size="70%">ei</tspan><tspan baseline-shift="super" font-size="70%">E</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="logEI" hidden>ln Λ<tspan baseline-shift="sub" font-size="70%">ei</tspan></text>
+                                <text class="chart-y-title" data-scan-result="logII" hidden>ln Λ<tspan baseline-shift="sub" font-size="70%">ii</tspan></text>
+                                <text class="chart-y-title" data-scan-result="lambdaE" hidden>λ<tspan baseline-shift="sub" font-size="70%">e</tspan> [m]</text>
+                                <text class="chart-y-title" data-scan-result="lambdaI" hidden>λ<tspan baseline-shift="sub" font-size="70%">i</tspan> [m]</text>
+                                <text class="chart-y-title" data-scan-result="fce" hidden>f<tspan baseline-shift="sub" font-size="70%">ce</tspan> [Hz]</text>
+                                <text class="chart-y-title" data-scan-result="fci" hidden>f<tspan baseline-shift="sub" font-size="70%">ci</tspan> [Hz]</text>
+                                <text class="chart-y-title" data-scan-result="fpe" hidden>f<tspan baseline-shift="sub" font-size="70%">pe</tspan> [Hz]</text>
+                                <text class="chart-y-title" data-scan-result="rhoe" hidden>ρ<tspan baseline-shift="sub" font-size="70%">e</tspan> [m]</text>
+                                <text class="chart-y-title" data-scan-result="rhoi" hidden>ρ<tspan baseline-shift="sub" font-size="70%">i</tspan> [m]</text>
+                                <text class="chart-y-title" data-scan-result="debye" hidden>λ<tspan baseline-shift="sub" font-size="70%">De</tspan> [m]</text>
+                                <text class="chart-y-title" data-scan-result="vA" hidden>v<tspan baseline-shift="sub" font-size="70%">A</tspan> [m/s]</text>
+                                <text class="chart-y-title" data-scan-result="betaE" hidden>β<tspan baseline-shift="sub" font-size="70%">e</tspan></text>
+                                <text class="chart-y-title" data-scan-result="betaI" hidden>β<tspan baseline-shift="sub" font-size="70%">i</tspan></text>
+                                <text class="chart-y-title" data-scan-result="magE" hidden>Ω<tspan baseline-shift="sub" font-size="70%">e</tspan>/ν<tspan baseline-shift="sub" font-size="70%">ei</tspan></text>
+                                <text class="chart-y-title" data-scan-result="magI" hidden>Ω<tspan baseline-shift="sub" font-size="70%">i</tspan>/ν<tspan baseline-shift="sub" font-size="70%">ii</tspan></text>
+                                <text class="chart-y-title" data-scan-result="KnE" hidden>Kn<tspan baseline-shift="sub" font-size="70%">e</tspan></text>
+                                <text class="chart-y-title" data-scan-result="KnI" hidden>Kn<tspan baseline-shift="sub" font-size="70%">i</tspan></text>
+                                <text class="chart-y-title" data-scan-result="rhoStar" hidden>ρ<tspan baseline-shift="sub" font-size="70%">∗</tspan></text>
                                 <text class="chart-x-title" data-scan-axis="Te" text-anchor="middle">T<tspan
                                         baseline-shift="sub" font-size="70%">e</tspan>
                                     [eV] · log scale</text>

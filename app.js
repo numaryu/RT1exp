@@ -58,6 +58,7 @@
 
     function drawChart(inputs) {
         const key = find(".scan").value;
+        const resultKey = find(".scan-y").value;
         const chart = find(".scan-chart");
         const width = Math.max(260, find(".chart").getBoundingClientRect().width);
         const height = 210;
@@ -70,8 +71,9 @@
             const x = xMin + index / 30;
             try {
                 const scannedInputs = { ...inputs, [key]: 10 ** x };
-                const frequency = calculate(scannedInputs).values.nuEI;
-                points.push([x, Math.log10(frequency)]);
+                const value = calculate(scannedInputs).values[resultKey];
+                if (!Number.isFinite(value) || value <= 0) continue;
+                points.push([x, Math.log10(value)]);
             } catch {
                 // 数値計算できない走査点を省く．
             }
@@ -110,7 +112,13 @@
         find(".chart-ticks").replaceChildren(ticks);
 
         // 軸名はHTMLにあるものを切り替え，位置だけを更新する．
-        setAttributes(find(".chart-y-title"), { x: margin.left, y: 14 });
+        root.querySelectorAll("[data-scan-result]").forEach((title) => {
+            title.toggleAttribute("hidden", title.dataset.scanResult !== resultKey);
+            setAttributes(title, { x: margin.left, y: 14 });
+        });
+        const xLabel = find(".scan").selectedOptions[0].textContent.trim();
+        const yLabel = find(".scan-y").selectedOptions[0].textContent.trim();
+        chart.setAttribute("aria-label", `${yLabel}の${xLabel}依存性（両対数）`);
         root.querySelectorAll("[data-scan-axis]").forEach((title) => {
             title.toggleAttribute("hidden", title.dataset.scanAxis !== key);
             setAttributes(title, { x: width / 2, y: height - 12 });
@@ -122,7 +130,7 @@
         find(".chart-curve").setAttribute("d", path);
         setAttributes(find(".chart-current"), {
             cx: xPixel(Math.log10(inputs[key])),
-            cy: yPixel(Math.log10(calculate(inputs).values.nuEI)),
+            cy: yPixel(Math.log10(calculate(inputs).values[resultKey])),
         });
     }
 
@@ -143,6 +151,9 @@
     }
 
     root.addEventListener("input", (event) => {
+        if (event.target.matches(".scan-y")) {
+            sessionStorage.setItem("rt1-scan-y", event.target.value);
+        }
         if (event.target.matches("input, select")) render();
     });
     root.querySelectorAll("[data-tab]").forEach((button) => {
@@ -157,6 +168,11 @@
         }
     }).observe(find(".chart"));
 
+    const savedResult = sessionStorage.getItem("rt1-scan-y");
+    if (Array.from(find(".scan-y").options).some((option) => option.value === savedResult)) {
+        find(".scan-y").value = savedResult;
+    }
     selectGroup(sessionStorage.getItem("rt1-tab") || "collision");
     render();
 })();
+
