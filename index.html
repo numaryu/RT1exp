@@ -401,7 +401,9 @@
                 <p>
                     <strong>適用範囲</strong>
                     非相対論・弱結合を仮定する．電子–イオン衝突周波数と自動Coulomb対数は
-                    電子熱速度優勢の近似 \(T_{\mathrm{e}}\gg T_{\mathrm{i}}m_{\mathrm{e}}/m_{\mathrm{i}}\) を用いる．
+                    電子熱速度優勢の近似 \(v_{\mathrm{th},\mathrm{e}} \gg v_{\mathrm{th},\mathrm{i}}\)
+                    (\(T_{\mathrm{e}}/T_{\mathrm{i}} \gg
+                    m_{\mathrm{e}}/m_{\mathrm{i}}\)) を用いる．
                     高温・低温電子の共存，温度異方性，中性粒子衝突，電荷交換，磁場形状とバウンス平均は含めない．
                 </p>
             </div>
@@ -466,16 +468,20 @@
                         \[
                         \ln\Lambda_{\mathrm{ei}} =
                         \begin{cases}
-                        23 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}\,Z}{T_{\mathrm{e}}^{3/2}}\right),
-                        &amp; T_{\mathrm{e}} &lt; 10Z^2\,\mathrm{eV}, \\[6pt]
-                        24 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}}{T_{\mathrm{e}}}\right),
-                        &amp; T_{\mathrm{e}} \ge 10Z^2\,\mathrm{eV}.
+                        23 - \ln \left( (n_{\mathrm{e}} [\mathrm{cm}^{-3}])^{1/2} Z (T_{\mathrm{e}}
+                        [\mathrm{eV}])^{3/2}\right),
+                        &amp; T_{\mathrm{e}} [\mathrm{eV}] &lt; 10Z^2, \\
+                        24 - \ln \left( (n_{\mathrm{e}} [\mathrm{cm}^{-3}])^{1/2} (T_{\mathrm{e}}
+                        [\mathrm{eV}])^{3/2}\right),
+                        &amp; T_{\mathrm{e}} [\mathrm{eV}]\ge 10Z^2.
                         \end{cases}
                         \]
                     </div>
                     <p class="formula-note">
-                        自動モードの式．\(n_{\mathrm{e,c}}\) は \(\mathrm{cm}^{-3}\) 単位の電子密度の数値（入力 \(n_{\mathrm{e}}\) の
-                        \(10^{-6}\) 倍），\(T_{\mathrm{e}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．
+                        自動モードの式．ここでは，\(n_{\mathrm{e}}\)，\(T_{\mathrm{e}}\)はそれぞれ
+                        \(\mathrm{cm}^{-3}\)と\(\mathrm{eV}\)単位の数値．\(T_{\mathrm{e}}/T_{\mathrm{i}} \gg
+                        m_{\mathrm{e}}/m_{\mathrm{i}}\) を仮定している．
+                        手動モードでは入力値をそのまま使用．
                     </p>
                 </section>
                 <!-- logII -->
@@ -484,14 +490,14 @@
                     <div class="formula-expression" aria-label="イオン–イオン Coulomb対数の定義式">
                         \[
                         \ln\Lambda_{\mathrm{ii}}
-                        = 23 - \ln\!\left(
-                        \frac{\sqrt{2n_{\mathrm{i,c}}}\,Z^3}{T_{\mathrm{i}}^{3/2}}
-                        \right)
+                        = 23 - \ln \left(\sqrt{2} (n_{\mathrm{i}} [\mathrm{cm}^{-3}])^{1/2} Z^3 (T_{\mathrm{i}}
+                        [\mathrm{eV}])^{-3/2}\right)
                         \]
                     </div>
                     <p class="formula-note">
-                        自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\)
-                        はeV単位の数値．手動モードでは入力値をそのまま使用．
+                        自動モードの式．ここでは，\(n_{\mathrm{i}}\)，\(T_{\mathrm{i}}\)はそれぞれ
+                        \(\mathrm{cm}^{-3}\)と\(\mathrm{eV}\)単位の数値．
+                        手動モードでは入力値をそのまま使用．
                     </p>
                 </section>
                 <!-- lambdaE -->
