@@ -143,16 +143,6 @@
                             <td>\(\mathrm{s}\)</td>
                         </tr>
                         <tr>
-                            <td>電子の代表自由行程<span class="symbol">\(\lambda_{\mathrm{e}}\)</span></td>
-                            <td id="lambdaE" data-value>—</td>
-                            <td>\(\mathrm{m}\)</td>
-                        </tr>
-                        <tr>
-                            <td>イオンの代表自由行程<span class="symbol">\(\lambda_{\mathrm{i}}\)</span></td>
-                            <td id="lambdaI" data-value>—</td>
-                            <td>\(\mathrm{m}\)</td>
-                        </tr>
-                        <tr>
                             <td>電子–イオン Coulomb対数<span class="symbol">\(\ln\Lambda_{\mathrm{ei}}\)</span></td>
                             <td id="logEI" data-value>—</td>
                             <td></td>
@@ -161,6 +151,16 @@
                             <td>イオン–イオン Coulomb対数<span class="symbol">\(\ln\Lambda_{\mathrm{ii}}\)</span></td>
                             <td id="logII" data-value>—</td>
                             <td></td>
+                        </tr>
+                        <tr>
+                            <td>電子の平均自由行程<span class="symbol">\(\lambda_{\mathrm{e}}\)</span></td>
+                            <td id="lambdaE" data-value>—</td>
+                            <td>\(\mathrm{m}\)</td>
+                        </tr>
+                        <tr>
+                            <td>イオンの平均自由行程<span class="symbol">\(\lambda_{\mathrm{i}}\)</span></td>
+                            <td id="lambdaI" data-value>—</td>
+                            <td>\(\mathrm{m}\)</td>
                         </tr>
                     </tbody>
                     <!-- scale: 固定の行・記号・単位．JSはidに対応する数値だけを更新する． -->
@@ -390,30 +390,6 @@
                         \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
                     </p>
                 </section>
-                <!-- lambdaE -->
-                <section class="formula-item">
-                    <div class="formula-label">電子の代表自由行程: \(\lambda_{\mathrm{e}}\) [\(\mathrm{m}\)]</div>
-                    <div class="formula-expression" aria-label="電子の代表自由行程の定義式">
-                        \[
-                        \lambda_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        電子–イオン衝突周波数に基づく代表自由行程．全衝突過程を合計した輸送平均自由行程ではない．
-                    </p>
-                </section>
-                <!-- lambdaI -->
-                <section class="formula-item">
-                    <div class="formula-label">イオンの代表自由行程: \(\lambda_{\mathrm{i}}\) [\(\mathrm{m}\)]</div>
-                    <div class="formula-expression" aria-label="イオンの代表自由行程の定義式">
-                        \[
-                        \lambda_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        同種イオン衝突周波数に基づく代表自由行程．
-                    </p>
-                </section>
                 <!-- logEI -->
                 <section class="formula-item">
                     <div class="formula-label">電子–イオン Coulomb対数: \(\ln\Lambda_{\mathrm{ei}}\)</div>
@@ -447,6 +423,20 @@
                     <p class="formula-note">
                         自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\)
                         はeV単位の数値．手動モードでは入力値をそのまま使用．
+                    </p>
+                </section>
+                <!-- lambdaE -->
+                <!-- lambdaI -->
+                <section class="formula-item">
+                    <div class="formula-label">平均自由行程: \(\lambda_{s}\) [\(\mathrm{m}\)]</div>
+                    <div class="formula-expression" aria-label="平均自由行程の定義式">
+                        \[
+                        \lambda_{\mathrm{s}} = \frac{v_{\mathrm{th,s}}}{\nu_{s}}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        電子については，電子–イオン衝突周波数 \(\nu_{s}=\nu_{\mathrm{ei}}\) で衝突周波数を代表して計算する．全衝突過程を合計した輸送平均自由行程ではない．
+                        イオンについては，同種イオン衝突周波数 \(\nu_{s}=\nu_{\mathrm{ii}}\) に基づいて計算する．
                     </p>
                 </section>
             </div>
