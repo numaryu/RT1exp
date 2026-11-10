@@ -224,17 +224,17 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td>電子Knudsen数<span class="symbol">\(\lambda_{\mathrm{e}}/L\)</span></td>
+                            <td>電子Knudsen数<span class="symbol">\(\mathrm{Kn}_{\mathrm{e}}\)</span></td>
                             <td id="KnE" data-value>—</td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>イオンKnudsen数<span class="symbol">\(\lambda_{\mathrm{i}}/L\)</span></td>
+                            <td>イオンKnudsen数<span class="symbol">\(\mathrm{Kn}_{\mathrm{i}}\)</span></td>
                             <td id="KnI" data-value>—</td>
                             <td></td>
                         </tr>
                         <tr>
-                            <td>規格化ラーマ半径<span class="symbol">\(\rho_{\mathrm{i}}/L\)</span></td>
+                            <td>規格化ラーマ半径<span class="symbol">\(\rho_{\ast}\)</span></td>
                             <td id="rhoStar" data-value>—</td>
                             <td></td>
                         </tr>
@@ -515,73 +515,36 @@
             <!-- ratio: 定義式と説明文はここで編集する． -->
             <div class="formula-list" data-group="ratio" hidden>
                 <!-- betaE -->
-                <section class="formula-item">
-                    <div class="formula-label">電子ベータ: \(\beta_{\mathrm{e}}\)</div>
-                    <div class="formula-expression" aria-label="電子ベータの定義式">
-                        \[
-                        \beta_{\mathrm{e}} = \frac{2\mu_0 n_{\mathrm{e}}\theta_{\mathrm{e}}}{B^2}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        等方電子圧力 \(p_{\mathrm{e}} = n_{\mathrm{e}}\theta_{\mathrm{e}}\) と磁気圧の比．
-                    </p>
-                </section>
                 <!-- betaI -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンベータ: \(\beta_{\mathrm{i}}\)</div>
-                    <div class="formula-expression" aria-label="イオンベータの定義式">
+                    <div class="formula-label">ベータ: \(\beta_{s}\)</div>
+                    <div class="formula-expression" aria-label="ベータの定義式">
                         \[
-                        \beta_{\mathrm{i}} = \frac{2\mu_0 n_{\mathrm{i}}\theta_{\mathrm{i}}}{B^2}
+                        \beta_{s} = \frac{2\mu_0 n_{s}\theta_{s}}{B^2}
                         \]
                     </div>
-                    <p class="formula-note">
-                        等方イオン圧力 \(p_{\mathrm{i}} = n_{\mathrm{i}}\theta_{\mathrm{i}}\) と磁気圧の比．
-                    </p>
                 </section>
                 <!-- magE -->
-                <section class="formula-item">
-                    <div class="formula-label">電子磁化パラメータ: \(\Omega_{\mathrm{e}}/\nu_{\mathrm{ei}}\)</div>
-                    <div class="formula-expression" aria-label="電子磁化パラメータの定義式">
-                        \[
-                        \frac{\Omega_{\mathrm{e}}}{\nu_{\mathrm{ei}}} = \frac{eB}{m_{\mathrm{e}}\nu_{\mathrm{ei}}}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        角周波数と衝突周波数の比．\(f_{\mathrm{ce}}/\nu_{\mathrm{ei}}\) とは \(2\pi\) の係数が異なる．
-                    </p>
-                </section>
                 <!-- magI -->
                 <section class="formula-item">
-                    <div class="formula-label">イオン磁化パラメータ: \(\Omega_{\mathrm{i}}/\nu_{\mathrm{ii}}\)</div>
-                    <div class="formula-expression" aria-label="イオン磁化パラメータの定義式">
+                    <div class="formula-label">磁化パラメータ: \(\omega_{s}/\nu_{s}\)</div>
+                    <div class="formula-expression" aria-label="磁化パラメータの定義式">
                         \[
-                        \frac{\Omega_{\mathrm{i}}}{\nu_{\mathrm{ii}}} = \frac{ZeB}{m_{\mathrm{i}}\nu_{\mathrm{ii}}}
+                        \frac{\omega_{s}}{\nu_{s}} = \frac{q_{s}B}{m_{s}\nu_{s}}
                         \]
                     </div>
                     <p class="formula-note">
-                        角周波数と同種イオン衝突周波数の比．
+                        角周波数と衝突周波数の比．
                     </p>
                 </section>
                 <!-- KnE -->
-                <section class="formula-item">
-                    <div class="formula-label">電子Knudsen数: \(\lambda_{\mathrm{e}}/L\)</div>
-                    <div class="formula-expression" aria-label="電子Knudsen数の定義式">
-                        \[
-                        \mathrm{Kn}_{\mathrm{e}} = \frac{\lambda_{\mathrm{e}}}{L} =
-                        \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}L}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        指定した代表長さ \(L\) に対するKnudsen数．
-                    </p>
-                </section>
                 <!-- KnI -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンKnudsen数: \(\lambda_{\mathrm{i}}/L\)</div>
-                    <div class="formula-expression" aria-label="イオンKnudsen数の定義式">
+                    <div class="formula-label">Knudsen数: \(\mathrm{Kn}_{s}\)</div>
+                    <div class="formula-expression" aria-label="Knudsen数の定義式">
                         \[
-                        \mathrm{Kn}_{\mathrm{i}} = \frac{\lambda_{\mathrm{i}}}{L} =
-                        \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}L}
+                        \mathrm{Kn}_{s} = \frac{\lambda_{s}}{L} =
+                        \frac{v_{\mathrm{th},s}}{\nu_{s}L}
                         \]
                     </div>
                     <p class="formula-note">
@@ -590,14 +553,14 @@
                 </section>
                 <!-- rhoStar -->
                 <section class="formula-item">
-                    <div class="formula-label">規格化ラーマ半径: \(\rho_{\mathrm{i}}/L\)</div>
+                    <div class="formula-label">規格化ラーマ半径: \(\rho_{\ast}\)</div>
                     <div class="formula-expression" aria-label="規格化ラーマ半径の定義式">
                         \[
                         \rho_* = \frac{\rho_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}L}
                         \]
                     </div>
                     <p class="formula-note">
-                        このページでは \(\rho_* = \rho_{\mathrm{i}}/L\) と定義．
+                        ここでは \(\rho_* = \rho_{\mathrm{i}}/L\) と定義．
                     </p>
                 </section>
             </div>
