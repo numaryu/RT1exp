@@ -1,243 +1,322 @@
 /* Layout and appearance. */
 
 body {
-  margin:0;
-  padding:24px;
-  background:light-dark(#f0f3ef,#121714);
-  font-family:system-ui,sans-serif
+    margin: 0;
+    padding: 24px;
+    background: light-dark(#f0f3ef, #121714);
+    font-family: system-ui, sans-serif
 }
+
 #rt1-prototype {
-  max-width:1100px;
-  margin:auto
+    max-width: 1100px;
+    margin: auto
 }
-button,summary {
-  cursor:pointer
+
+button,
+summary {
+    cursor: pointer
 }
+
 @media(max-width:650px) {
-  body {
-    padding:8px
-  }
+    body {
+        padding: 8px
+    }
 }
+
 #rt1-prototype {
-  --paper:light-dark(#fafbf9,#171d1b);
-  --panel:light-dark(#ffffff,#212a26);
-  --ink:light-dark(#233c32,#e3eae5);
-  --sub:light-dark(#607568,#adbbb1);
-  --edge:light-dark(#d8e2da,#415247);
-  --accent:light-dark(#286b50,#88c4a0);
-  color:var(--ink);
-  background:var(--paper);
-  font:14px/1.6 system-ui,sans-serif;
-  border-radius:10px;
-  overflow:hidden
+    --paper: light-dark(#fafbf9, #171d1b);
+    --panel: light-dark(#ffffff, #212a26);
+    --ink: light-dark(#233c32, #e3eae5);
+    --sub: light-dark(#607568, #adbbb1);
+    --edge: light-dark(#d8e2da, #415247);
+    --accent: light-dark(#286b50, #88c4a0);
+    color: var(--ink);
+    background: var(--paper);
+    font: 14px/1.6 system-ui, sans-serif;
+    border-radius: 10px;
+    overflow: hidden
 }
+
 #rt1-prototype * {
-  box-sizing:border-box
+    box-sizing: border-box
 }
+
 #rt1-prototype header {
-  padding:22px 26px;
-  background:var(--panel);
-  border-bottom:1px solid var(--edge);
-  display:flex;
-  align-items:center;
-  gap:18px;
-  flex-wrap:wrap
+    padding: 22px 26px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--edge);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap
 }
+
 #rt1-prototype h2 {
-  font-size:19px;
-  margin:0;
-  font-weight:500
+    font-size: 19px;
+    margin: 0;
+    font-weight: 500
 }
+
 #rt1-prototype .tag {
-  font-size:12px;
-  color:var(--sub)
+    font-size: 12px;
+    color: var(--sub)
 }
+
 #rt1-prototype .layout {
-  display:grid;
-  grid-template-columns:270px minmax(0,1fr)
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr)
 }
+
 #rt1-prototype aside {
-  background:var(--panel);
-  border-right:1px solid var(--edge);
-  padding:22px
+    background: var(--panel);
+    border-right: 1px solid var(--edge);
+    padding: 22px
 }
+
 #rt1-prototype .result {
-  padding:22px;
-  min-width:0
+    padding: 22px;
+    min-width: 0
 }
+
 #rt1-prototype h3 {
-  font-size:14px;
-  font-weight:500;
-  margin:0 0 16px
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 0 16px
 }
+
 #rt1-prototype label {
-  display:block;
-  margin-bottom:16px;
-  font-size:12px;
-  color:var(--sub)
+    display: block;
+    margin-bottom: 16px;
+    font-size: 12px;
+    color: var(--sub)
 }
-#rt1-prototype input,#rt1-prototype select {
-  font:14px system-ui;
-  color:var(--ink);
-  background:var(--paper);
-  border:1px solid var(--edge);
-  border-radius:5px;
-  width:100%;
-  padding:9px;
-  margin-top:5px;
-  min-width:0
+
+#rt1-prototype input,
+#rt1-prototype select {
+    font: 14px system-ui;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--edge);
+    border-radius: 5px;
+    width: 100%;
+    padding: 9px;
+    margin-top: 5px;
+    min-width: 0
 }
+
 #rt1-prototype .pair {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px
 }
+
 #rt1-prototype .note {
-  font-size:12px;
-  color:var(--sub);
-  margin:0 0 18px
+    font-size: 12px;
+    color: var(--sub);
+    margin: 0 0 18px
 }
+
 #rt1-prototype .tabs {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:18px
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 18px
 }
+
 #rt1-prototype button {
-  font:13px system-ui;
-  padding:8px 12px;
-  border:1px solid var(--edge);
-  background:var(--panel);
-  color:var(--ink);
-  border-radius:5px
+    font: 13px system-ui;
+    padding: 8px 12px;
+    border: 1px solid var(--edge);
+    background: var(--panel);
+    color: var(--ink);
+    border-radius: 5px
 }
+
 #rt1-prototype button[aria-pressed=true] {
-  background:var(--accent);
-  color:var(--paper);
-  border-color:var(--accent)
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent)
 }
+
 #rt1-prototype table {
-  border-collapse:collapse;
-  width:100%;
-  font-size:13px
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 13px
 }
+
 #rt1-prototype th {
-  font-weight:400;
-  color:var(--sub);
-  text-align:left;
-  font-size:12px;
-  padding:8px;
-  border-bottom:1px solid var(--edge)
+    font-weight: 400;
+    color: var(--sub);
+    text-align: left;
+    font-size: 12px;
+    padding: 8px;
+    border-bottom: 1px solid var(--edge)
 }
+
 #rt1-prototype td {
-  padding:13px 8px;
-  border-bottom:1px solid var(--edge)
+    padding: 13px 8px;
+    border-bottom: 1px solid var(--edge)
 }
+
 #rt1-prototype td:nth-child(2) {
-  text-align:right;
-  font:14px ui-monospace,monospace;
-  font-variant-numeric:tabular-nums
+    text-align: right;
+    font: 14px ui-monospace, monospace;
+    font-variant-numeric: tabular-nums
 }
+
 #rt1-prototype td:last-child {
-  color:var(--sub);
-  font-size:12px
+    color: var(--sub);
+    font-size: 12px
 }
+
 #rt1-prototype .symbol {
-  display:block;
-  color:var(--sub);
-  font-size:12px
+    display: block;
+    color: var(--sub);
+    font-size: 12px
 }
+
 #rt1-prototype .below {
-  margin-top:22px
+    margin-top: 22px
 }
+
 #rt1-prototype .strip {
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap
 }
+
 #rt1-prototype .strip select {
-  width:auto
+    width: auto
 }
+
 #rt1-prototype svg {
-  width:100%;
-  display:block
+    width: 100%;
+    display: block
 }
+
 #rt1-prototype details {
-  border-top:1px solid var(--edge);
-  padding:16px 26px;
-  font-size:12px
+    border-top: 1px solid var(--edge);
+    padding: 16px 26px;
+    font-size: 12px
 }
+
 #rt1-prototype summary {
-  color:var(--accent)
+    color: var(--accent)
 }
+
 #rt1-prototype .error {
-  color:light-dark(#9e402a,#ffac8f);
-  font-size:12px
+    color: light-dark(#9e402a, #ffac8f);
+    font-size: 12px
 }
+
 #rt1-prototype [hidden] {
-  display:none!important
+    display: none !important
 }
+
 @media(max-width:650px) {
-  #rt1-prototype .layout {
-    grid-template-columns:1fr
-  }
-  #rt1-prototype aside {
-    border-right:0;
-    border-bottom:1px solid var(--edge)
-  }
-  #rt1-prototype .fields {
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:0 14px
-  }
-  #rt1-prototype .pair {
-    grid-template-columns:1fr
-  }
-  #rt1-prototype .result {
-    padding:16px
-  }
-  #rt1-prototype td {
-    padding:10px 4px
-  }
+    #rt1-prototype .layout {
+        grid-template-columns: 1fr
+    }
+
+    #rt1-prototype aside {
+        border-right: 0;
+        border-bottom: 1px solid var(--edge)
+    }
+
+    #rt1-prototype .fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 14px
+    }
+
+    #rt1-prototype .pair {
+        grid-template-columns: 1fr
+    }
+
+    #rt1-prototype .result {
+        padding: 16px
+    }
+
+    #rt1-prototype td {
+        padding: 10px 4px
+    }
 }
+
 #rt1-prototype .formula-list {
-  display:grid;
-  grid-template-columns:minmax(0,1fr);
-  gap:0;
-  margin-top:14px
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    margin-top: 14px
 }
+
 #rt1-prototype .formula-item {
-  padding:14px 0;
-  border-top:1px solid var(--edge);
-  min-width:0
+    padding: 14px 0;
+    border-top: 1px solid var(--edge);
+    min-width: 0
 }
+
 #rt1-prototype .formula-item:first-child {
-  border-top:0
+    border-top: 0
 }
+
 #rt1-prototype .formula-label {
-  font-size:13px;
-  color:var(--sub);
-  margin-bottom:9px
+    font-size: 13px;
+    color: var(--sub);
+    margin-bottom: 9px
 }
+
 #rt1-prototype .formula-expression {
-  overflow-x:auto;
-  padding:5px 0 10px;
-  font-size:17px
+    overflow-x: auto;
+    padding: 5px 0 10px;
+    font-size: 14px
 }
+
 #rt1-prototype .formula-expression math {
-  font-family:math;
-  font-size:1.05em
+    font-family: math;
+    font-size: 1.05em
 }
+
 #rt1-prototype .formula-note {
-  font-size:12px;
-  color:var(--sub);
-  margin:5px 0 0
+    font-size: 12px;
+    color: var(--sub);
+    margin: 5px 0 0
 }
+
 #rt1-prototype .notation {
-  max-width:900px
+    max-width: 900px
 }
+
 #rt1-prototype a {
-  color:var(--accent)
+    color: var(--accent)
+}
+
+/* 基準サイズ */
+#rt1-prototype {
+    --text-size: 14px;
+    font-size: var(--text-size);
+}
+
+/* 各所の個別指定を上書き */
+#rt1-prototype :is(h3, label, input, select, button,
+    table, th, td, td:nth-child(2), td:last-child,
+    details, .tag, .note, .symbol, .error,
+    .formula-label, .formula-expression, .formula-note) {
+    font-size: var(--text-size);
+}
+
+/* タイトルだけ少し大きくする */
+#rt1-prototype h2 {
+    font-size: 1.2em;
+}
+
+/* HTML側・JS側のMathJaxを同じ倍率にする */
+#rt1-prototype mjx-container {
+    font-size: 100% !important;
+}
+
+/* グラフ中の文字も揃える */
+#rt1-prototype svg text {
+    font-size: var(--text-size);
 }
