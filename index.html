@@ -346,9 +346,10 @@
                         また，サイクロトロン周波数 \(f_s = \Omega_{s}/(2\pi)\) [\(\mathrm{Hz}\)]．
                     </p>
                 </section>
+                <!-- nuEI -->
                 <section class="formula-item">
-                    <div class="formula-label">電子–イオン衝突率 · \(\nu_{\mathrm{ei}}\)</div>
-                    <div class="formula-expression" aria-label="電子–イオン衝突率の定義式">
+                    <div class="formula-label">電子–イオン衝突周波数: \(\nu_{\mathrm{ei}}\) [\(\mathrm{s}^{-1}\)]</div>
+                    <div class="formula-expression" aria-label="電子–イオン衝突周波数の定義式">
                         \[
                         \nu_{\mathrm{ei}}
                         = \frac{4\sqrt{2\pi}}{3}
@@ -359,121 +360,107 @@
                     <p class="formula-note">
                         Maxwell電子のイオンに対する運動量緩和率．電子熱速度優勢の極限．
                     </p>
-                    <!-- nuEI -->
-                    <section class="formula-item">
-                        <div class="formula-label">電子–イオン衝突率 · \(\nu_{\mathrm{ei}}\)</div>
-                        <div class="formula-expression" aria-label="電子–イオン衝突率の定義式">
-                            \[
-                            \nu_{\mathrm{ei}}
-                            = \frac{4\sqrt{2\pi}}{3}
-                            \frac{n_{\mathrm{i}} Z^2 K^2 \ln\Lambda_{\mathrm{ei}}}
-                            {\sqrt{m_{\mathrm{e}}}\,\theta_{\mathrm{e}}^{3/2}}
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            Maxwell電子のイオンに対する運動量緩和率．電子熱速度優勢の極限．
-                        </p>
-                    </section>
-                    <!-- nuII -->
-                    <section class="formula-item">
-                        <div class="formula-label">イオン–イオン衝突率 · \(\nu_{\mathrm{ii}}\)</div>
-                        <div class="formula-expression" aria-label="イオン–イオン衝突率の定義式">
-                            \[
-                            \nu_{\mathrm{ii}}
-                            = \frac{4\sqrt{\pi}}{3}
-                            \frac{n_{\mathrm{i}} Z^4 K^2 \ln\Lambda_{\mathrm{ii}}}
-                            {\sqrt{m_{\mathrm{i}}}\,\theta_{\mathrm{i}}^{3/2}}
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            同種イオンの衝突率（NRLの定義）．
-                        </p>
-                    </section>
-                    <!-- tauE -->
-                    <section class="formula-item">
-                        <div class="formula-label">電子温度平衡化時間 · \(\tau^{E}_{\mathrm{ei}}\)</div>
-                        <div class="formula-expression" aria-label="電子温度平衡化時間の定義式">
-                            \[
-                            \tau^{E}_{\mathrm{ei}}
-                            = \frac{3m_{\mathrm{e}}m_{\mathrm{i}}}
-                            {8\sqrt{2\pi}\,n_{\mathrm{i}}Z^2K^2\ln\Lambda_{\mathrm{ei}}}
-                            \left(
-                            \frac{\theta_{\mathrm{e}}}{m_{\mathrm{e}}}
-                            + \frac{\theta_{\mathrm{i}}}{m_{\mathrm{i}}}
-                            \right)^{3/2}
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
-                            (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手の温度を固定したときの電子温度の平衡化時間を表す．両種が変化するとき，温度差の瞬時緩和時間は
-                            \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
-                        </p>
-                    </section>
-                    <!-- lambdaE -->
-                    <section class="formula-item">
-                        <div class="formula-label">電子の代表自由行程 · \(\lambda_{\mathrm{e}}\)</div>
-                        <div class="formula-expression" aria-label="電子の代表自由行程の定義式">
-                            \[
-                            \lambda_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}}
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            電子–イオン衝突率に基づく代表自由行程．全衝突過程を合計した輸送平均自由行程ではない．
-                        </p>
-                    </section>
-                    <!-- lambdaI -->
-                    <section class="formula-item">
-                        <div class="formula-label">イオンの代表自由行程 · \(\lambda_{\mathrm{i}}\)</div>
-                        <div class="formula-expression" aria-label="イオンの代表自由行程の定義式">
-                            \[
-                            \lambda_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}}
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            同種イオン衝突率に基づく代表自由行程．
-                        </p>
-                    </section>
-                    <!-- logEI -->
-                    <section class="formula-item">
-                        <div class="formula-label">電子–イオン Coulomb対数 · \(\ln\Lambda_{\mathrm{ei}}\)</div>
-                        <div class="formula-expression" aria-label="電子–イオン Coulomb対数の定義式">
-                            \[
-                            \ln\Lambda_{\mathrm{ei}} =
-                            \begin{cases}
-                            23 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}\,Z}{T_{\mathrm{e}}^{3/2}}\right),
-                            &amp; T_{\mathrm{e}} &lt; 10Z^2\,\mathrm{eV}, \\[6pt]
-                            24 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}}{T_{\mathrm{e}}}\right),
-                            &amp; T_{\mathrm{e}} \ge 10Z^2\,\mathrm{eV}.
-                            \end{cases}
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            自動モードの式．\(n_{\mathrm{e,c}}\) は \(\mathrm{cm}^{-3}\) 単位の電子密度の数値（入力 \(n_{\mathrm{e}}\) の
-                            \(10^{-6}\) 倍），\(T_{\mathrm{e}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．
-                        </p>
-                    </section>
-                    <!-- logII -->
-                    <section class="formula-item">
-                        <div class="formula-label">イオン–イオン Coulomb対数 · \(\ln\Lambda_{\mathrm{ii}}\)</div>
-                        <div class="formula-expression" aria-label="イオン–イオン Coulomb対数の定義式">
-                            \[
-                            \ln\Lambda_{\mathrm{ii}}
-                            = 23 - \ln\!\left(
-                            \frac{\sqrt{2n_{\mathrm{i,c}}}\,Z^3}{T_{\mathrm{i}}^{3/2}}
-                            \right)
-                            \]
-                        </div>
-                        <p class="formula-note">
-                            自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\)
-                            はeV単位の数値．手動モードでは入力値をそのまま使用．
-                        </p>
-                    </section>
+                </section>
+                <!-- nuII -->
+                <section class="formula-item">
+                    <div class="formula-label">イオン–イオン衝突周波数: \(\nu_{\mathrm{ii}}\) [\(\mathrm{s}^{-1}\)]</div>
+                    <div class="formula-expression" aria-label="イオン–イオン衝突周波数の定義式">
+                        \[
+                        \nu_{\mathrm{ii}}
+                        = \frac{4\sqrt{\pi}}{3}
+                        \frac{n_{\mathrm{i}} Z^4 K^2 \ln\Lambda_{\mathrm{ii}}}
+                        {\sqrt{m_{\mathrm{i}}}\,\theta_{\mathrm{i}}^{3/2}}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        同種イオンの衝突周波数（NRLの定義）．
+                    </p>
+                </section>
+                <!-- tauE -->
+                <section class="formula-item">
+                    <div class="formula-label">電子温度平衡化時間: \(\tau^{E}_{\mathrm{ei}}\) [\(\mathrm{s}\)]</div>
+                    <div class="formula-expression" aria-label="電子温度平衡化時間の定義式">
+                        \[
+                        \tau^{E}_{\mathrm{ei}}
+                        = \frac{3m_{\mathrm{e}}m_{\mathrm{i}}}
+                        {8\sqrt{2\pi}\,n_{\mathrm{i}}Z^2K^2\ln\Lambda_{\mathrm{ei}}}
+                        \left(
+                        \frac{\theta_{\mathrm{e}}}{m_{\mathrm{e}}}
+                        + \frac{\theta_{\mathrm{i}}}{m_{\mathrm{i}}}
+                        \right)^{3/2}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
+                        (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手の温度を固定したときの電子温度の平衡化時間を表す．両種が変化するとき，温度差の瞬時緩和時間は
+                        \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
+                    </p>
+                </section>
+                <!-- lambdaE -->
+                <section class="formula-item">
+                    <div class="formula-label">電子の代表自由行程: \(\lambda_{\mathrm{e}}\) [\(\mathrm{m}\)]</div>
+                    <div class="formula-expression" aria-label="電子の代表自由行程の定義式">
+                        \[
+                        \lambda_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        電子–イオン衝突周波数に基づく代表自由行程．全衝突過程を合計した輸送平均自由行程ではない．
+                    </p>
+                </section>
+                <!-- lambdaI -->
+                <section class="formula-item">
+                    <div class="formula-label">イオンの代表自由行程: \(\lambda_{\mathrm{i}}\) [\(\mathrm{m}\)]</div>
+                    <div class="formula-expression" aria-label="イオンの代表自由行程の定義式">
+                        \[
+                        \lambda_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        同種イオン衝突周波数に基づく代表自由行程．
+                    </p>
+                </section>
+                <!-- logEI -->
+                <section class="formula-item">
+                    <div class="formula-label">電子–イオン Coulomb対数: \(\ln\Lambda_{\mathrm{ei}}\)</div>
+                    <div class="formula-expression" aria-label="電子–イオン Coulomb対数の定義式">
+                        \[
+                        \ln\Lambda_{\mathrm{ei}} =
+                        \begin{cases}
+                        23 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}\,Z}{T_{\mathrm{e}}^{3/2}}\right),
+                        &amp; T_{\mathrm{e}} &lt; 10Z^2\,\mathrm{eV}, \\[6pt]
+                        24 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}}{T_{\mathrm{e}}}\right),
+                        &amp; T_{\mathrm{e}} \ge 10Z^2\,\mathrm{eV}.
+                        \end{cases}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        自動モードの式．\(n_{\mathrm{e,c}}\) は \(\mathrm{cm}^{-3}\) 単位の電子密度の数値（入力 \(n_{\mathrm{e}}\) の
+                        \(10^{-6}\) 倍），\(T_{\mathrm{e}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．
+                    </p>
+                </section>
+                <!-- logII -->
+                <section class="formula-item">
+                    <div class="formula-label">イオン–イオン Coulomb対数: \(\ln\Lambda_{\mathrm{ii}}\)</div>
+                    <div class="formula-expression" aria-label="イオン–イオン Coulomb対数の定義式">
+                        \[
+                        \ln\Lambda_{\mathrm{ii}}
+                        = 23 - \ln\!\left(
+                        \frac{\sqrt{2n_{\mathrm{i,c}}}\,Z^3}{T_{\mathrm{i}}^{3/2}}
+                        \right)
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\)
+                        はeV単位の数値．手動モードでは入力値をそのまま使用．
+                    </p>
+                </section>
             </div>
             <!-- scale: 定義式と説明文はここで編集する． -->
             <div class="formula-list" data-group="scale" hidden>
                 <!-- fce -->
                 <section class="formula-item">
-                    <div class="formula-label">電子サイクロトロン周波数 · \(f_{\mathrm{ce}}\)</div>
+                    <div class="formula-label">電子サイクロトロン周波数: \(f_{\mathrm{ce}}\) [\(\mathrm{s}^{-1}\)]</div>
                     <div class="formula-expression" aria-label="電子サイクロトロン周波数の定義式">
                         \[
                         f_{\mathrm{ce}} = \frac{\Omega_{\mathrm{e}}}{2\pi} = \frac{eB}{2\pi m_{\mathrm{e}}}
@@ -485,7 +472,7 @@
                 </section>
                 <!-- fci -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンサイクロトロン周波数 · \(f_{\mathrm{ci}}\)</div>
+                    <div class="formula-label">イオンサイクロトロン周波数: \(f_{\mathrm{ci}}\) [\(\mathrm{s}^{-1}\)]</div>
                     <div class="formula-expression" aria-label="イオンサイクロトロン周波数の定義式">
                         \[
                         f_{\mathrm{ci}} = \frac{\Omega_{\mathrm{i}}}{2\pi} = \frac{ZeB}{2\pi m_{\mathrm{i}}}
@@ -497,7 +484,7 @@
                 </section>
                 <!-- fpe -->
                 <section class="formula-item">
-                    <div class="formula-label">電子プラズマ周波数 · \(f_{\mathrm{pe}}\)</div>
+                    <div class="formula-label">電子プラズマ周波数: \(f_{\mathrm{pe}}\) [\(\mathrm{s}^{-1}\)]</div>
                     <div class="formula-expression" aria-label="電子プラズマ周波数の定義式">
                         \[
                         f_{\mathrm{pe}} = \frac{1}{2\pi}\sqrt{\frac{n_{\mathrm{e}}e^2}{\varepsilon_0 m_{\mathrm{e}}}}
@@ -510,7 +497,7 @@
                 </section>
                 <!-- rhoe -->
                 <section class="formula-item">
-                    <div class="formula-label">電子ラーマー半径 · \(\rho_{\mathrm{e}}\)</div>
+                    <div class="formula-label">電子ラーマー半径: \(\rho_{\mathrm{e}}\) [\(\mathrm{m}\)]</div>
                     <div class="formula-expression" aria-label="電子ラーマー半径の定義式">
                         \[
                         \rho_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\Omega_{\mathrm{e}}} =
@@ -523,7 +510,7 @@
                 </section>
                 <!-- rhoi -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンラーマー半径 · \(\rho_{\mathrm{i}}\)</div>
+                    <div class="formula-label">イオンラーマー半径: \(\rho_{\mathrm{i}}\) [\(\mathrm{m}\)]</div>
                     <div class="formula-expression" aria-label="イオンラーマー半径の定義式">
                         \[
                         \rho_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}} =
@@ -536,7 +523,7 @@
                 </section>
                 <!-- debye -->
                 <section class="formula-item">
-                    <div class="formula-label">電子Debye長 · \(\lambda_{\mathrm{De}}\)</div>
+                    <div class="formula-label">電子Debye長: \(\lambda_{\mathrm{De}}\) [\(\mathrm{m}\)]</div>
                     <div class="formula-expression" aria-label="電子Debye長の定義式">
                         \[
                         \lambda_{\mathrm{De}} = \sqrt{\frac{\varepsilon_0\theta_{\mathrm{e}}}{n_{\mathrm{e}}e^2}}
@@ -548,7 +535,7 @@
                 </section>
                 <!-- vA -->
                 <section class="formula-item">
-                    <div class="formula-label">Alfvén速度 · \(v_{\mathrm{A}}\)</div>
+                    <div class="formula-label">Alfvén速度: \(v_{\mathrm{A}}\) [\(\mathrm{m \cdot s^{-1}}\)]</div>
                     <div class="formula-expression" aria-label="Alfvén速度の定義式">
                         \[
                         v_{\mathrm{A}} = \frac{B}{\sqrt{\mu_0 n_{\mathrm{i}} m_{\mathrm{i}}}}
@@ -563,7 +550,7 @@
             <div class="formula-list" data-group="ratio" hidden>
                 <!-- betaE -->
                 <section class="formula-item">
-                    <div class="formula-label">電子β · \(\beta_{\mathrm{e}}\)</div>
+                    <div class="formula-label">電子β: \(\beta_{\mathrm{e}}\)</div>
                     <div class="formula-expression" aria-label="電子βの定義式">
                         \[
                         \beta_{\mathrm{e}} = \frac{2\mu_0 n_{\mathrm{e}}\theta_{\mathrm{e}}}{B^2}
@@ -575,7 +562,7 @@
                 </section>
                 <!-- betaI -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンβ · \(\beta_{\mathrm{i}}\)</div>
+                    <div class="formula-label">イオンβ: \(\beta_{\mathrm{i}}\)</div>
                     <div class="formula-expression" aria-label="イオンβの定義式">
                         \[
                         \beta_{\mathrm{i}} = \frac{2\mu_0 n_{\mathrm{i}}\theta_{\mathrm{i}}}{B^2}
@@ -587,7 +574,7 @@
                 </section>
                 <!-- magE -->
                 <section class="formula-item">
-                    <div class="formula-label">電子磁化パラメータ · \(\Omega_{\mathrm{e}}/\nu_{\mathrm{ei}}\)</div>
+                    <div class="formula-label">電子磁化パラメータ: \(\Omega_{\mathrm{e}}/\nu_{\mathrm{ei}}\)</div>
                     <div class="formula-expression" aria-label="電子磁化パラメータの定義式">
                         \[
                         \frac{\Omega_{\mathrm{e}}}{\nu_{\mathrm{ei}}} = \frac{eB}{m_{\mathrm{e}}\nu_{\mathrm{ei}}}
@@ -599,7 +586,7 @@
                 </section>
                 <!-- magI -->
                 <section class="formula-item">
-                    <div class="formula-label">イオン磁化パラメータ · \(\Omega_{\mathrm{i}}/\nu_{\mathrm{ii}}\)</div>
+                    <div class="formula-label">イオン磁化パラメータ: \(\Omega_{\mathrm{i}}/\nu_{\mathrm{ii}}\)</div>
                     <div class="formula-expression" aria-label="イオン磁化パラメータの定義式">
                         \[
                         \frac{\Omega_{\mathrm{i}}}{\nu_{\mathrm{ii}}} = \frac{ZeB}{m_{\mathrm{i}}\nu_{\mathrm{ii}}}
@@ -611,7 +598,7 @@
                 </section>
                 <!-- KnE -->
                 <section class="formula-item">
-                    <div class="formula-label">電子Knudsen数 · \(\lambda_{\mathrm{e}}/L\)</div>
+                    <div class="formula-label">電子Knudsen数: \(\lambda_{\mathrm{e}}/L\)</div>
                     <div class="formula-expression" aria-label="電子Knudsen数の定義式">
                         \[
                         \mathrm{Kn}_{\mathrm{e}} = \frac{\lambda_{\mathrm{e}}}{L} =
@@ -624,7 +611,7 @@
                 </section>
                 <!-- KnI -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンKnudsen数 · \(\lambda_{\mathrm{i}}/L\)</div>
+                    <div class="formula-label">イオンKnudsen数: \(\lambda_{\mathrm{i}}/L\)</div>
                     <div class="formula-expression" aria-label="イオンKnudsen数の定義式">
                         \[
                         \mathrm{Kn}_{\mathrm{i}} = \frac{\lambda_{\mathrm{i}}}{L} =
@@ -637,7 +624,7 @@
                 </section>
                 <!-- rhoStar -->
                 <section class="formula-item">
-                    <div class="formula-label">規格化ラーマー半径 · \(\rho_{\mathrm{i}}/L\)</div>
+                    <div class="formula-label">規格化ラーマー半径: \(\rho_{\mathrm{i}}/L\)</div>
                     <div class="formula-expression" aria-label="規格化ラーマー半径の定義式">
                         \[
                         \rho_* = \frac{\rho_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}L}
