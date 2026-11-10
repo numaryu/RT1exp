@@ -7,6 +7,30 @@
   const root = document.getElementById("rt1-prototype");
   const find = (selector) => root.querySelector(selector);
   let activeGroup = "collision";
+  let renderVersion = 0;
+  let mathQueue = Promise.resolve();
+
+  // index.html loads MathJax after this script. Wait for all deferred scripts
+  // and MathJax's initial page typesetting before processing dynamic content.
+  const mathReady = new Promise((resolve) => {
+    const ready = () => {
+      const mathJax = window.MathJax;
+      if (!mathJax?.startup?.promise) {
+        resolve(null);
+        return;
+      }
+      mathJax.startup.promise.then(() => resolve(mathJax)).catch(() => resolve(null));
+    };
+    if (document.readyState === "complete") ready();
+    else document.addEventListener("DOMContentLoaded", ready, { once: true });
+  });
+
+  const escapeHTML = (text) => String(text).replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]);
+
+  const inlineMath = (tex) => escapeHTML(String.raw`\(${tex}\)`);
+  const displayMath = (tex) => escapeHTML(String.raw`\[${tex}\]`);
 
   function format(value) {
     return value >= 0.01 && value < 1000
@@ -24,34 +48,55 @@
     return inputs;
   }
 
-  function renderDefinitions() {
-    find(".formula-list").innerHTML = groups[activeGroup].map(
+  function renderDefinitions(group) {
+    find(".formula-list").innerHTML = groups[group].map(
       ([key, symbol, label]) => {
-        const [expression, note] = formulas[key];
+        const { tex, note } = formulas[key];
         return `
           <div class="formula-item">
-            <div class="formula-label">${label} · ${symbol}</div>
-            <div class="formula-expression">
-              <math xmlns="http://www.w3.org/1998/Math/MathML"
-                    aria-label="${label}の定義式">
-                <mrow>${expression}</mrow>
-              </math>
+            <div class="formula-label">${escapeHTML(label)} · ${inlineMath(symbol)}</div>
+            <div class="formula-expression" aria-label="${escapeHTML(label)}の定義式">
+              ${displayMath(tex)}
             </div>
-            <p class="formula-note">${note}</p>
+            <p class="formula-note">${escapeHTML(note)}</p>
           </div>`;
       }
     ).join("");
   }
 
-  function renderResults(values) {
-    find(".values").innerHTML = groups[activeGroup].map(
+  function renderResults(values, group) {
+    find(".values").innerHTML = groups[group].map(
       ([key, symbol, label, unit]) => `
         <tr>
-          <td>${label}<span class="symbol">${symbol}</span></td>
+          <td>${escapeHTML(label)}<span class="symbol">${inlineMath(symbol)}</span></td>
           <td>${format(values[key])}</td>
-          <td>${unit}</td>
+          <td>${escapeHTML(unit)}</td>
         </tr>`
     ).join("");
+  }
+
+  // Serialize DOM replacements and typesetting. Rapid edits keep the latest
+  // input, and removed equations are cleared from MathJax before replacement.
+  function updateMathContent(values, group) {
+    const version = ++renderVersion;
+    mathQueue = mathQueue.then(async () => {
+      const mathJax = await mathReady;
+      if (version !== renderVersion) return;
+
+      const containers = [find(".formula-list"), find(".values")];
+      if (mathJax) mathJax.typesetClear(containers);
+      renderDefinitions(group);
+      if (values) renderResults(values, group);
+      else find(".values").innerHTML =
+        '<tr><td colspan="3">有効な値を入力してください．</td></tr>';
+
+      if (mathJax) await mathJax.typesetPromise(containers);
+      else find(".error").textContent +=
+        " MathJaxを読み込めませんでした．ネット接続とHTMLの読み込み設定を確認してください．";
+    }).catch((error) => {
+      console.error("MathJax typesetting failed:", error);
+      find(".error").textContent = "数式を描画できませんでした．LaTeX記法を確認してください．";
+    });
   }
 
   function drawChart(inputs) {
@@ -127,18 +172,16 @@
   }
 
   function render() {
-    renderDefinitions();
     find(".manual").hidden = find('[name="mode"]').value !== "manual";
     try {
       const inputs = readInputs();
       const { values, warnings } = calculate(inputs);
       find(".error").textContent = warnings.join(" ");
-      renderResults(values);
+      updateMathContent(values, activeGroup);
       drawChart(inputs);
     } catch (error) {
       find(".error").textContent = error.message;
-      find(".values").innerHTML =
-        '<tr><td colspan="3">有効な値を入力してください．</td></tr>';
+      updateMathContent(null, activeGroup);
       find(".chart").textContent = "";
     }
   }
@@ -164,3 +207,4 @@
 
   render();
 })();
+

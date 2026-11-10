@@ -1,188 +1,169 @@
 /*
- * Display labels, units and definition formulas.
+ * 表示する記号・定義式・説明文．数値計算は physics.js．
  *
- * groups: [calculation key, symbol, Japanese label, unit]
- * formulas: [MathML expression, explanation]
+ * 数式はすべてLaTeX記法で記述する．
+ * String.raw`...` を使うと，バックスラッシュを二重にせずに書ける．
+ * tex: 独立した数式（区切りの \[ \] は app.js が付ける）
+ * note: 説明文（文中の数式は \( ... \) で囲む）
  *
- * Edit the entry with the same key in both sections to change a label/formula.
- * Numerical calculations are in physics.js; changing a formula here changes
- * the displayed explanation only.
- *
- * Math helpers:
- *   sub('n', 'e')    -> electron density symbol
- *   frac(a, b)      -> a / b
- *   sqrt(a)         -> square root of a
- *   sup(a, 2)       -> a squared
- *   power32(a)      -> a to the power 3/2
+ * groups: [計算キー, LaTeXの記号, 表示名, 単位]
+ * 表示式を書き換えても数値計算は変わらない．
  */
 (() => {
-"use strict";
+  "use strict";
 
-const groups = {
-  collision: [
-    ['nuEI', 'νₑᵢ', '電子–イオン衝突率', 's⁻¹'],
-    ['nuII', 'νᵢᵢ', 'イオン–イオン衝突率', 's⁻¹'],
-    ['tauE', 'τᴱₑᵢ', '電子温度平衡化時間', 's'],
-    ['lambdaE', 'λₑ', '電子の代表自由行程', 'm'],
-    ['lambdaI', 'λᵢ', 'イオンの代表自由行程', 'm'],
-    ['logEI', 'ln Λₑᵢ', '電子–イオン Coulomb対数', ''],
-    ['logII', 'ln Λᵢᵢ', 'イオン–イオン Coulomb対数', ''],
-  ],
-  scale: [
-    ['fce', 'f꜀ₑ', '電子サイクロトロン周波数', 'Hz'],
-    ['fci', 'f꜀ᵢ', 'イオンサイクロトロン周波数', 'Hz'],
-    ['fpe', 'fₚₑ', '電子プラズマ周波数', 'Hz'],
-    ['rhoe', 'ρₑ', '電子ラーマー半径', 'm'],
-    ['rhoi', 'ρᵢ', 'イオンラーマー半径', 'm'],
-    ['debye', 'λDₑ', '電子Debye長', 'm'],
-    ['vA', 'vA', 'Alfvén速度', 'm s⁻¹'],
-  ],
-  ratio: [
-    ['betaE', 'βₑ', '電子β', ''],
-    ['betaI', 'βᵢ', 'イオンβ', ''],
-    ['magE', 'Ωₑ/νₑᵢ', '電子磁化パラメータ', ''],
-    ['magI', 'Ωᵢ/νᵢᵢ', 'イオン磁化パラメータ', ''],
-    ['KnE', 'λₑ/L', '電子Knudsen数', ''],
-    ['KnI', 'λᵢ/L', 'イオンKnudsen数', ''],
-    ['rhoStar', 'ρᵢ/L', '規格化ラーマー半径', ''],
-  ],
-};
+  const groups = {
+    collision: [
+      ["nuEI", String.raw`\nu_{\mathrm{ei}}`, "電子–イオン衝突率", "s⁻¹"],
+      ["nuII", String.raw`\nu_{\mathrm{ii}}`, "イオン–イオン衝突率", "s⁻¹"],
+      ["tauE", String.raw`\tau^{E}_{\mathrm{ei}}`, "電子温度平衡化時間", "s"],
+      ["lambdaE", String.raw`\lambda_{\mathrm{e}}`, "電子の代表自由行程", "m"],
+      ["lambdaI", String.raw`\lambda_{\mathrm{i}}`, "イオンの代表自由行程", "m"],
+      ["logEI", String.raw`\ln\Lambda_{\mathrm{ei}}`, "電子–イオン Coulomb対数", ""],
+      ["logII", String.raw`\ln\Lambda_{\mathrm{ii}}`, "イオン–イオン Coulomb対数", ""],
+    ],
+    scale: [
+      ["fce", String.raw`f_{\mathrm{ce}}`, "電子サイクロトロン周波数", "Hz"],
+      ["fci", String.raw`f_{\mathrm{ci}}`, "イオンサイクロトロン周波数", "Hz"],
+      ["fpe", String.raw`f_{\mathrm{pe}}`, "電子プラズマ周波数", "Hz"],
+      ["rhoe", String.raw`\rho_{\mathrm{e}}`, "電子ラーマー半径", "m"],
+      ["rhoi", String.raw`\rho_{\mathrm{i}}`, "イオンラーマー半径", "m"],
+      ["debye", String.raw`\lambda_{\mathrm{De}}`, "電子Debye長", "m"],
+      ["vA", String.raw`v_{\mathrm{A}}`, "Alfvén速度", "m s⁻¹"],
+    ],
+    ratio: [
+      ["betaE", String.raw`\beta_{\mathrm{e}}`, "電子β", ""],
+      ["betaI", String.raw`\beta_{\mathrm{i}}`, "イオンβ", ""],
+      ["magE", String.raw`\Omega_{\mathrm{e}}/\nu_{\mathrm{ei}}`, "電子磁化パラメータ", ""],
+      ["magI", String.raw`\Omega_{\mathrm{i}}/\nu_{\mathrm{ii}}`, "イオン磁化パラメータ", ""],
+      ["KnE", String.raw`\lambda_{\mathrm{e}}/L`, "電子Knudsen数", ""],
+      ["KnI", String.raw`\lambda_{\mathrm{i}}/L`, "イオンKnudsen数", ""],
+      ["rhoStar", String.raw`\rho_{\mathrm{i}}/L`, "規格化ラーマー半径", ""],
+    ],
+  };
 
-// MathML is native to the browser; no external script or typesetting service.
-const sub=(s,k)=>`<msub><mi>${s}</mi><mi>${k}</mi></msub>`;
-const sup=(s,k)=>`<msup>${s}<mn>${k}</mn></msup>`;
-const frac=(a,b)=>`<mfrac><mrow>${a}</mrow><mrow>${b}</mrow></mfrac>`;
-const sqrt=a=>`<msqrt>${a}</msqrt>`;
-const mi=s=>`<mi>${s}</mi>`;
-const num=s=>`<mn>${s}</mn>`;
-const op=s=>`<mo>${s}</mo>`;
-const eq=op('=');
-const ns=s=>sub('n',s);
-const ms=s=>sub('m',s);
-const T=s=>sub('T',s);
-const th=s=>sub('θ',s);
-const vt=s=>sub('v', 't'+s);
-const om=s=>sub('Ω',s);
-const nu=s=>sub('ν',s);
-const rho=s=>sub('ρ',s);
-const ln=s=>`<mi mathvariant="normal">ln</mi>${sub('Λ',s)}`;
-const power32=a=>`<msup><mrow>${a}</mrow><mfrac><mn>3</mn><mn>2</mn></mfrac></msup>`;
-const e=mi('e');
-const Z=mi('Z');
-const B=mi('B');
-const K=mi('K');
-const L=mi('L');
-const eps=sub('ε', '0');
-const mu0=sub('μ', '0');
+  const formulas = {
+    // 衝突・緩和
+    nuEI: {
+      tex: String.raw`
+        \nu_{\mathrm{ei}}
+        = \frac{4\sqrt{2\pi}}{3}
+          \frac{n_{\mathrm{i}} Z^2 K^2 \ln\Lambda_{\mathrm{ei}}}
+               {\sqrt{m_{\mathrm{e}}}\,\theta_{\mathrm{e}}^{3/2}}
+      `,
+      note: String.raw`Maxwell電子の運動量緩和率．電子熱速度優勢の極限．\(K = e^2/(4\pi\varepsilon_0)\)，\(\theta_s = eT_s\) [J]．`,
+    },
+    nuII: {
+      tex: String.raw`
+        \nu_{\mathrm{ii}}
+        = \frac{4\sqrt{\pi}}{3}
+          \frac{n_{\mathrm{i}} Z^4 K^2 \ln\Lambda_{\mathrm{ii}}}
+               {\sqrt{m_{\mathrm{i}}}\,\theta_{\mathrm{i}}^{3/2}}
+      `,
+      note: String.raw`同種イオンの衝突率（NRLの定義）．\(K = e^2/(4\pi\varepsilon_0)\)，\(\theta_s = eT_s\) [J]．`,
+    },
+    tauE: {
+      tex: String.raw`
+        \tau^{E}_{\mathrm{ei}}
+        = \frac{3m_{\mathrm{e}}m_{\mathrm{i}}}
+               {8\sqrt{2\pi}\,n_{\mathrm{i}}Z^2K^2\ln\Lambda_{\mathrm{ei}}}
+          \left(
+            \frac{\theta_{\mathrm{e}}}{m_{\mathrm{e}}}
+            + \frac{\theta_{\mathrm{i}}}{m_{\mathrm{i}}}
+          \right)^{3/2}
+      `,
+      note: String.raw`電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t = (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．`,
+    },
+    lambdaE: {
+      tex: String.raw`\lambda_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}}`,
+      note: String.raw`\(v_{\mathrm{th},\mathrm{e}} = \sqrt{2\theta_{\mathrm{e}}/m_{\mathrm{e}}}\)．`,
+    },
+    lambdaI: {
+      tex: String.raw`\lambda_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}}`,
+      note: String.raw`\(v_{\mathrm{th},\mathrm{i}} = \sqrt{2\theta_{\mathrm{i}}/m_{\mathrm{i}}}\)．`,
+    },
+    logEI: {
+      tex: String.raw`
+        \ln\Lambda_{\mathrm{ei}} =
+        \begin{cases}
+          23 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}\,Z}{T_{\mathrm{e}}^{3/2}}\right),
+          & T_{\mathrm{e}} < 10Z^2\,\mathrm{eV}, \\[6pt]
+          24 - \ln\!\left(\dfrac{\sqrt{n_{\mathrm{e,c}}}}{T_{\mathrm{e}}}\right),
+          & T_{\mathrm{e}} \ge 10Z^2\,\mathrm{eV}.
+        \end{cases}
+      `,
+      note: String.raw`自動モードの式．\(n_{\mathrm{e,c}}\) は \(\mathrm{cm}^{-3}\) 単位の電子密度の数値（入力 \(n_{\mathrm{e}}\) の \(10^{-6}\) 倍），\(T_{\mathrm{e}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．`,
+    },
+    logII: {
+      tex: String.raw`
+        \ln\Lambda_{\mathrm{ii}}
+        = 23 - \ln\!\left(
+          \frac{\sqrt{2n_{\mathrm{i,c}}}\,Z^3}{T_{\mathrm{i}}^{3/2}}
+        \right)
+      `,
+      note: String.raw`自動モードの式．\(n_{\mathrm{i,c}}\) は \(\mathrm{cm}^{-3}\) 単位のイオン密度の数値，\(T_{\mathrm{i}}\) はeV単位の数値．手動モードでは入力値をそのまま使用．`,
+    },
 
-const formulas = {
+    // 周波数・長さ
+    fce: {
+      tex: String.raw`f_{\mathrm{ce}} = \frac{\Omega_{\mathrm{e}}}{2\pi} = \frac{eB}{2\pi m_{\mathrm{e}}}`,
+      note: String.raw`\(\Omega_{\mathrm{e}} = eB/m_{\mathrm{e}}\) は角周波数 [\(\mathrm{rad}\,\mathrm{s}^{-1}\)]．`,
+    },
+    fci: {
+      tex: String.raw`f_{\mathrm{ci}} = \frac{\Omega_{\mathrm{i}}}{2\pi} = \frac{ZeB}{2\pi m_{\mathrm{i}}}`,
+      note: String.raw`\(\Omega_{\mathrm{i}} = ZeB/m_{\mathrm{i}}\) は角周波数 [\(\mathrm{rad}\,\mathrm{s}^{-1}\)]．`,
+    },
+    fpe: {
+      tex: String.raw`f_{\mathrm{pe}} = \frac{1}{2\pi}\sqrt{\frac{n_{\mathrm{e}}e^2}{\varepsilon_0 m_{\mathrm{e}}}}`,
+      note: String.raw`\(\omega_{\mathrm{pe}} = \sqrt{n_{\mathrm{e}}e^2/(\varepsilon_0 m_{\mathrm{e}})}\)，\(f_{\mathrm{pe}} = \omega_{\mathrm{pe}}/(2\pi)\)．`,
+    },
+    rhoe: {
+      tex: String.raw`\rho_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\Omega_{\mathrm{e}}} = \frac{\sqrt{2m_{\mathrm{e}}\theta_{\mathrm{e}}}}{eB}`,
+      note: "熱速度の定義に対応する代表ラーマー半径．",
+    },
+    rhoi: {
+      tex: String.raw`\rho_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}} = \frac{\sqrt{2m_{\mathrm{i}}\theta_{\mathrm{i}}}}{ZeB}`,
+      note: "熱速度の定義に対応する代表ラーマー半径．",
+    },
+    debye: {
+      tex: String.raw`\lambda_{\mathrm{De}} = \sqrt{\frac{\varepsilon_0\theta_{\mathrm{e}}}{n_{\mathrm{e}}e^2}}`,
+      note: "電子のみのDebye長．イオンの遮蔽寄与は含めない．",
+    },
+    vA: {
+      tex: String.raw`v_{\mathrm{A}} = \frac{B}{\sqrt{\mu_0 n_{\mathrm{i}} m_{\mathrm{i}}}}`,
+      note: "イオン質量密度に基づくAlfvén速度．電子質量を無視．",
+    },
 
-  // nuEI
-  nuEI: [
-    nu('ei')+eq+frac(num(4)+sqrt(num(2)+mi('π')),num(3))+frac(ns('i')+sup(Z,2)+sup(K,2)+ln('ei'),sqrt(ms('e'))+power32(th('e'))),
-    'Maxwell電子の運動量緩和率．電子熱速度優勢の極限．',
-  ],
-  // nuII
-  nuII: [
-    nu('ii')+eq+frac(num(4)+sqrt(mi('π')),num(3))+frac(ns('i')+sup(Z,4)+sup(K,2)+ln('ii'),sqrt(ms('i'))+power32(th('i'))),
-    '同種イオンの衝突率（NRLの定義）．',
-  ],
-  // tauE
-  tauE: [
-    sup(sub('τ', 'ei'),'E')+eq+frac(num(3)+ms('e')+ms('i'),num(8)+sqrt(num(2)+mi('π'))+ns('i')+sup(Z,2)+sup(K,2)+ln('ei'))+power32(op('(')+frac(th('e'),ms('e'))+op('+')+frac(th('i'),ms('i'))+op(')')),
-    '電子温度の変化率：dTₑ/dt = (Tᵢ − Tₑ)/τᴱₑᵢ．',
-  ],
-  // lambdaE
-  lambdaE: [
-    sub('λ', 'e')+eq+frac(vt('e'),nu('ei')),
-    'vₜₑ = √(2θₑ/mₑ)．',
-  ],
-  // lambdaI
-  lambdaI: [
-    sub('λ', 'i')+eq+frac(vt('i'),nu('ii')),
-    'vₜᵢ = √(2θᵢ/mᵢ)．',
-  ],
-  // logEI
-  logEI: [
-    ln('ei')+eq+`<mrow><mo>{</mo><mtable columnalign="left"><mtr><mtd><mn>23</mn><mo>−</mo><mi mathvariant="normal">ln</mi><mo>(</mo>${frac(sqrt(ns('e,c'))+Z,power32(T('e')))}<mo>)</mo></mtd><mtd>${T('e')}<mo>&lt;</mo><mn>10</mn>${sup(Z,2)}<mtext> eV</mtext></mtd></mtr><mtr><mtd><mn>24</mn><mo>−</mo><mi mathvariant="normal">ln</mi><mo>(</mo>${frac(sqrt(ns('e,c')),T('e'))}<mo>)</mo></mtd><mtd>${T('e')}<mo>≥</mo><mn>10</mn>${sup(Z,2)}<mtext> eV</mtext></mtd></mtr></mtable></mrow>`,
-    '自動モードの式．nₑ,cはcm⁻³単位の電子密度の数値（入力nₑの10⁻⁶倍），TₑはeV単位の数値．手動モードでは入力値をそのまま使用．',
-  ],
-  // logII
-  logII: [
-    ln('ii')+eq+num(23)+op('−')+'<mi mathvariant="normal">ln</mi>'+op('(')+frac(sqrt(num(2)+ns('i,c'))+sup(Z,3),power32(T('i')))+op(')'),
-    '自動モードの式．nᵢ,cはcm⁻³単位のイオン密度の数値，TᵢはeV単位の数値．手動モードでは入力値をそのまま使用．',
-  ],
-  // fce
-  fce: [
-    sub('f', 'ce')+eq+frac(om('e'),num(2)+mi('π'))+eq+frac(e+B,num(2)+mi('π')+ms('e')),
-    'Ωₑ = eB/mₑ は角周波数 [rad s⁻¹]．',
-  ],
-  // fci
-  fci: [
-    sub('f', 'ci')+eq+frac(om('i'),num(2)+mi('π'))+eq+frac(Z+e+B,num(2)+mi('π')+ms('i')),
-    'Ωᵢ = ZeB/mᵢ は角周波数 [rad s⁻¹]．',
-  ],
-  // fpe
-  fpe: [
-    sub('f', 'pe')+eq+frac(num(1),num(2)+mi('π'))+sqrt(frac(ns('e')+sup(e,2),eps+ms('e'))),
-    'ωₚₑ = √(nₑe²/ε₀mₑ)，fₚₑ = ωₚₑ/(2π)．',
-  ],
-  // rhoe
-  rhoe: [
-    rho('e')+eq+frac(vt('e'),om('e'))+eq+frac(sqrt(num(2)+ms('e')+th('e')),e+B),
-    '熱速度の定義に対応する代表ラーマー半径．',
-  ],
-  // rhoi
-  rhoi: [
-    rho('i')+eq+frac(vt('i'),om('i'))+eq+frac(sqrt(num(2)+ms('i')+th('i')),Z+e+B),
-    '熱速度の定義に対応する代表ラーマー半径．',
-  ],
-  // debye
-  debye: [
-    sub('λ', 'De')+eq+sqrt(frac(eps+th('e'),ns('e')+sup(e,2))),
-    '電子のみのDebye長．イオンの遮蔽寄与は含めない．',
-  ],
-  // vA
-  vA: [
-    sub('v', 'A')+eq+frac(B,sqrt(mu0+ns('i')+ms('i'))),
-    'イオン質量密度に基づくAlfvén速度．電子質量を無視．',
-  ],
-  // betaE
-  betaE: [
-    sub('β', 'e')+eq+frac(num(2)+mu0+ns('e')+th('e'),sup(B,2)),
-    '等方電子圧力 pₑ = nₑθₑ と磁気圧の比．',
-  ],
-  // betaI
-  betaI: [
-    sub('β', 'i')+eq+frac(num(2)+mu0+ns('i')+th('i'),sup(B,2)),
-    '等方イオン圧力 pᵢ = nᵢθᵢ と磁気圧の比．',
-  ],
-  // magE
-  magE: [
-    frac(om('e'),nu('ei'))+eq+frac(e+B,ms('e')+nu('ei')),
-    '角周波数と衝突率の比（f꜀ₑ/νₑᵢではない）．',
-  ],
-  // magI
-  magI: [
-    frac(om('i'),nu('ii'))+eq+frac(Z+e+B,ms('i')+nu('ii')),
-    '角周波数と同種イオン衝突率の比．',
-  ],
-  // KnE
-  KnE: [
-    sub('Kn', 'e')+eq+frac(sub('λ', 'e'),L)+eq+frac(vt('e'),nu('ei')+L),
-    '指定した代表長さLに対するKnudsen数．',
-  ],
-  // KnI
-  KnI: [
-    sub('Kn', 'i')+eq+frac(sub('λ', 'i'),L)+eq+frac(vt('i'),nu('ii')+L),
-    '指定した代表長さLに対するKnudsen数．',
-  ],
-  // rhoStar
-  rhoStar: [
-    sub('ρ', '*')+eq+frac(rho('i'),L)+eq+frac(vt('i'),om('i')+L),
-    'このページではρ* = ρᵢ/Lと定義．',
-  ],
-};
+    // 無次元量
+    betaE: {
+      tex: String.raw`\beta_{\mathrm{e}} = \frac{2\mu_0 n_{\mathrm{e}}\theta_{\mathrm{e}}}{B^2}`,
+      note: String.raw`等方電子圧力 \(p_{\mathrm{e}} = n_{\mathrm{e}}\theta_{\mathrm{e}}\) と磁気圧の比．`,
+    },
+    betaI: {
+      tex: String.raw`\beta_{\mathrm{i}} = \frac{2\mu_0 n_{\mathrm{i}}\theta_{\mathrm{i}}}{B^2}`,
+      note: String.raw`等方イオン圧力 \(p_{\mathrm{i}} = n_{\mathrm{i}}\theta_{\mathrm{i}}\) と磁気圧の比．`,
+    },
+    magE: {
+      tex: String.raw`\frac{\Omega_{\mathrm{e}}}{\nu_{\mathrm{ei}}} = \frac{eB}{m_{\mathrm{e}}\nu_{\mathrm{ei}}}`,
+      note: String.raw`角周波数と衝突率の比．\(f_{\mathrm{ce}}/\nu_{\mathrm{ei}}\) とは \(2\pi\) の係数が異なる．`,
+    },
+    magI: {
+      tex: String.raw`\frac{\Omega_{\mathrm{i}}}{\nu_{\mathrm{ii}}} = \frac{ZeB}{m_{\mathrm{i}}\nu_{\mathrm{ii}}}`,
+      note: "角周波数と同種イオン衝突率の比．",
+    },
+    KnE: {
+      tex: String.raw`\mathrm{Kn}_{\mathrm{e}} = \frac{\lambda_{\mathrm{e}}}{L} = \frac{v_{\mathrm{th},\mathrm{e}}}{\nu_{\mathrm{ei}}L}`,
+      note: String.raw`指定した代表長さ \(L\) に対するKnudsen数．`,
+    },
+    KnI: {
+      tex: String.raw`\mathrm{Kn}_{\mathrm{i}} = \frac{\lambda_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\nu_{\mathrm{ii}}L}`,
+      note: String.raw`指定した代表長さ \(L\) に対するKnudsen数．`,
+    },
+    rhoStar: {
+      tex: String.raw`\rho_* = \frac{\rho_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}L}`,
+      note: String.raw`このページでは \(\rho_* = \rho_{\mathrm{i}}/L\) と定義．`,
+    },
+  };
 
-window.RT1Definitions = Object.freeze({ groups, formulas });
+  window.RT1Definitions = Object.freeze({ groups, formulas });
 })();
