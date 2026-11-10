@@ -325,3 +325,12 @@ summary {
 #rt1-prototype .formula-label {
     font-weight: 400;
 }
+
+#rt1-prototype h3 {
+    font-size: var(--text-size);
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--edge);
+}
