@@ -64,7 +64,7 @@ summary {
 
 #rt1-prototype .layout {
     display: grid;
-    grid-template-columns: 270px minmax(0, 1fr)
+    grid-template-columns: 330px minmax(0, 1fr)
 }
 
 #rt1-prototype aside {
@@ -321,6 +321,7 @@ summary {
     font-family: system-ui, sans-serif;
     font-size: var(--text-size);
 }
+
 #rt1-prototype .formula-label {
     font-weight: 400;
 }
