@@ -277,9 +277,55 @@
             </section>
         </div>
         <details open class="parameter-definitions">
-            <summary>
-                表示中のパラメータの定義式
-            </summary>
+            <summary>定義式・計算モデル</summary>
+
+            <!-- 共通事項はここにまとめ，各式には固有の説明だけを置く． -->
+            <div class="notation below">
+                <h3>共通の記号・単位・仮定</h3>
+                <p>
+                    <strong>入力値：</strong>
+                    \(n_{\mathrm{e}}\) は局所電子密度 [\(\mathrm{m}^{-3}\)]，
+                    \(T_{\mathrm{e}}\)・\(T_{\mathrm{i}}\) は電子・イオン温度 [eV]，
+                    \(B\) は局所磁場の強さ [T]，\(L\) は代表長さ [m]．
+                    \(L\) はユーザーが指定する比較用の長さで，磁力線長や勾配長とは自動では対応しない．
+                </p>
+                <p>
+                    <strong>粒子種と準中性条件：</strong>
+                    単一温度・等方Maxwell電子と単一イオン種を仮定する．
+                    イオン電荷は \(Ze\)，イオン密度は \(n_{\mathrm{i}}=n_{\mathrm{e}}/Z\)．
+                    選択できるH⁺，D⁺，He⁺はすべて \(Z=1\)．
+                    イオン質量は \(m_{\mathrm{i}}=\mu m_{\mathrm{p}}\) とし，
+                    質量比 \(\mu\) はH⁺：1，D⁺：2，He⁺：4の近似値を用いる．
+                </p>
+                <p>
+                    <strong>物理定数：</strong>
+                    \(e\) は正の素電荷，\(m_{\mathrm{e}}\)・\(m_{\mathrm{p}}\) は電子・陽子質量，
+                    \(\varepsilon_0\)・\(\mu_0\) は真空の誘電率・透磁率．
+                    衝突の式では \(K\equiv e^2/(4\pi\varepsilon_0)\) と略記する．
+                </p>
+                <p>
+                    <strong>温度の換算：</strong>
+                    \(T_s\) をeV単位の数値で与え，\(\theta_s\equiv eT_s\) を熱エネルギー [J] とする．
+                    \(\theta_s\) は通常の \(k_{\mathrm{B}}T_s\) に対応し，
+                    eVから換算した値に \(k_{\mathrm{B}}\) をさらに掛けない．
+                </p>
+                <p>
+                    <strong>熱速度と周波数：</strong>
+                    \(v_{\mathrm{th},s}=\sqrt{2\theta_s/m_s}\)，
+                    \(\Omega_s=|q_s|B/m_s\)，\(q_{\mathrm{e}}=-e\)，\(q_{\mathrm{i}}=Ze\) と定義する．
+                    衝突率 \(\nu\) の単位は \(\mathrm{s}^{-1}\)，
+                    角周波数 \(\Omega\) は \(\mathrm{rad}\,\mathrm{s}^{-1}\)，
+                    周波数 \(f=\Omega/(2\pi)\) はHz．衝突率を \(2\pi\) で割る換算は行わない．
+                </p>
+                <p>
+                    <strong>適用範囲：</strong>
+                    非相対論・弱結合を仮定する．電子–イオン衝突率と自動Coulomb対数は
+                    電子熱速度優勢の近似 \(T_{\mathrm{e}}\gg T_{\mathrm{i}}m_{\mathrm{e}}/m_{\mathrm{i}}\) を用いる．
+                    高温・低温電子の共存，温度異方性，中性粒子衝突，電荷交換，磁場形状とバウンス平均は含めない．
+                </p>
+            </div>
+
+            <h3>各パラメータの定義式</h3>
             <!-- collision: 定義式と説明文はここで編集する． -->
             <div class="formula-list" data-group="collision">
                 <!-- nuEI -->
@@ -294,7 +340,7 @@
                         \]
                     </div>
                     <p class="formula-note">
-                        Maxwell電子の運動量緩和率．電子熱速度優勢の極限．\(K = e^2/(4\pi\varepsilon_0)\)，\(\theta_s = eT_s\) [J]．
+                        Maxwell電子のイオンに対する運動量緩和率．電子熱速度優勢の極限．
                     </p>
                 </section>
                 <!-- nuII -->
@@ -309,7 +355,7 @@
                         \]
                     </div>
                     <p class="formula-note">
-                        同種イオンの衝突率（NRLの定義）．\(K = e^2/(4\pi\varepsilon_0)\)，\(\theta_s = eT_s\) [J]．
+                        同種イオンの衝突率（NRLの定義）．
                     </p>
                 </section>
                 <!-- tauE -->
@@ -327,7 +373,7 @@
                         \]
                     </div>
                     <p class="formula-note">
-                        電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t = (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．
+                        電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t = (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手の温度を固定したときの電子温度の平衡化時間を表す．両種が変化するとき，温度差の瞬時緩和時間は \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
                     </p>
                 </section>
                 <!-- lambdaE -->
@@ -339,7 +385,7 @@
                         \]
                     </div>
                     <p class="formula-note">
-                        \(v_{\mathrm{th},\mathrm{e}} = \sqrt{2\theta_{\mathrm{e}}/m_{\mathrm{e}}}\)．
+                        電子–イオン衝突率に基づく代表自由行程．全衝突過程を合計した輸送平均自由行程ではない．
                     </p>
                 </section>
                 <!-- lambdaI -->
@@ -351,7 +397,7 @@
                         \]
                     </div>
                     <p class="formula-note">
-                        \(v_{\mathrm{th},\mathrm{i}} = \sqrt{2\theta_{\mathrm{i}}/m_{\mathrm{i}}}\)．
+                        同種イオン衝突率に基づく代表自由行程．
                     </p>
                 </section>
                 <!-- logEI -->
@@ -562,68 +608,15 @@
                     </p>
                 </section>
             </div>
-        </details>
-        <details>
-            <summary>
-                入力・記号・モデルの定義
-            </summary>
-            <div class="notation">
+
+            <div class="notation below">
+                <h3>参考文献</h3>
                 <p>
-                    <strong>
-                        入力値：
-                    </strong>
-                    \(n_{\mathrm{e}}\) は局所電子密度 [\(\mathrm{m}^{-3}\)]，\(T_{\mathrm{e}}\)・\(T_{\mathrm{i}}\) は電子・イオン温度
-                    [eV]，\(B\) は局所磁場の強さ
-                    [T]，\(L\) はユーザーが指定する代表長さ [m]．\(L\) は磁力線長や勾配長とは自動では対応しません．
-                </p>
-                <p>
-                    <strong>
-                        記号：
-                    </strong>
-                    \(e\) は正の素電荷，\(m_{\mathrm{e}}\)・\(m_{\mathrm{p}}\) は電子・陽子質量，\(\varepsilon_0\)・\(\mu_0\)
-                    は真空の誘電率・透磁率，\(Z\) はイオン電荷数．\(m_{\mathrm{i}} = \mu m_{\mathrm{p}}\)（H⁺：\(\mu =
-                    1\)，D⁺：2，He⁺：4；質量比は近似値），\(n_{\mathrm{i}} =
-                    n_{\mathrm{e}}/Z\)．
-                </p>
-                <p>
-                    <strong>
-                        温度の換算：
-                    </strong>
-                    式中の \(\theta_s \equiv eT_s\) は熱エネルギー [J]（通常の \(k_{\mathrm{B}} T_s\) に対応）．したがって \(T\)
-                    をeVの数値で入力するとき，\(k_{\mathrm{B}}\)をさらに掛けません．
-                </p>
-                <p>
-                    <strong>
-                        熱速度：
-                    </strong>
-                    \(v_{\mathrm{th},s} = \sqrt{2\theta_s/m_s}\) に統一．\(\Omega_s = |q_s|B/m_s\)，\(q_e = -e\)，\(q_i =
-                    Ze\)．
+                    A. Beresnyak,
+                    <a href="https://homepage.physics.uiowa.edu/~ghowes/teach/phys4731/resources/NRL_Plasma_Formulary_2023.pdf">2023 NRL Plasma Formulary</a>,
+                    pp. 28–34．
                 </p>
             </div>
-            <p>
-                単一温度・等方Maxwell電子と単一イオン種，準中性 \(n_{\mathrm{i}} = n_{\mathrm{e}}/Z\) を仮定．ここでは \(Z =
-                1\)．高温・低温電子の共存，中性粒子衝突，磁場形状とバウンス平均は未実装．
-            </p>
-            <p>
-                \(\nu_{\mathrm{ei}}\)：電子–イオンの運動量緩和率．\(\tau^{E}_{\mathrm{ei}}\)：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
-                (T_{\mathrm{i}}−T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\) における電子温度平衡化時間．\(v_{\mathrm{th}} =
-                \sqrt{2eT/m}\)，\(\lambda_{\mathrm{e}} =
-                v_{\mathrm{th},\mathrm{e}}/\nu_{\mathrm{ei}}\)，\(\lambda_{\mathrm{i}} =
-                v_{\mathrm{th},\mathrm{i}}/\nu_{\mathrm{ii}}\)．\(\nu\) は
-                \(\mathrm{s}^{-1}\)，\(f = \Omega/(2\pi)\) は Hz．
-            </p>
-            <p>
-                \(\nu_{\mathrm{ei}}\)は電子のイオンに対する運動量緩和率，\(\nu_{\mathrm{ii}}\)はNRLの同種イオン衝突率です．平均自由行程はこれらの率と上記の熱速度から定義し，全衝突過程を合計した輸送平均自由行程ではありません．\(\tau^{E}_{\mathrm{ei}}\)は相手の温度を固定した電子の温度平衡化時間で，両種が変化する温度差の瞬時緩和時間は
-                \(\tau^{E}_{\mathrm{ei}}/(1 + Z)\) です．
-            </p>
-            <p>
-                参考：A. Beresnyak,
-                <a
-                    href="https://homepage.physics.uiowa.edu/~ghowes/teach/phys4731/resources/NRL_Plasma_Formulary_2023.pdf">
-                    2023 NRL Plasma Formulary
-                </a>
-                , pp. 28–34．非相対論・弱結合・等方分布を仮定します．
-            </p>
         </details>
     </div>
 </body>
