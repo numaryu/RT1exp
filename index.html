@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="ja">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <title>
-      RT-1 Plasma Calculator
+        RT-1 Plasma Calculator
     </title>
     <link rel="stylesheet" href="style.css">
     <script defer src="physics.js">
@@ -14,197 +15,213 @@
     </script>
     <script defer src="app.js">
     </script>
-  </head>
-  <body>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+
+<body>
     <div id="rt1-prototype">
-      <header>
-        <h2>
-          RT-1 Plasma Calculator
-        </h2>
-        <span class="tag">
-          プロトタイプ · 局所パラメータ評価
-        </span>
-      </header>
-      <div class="layout">
-        <aside>
-          <h3>
-            入力
-          </h3>
-          <div class="fields">
-            <label>
-              電子密度 nₑ [m⁻³]
-              <input name="ne" type="number" step="any" value="1e17">
-            </label>
-            <div class="pair">
-              <label>
-                電子温度 Tₑ [eV]
-                <input name="Te" type="number" step="any" value="10">
-              </label>
-              <label>
-                イオン温度 Tᵢ [eV]
-                <input name="Ti" type="number" step="any" value="1">
-              </label>
-            </div>
-            <div class="pair">
-              <label>
-                局所磁場 B [T]
-                <input name="B" type="number" step="any" value="0.01">
-              </label>
-              <label>
-                代表長さ L [m]
-                <input name="L" type="number" step="any" value="1">
-              </label>
-            </div>
-            <label>
-              イオン種
-              <select name="ion">
-                <option value="4">
-                  He⁺
-                </option>
-                <option value="1">
-                  H⁺
-                </option>
-                <option value="2">
-                  D⁺
-                </option>
-              </select>
-            </label>
-            <label>
-              Coulomb対数
-              <select name="mode">
-                <option value="auto">
-                  自動計算（NRL近似）
-                </option>
-                <option value="manual">
-                  手動指定
-                </option>
-              </select>
-            </label>
-            <div class="pair manual" hidden>
-              <label>
-                ln Λₑᵢ
-                <input name="logEI" type="number" step="any" value="15">
-              </label>
-              <label>
-                ln Λᵢᵢ
-                <input name="logII" type="number" step="any" value="12">
-              </label>
-            </div>
-          </div>
-          <p class="note">
-            初期値は例示値です．特定の放電の実測値ではありません．
-          </p>
-          <div class="error" role="alert">
-          </div>
-        </aside>
-        <section class="result">
-          <div class="tabs">
-            <button class="cursor-interaction" type="button" data-tab="collision" aria-pressed="true">
-              衝突・緩和
-            </button>
-            <button class="cursor-interaction" type="button" data-tab="scale" aria-pressed="false">
-              周波数・長さ
-            </button>
-            <button class="cursor-interaction" type="button" data-tab="ratio" aria-pressed="false">
-              無次元量
-            </button>
-          </div>
-          <table aria-label="計算結果">
-            <thead>
-              <tr>
-                <th>
-                  量
-                </th>
-                <th style="text-align:right">
-                  計算値
-                </th>
-                <th>
-                  単位
-                </th>
-              </tr>
-            </thead>
-            <tbody class="values" aria-live="polite">
-            </tbody>
-          </table>
-          <div class="below">
-            <div class="strip">
-              <h3>
-                パラメータ依存性
-              </h3>
-              <label>
-                走査する量
-                <select class="scan">
-                  <option value="Te">
-                    電子温度 Tₑ
-                  </option>
-                  <option value="ne">
-                    電子密度 nₑ
-                  </option>
-                </select>
-              </label>
-            </div>
-            <div class="chart">
-            </div>
-          </div>
-        </section>
-      </div>
-      <details open class="parameter-definitions">
-        <summary>
-          表示中のパラメータの定義式
-        </summary>
-        <div class="formula-list">
+        <header>
+            <h2>
+                RT-1 Plasma Calculator
+            </h2>
+            <span class="tag">
+                プロトタイプ · 局所パラメータ評価
+            </span>
+        </header>
+        <div class="layout">
+            <aside>
+                <h3>
+                    入力
+                </h3>
+                <div class="fields">
+                    <label>
+                        電子密度 \(n_{\mathrm{e}}\) [\(\mathrm{m}^{-3}\)]
+                        <input name="ne" type="number" step="any" value="1e17">
+                    </label>
+                    <div class="pair">
+                        <label>
+                            電子温度 \(T_{\mathrm{e}}\) [eV]
+                            <input name="Te" type="number" step="any" value="10">
+                        </label>
+                        <label>
+                            イオン温度 \(T_{\mathrm{i}}\) [eV]
+                            <input name="Ti" type="number" step="any" value="1">
+                        </label>
+                    </div>
+                    <div class="pair">
+                        <label>
+                            局所磁場 \(B\) [T]
+                            <input name="B" type="number" step="any" value="0.01">
+                        </label>
+                        <label>
+                            代表長さ \(L\) [m]
+                            <input name="L" type="number" step="any" value="1">
+                        </label>
+                    </div>
+                    <label>
+                        イオン種
+                        <select name="ion">
+                            <option value="4">
+                                He⁺
+                            </option>
+                            <option value="1">
+                                H⁺
+                            </option>
+                            <option value="2">
+                                D⁺
+                            </option>
+                        </select>
+                    </label>
+                    <label>
+                        Coulomb対数
+                        <select name="mode">
+                            <option value="auto">
+                                自動計算（NRL近似）
+                            </option>
+                            <option value="manual">
+                                手動指定
+                            </option>
+                        </select>
+                    </label>
+                    <div class="pair manual" hidden>
+                        <label>
+                            \( \ln \Lambda_{\mathrm{ei}} \)
+                            <input name="logEI" type="number" step="any" value="15">
+                        </label>
+                        <label>
+                            \( \ln \Lambda_{\mathrm{ii}} \)
+                            <input name="logII" type="number" step="any" value="12">
+                        </label>
+                    </div>
+                </div>
+                <p class="note">
+                    初期値は例示値です．特定の放電の実測値ではありません．
+                </p>
+                <div class="error" role="alert">
+                </div>
+            </aside>
+            <section class="result">
+                <div class="tabs">
+                    <button class="cursor-interaction" type="button" data-tab="collision" aria-pressed="true">
+                        衝突・緩和
+                    </button>
+                    <button class="cursor-interaction" type="button" data-tab="scale" aria-pressed="false">
+                        周波数・長さ
+                    </button>
+                    <button class="cursor-interaction" type="button" data-tab="ratio" aria-pressed="false">
+                        無次元量
+                    </button>
+                </div>
+                <table aria-label="計算結果">
+                    <thead>
+                        <tr>
+                            <th>
+                                量
+                            </th>
+                            <th style="text-align:right">
+                                計算値
+                            </th>
+                            <th>
+                                単位
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="values" aria-live="polite">
+                    </tbody>
+                </table>
+                <div class="below">
+                    <div class="strip">
+                        <h3>
+                            パラメータ依存性
+                        </h3>
+                        <label>
+                            走査する量
+                            <select class="scan">
+                                <option value="Te">
+                                    電子温度 Te
+                                </option>
+                                <option value="ne">
+                                    電子密度 ne
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="chart">
+                    </div>
+                </div>
+            </section>
         </div>
-      </details>
-      <details>
-        <summary>
-          入力・記号・モデルの定義
-        </summary>
-        <div class="notation">
-          <p>
-            <strong>
-              入力値：
-            </strong>
-            nₑ は局所電子密度 [m⁻³]，Tₑ・Tᵢ は電子・イオン温度 [eV]，B は局所磁場の強さ [T]，L はユーザーが指定する代表長さ [m]．L は磁力線長や勾配長とは自動では対応しません．
-          </p>
-          <p>
-            <strong>
-              記号：
-            </strong>
-            e は正の素電荷，mₑ・mₚ は電子・陽子質量，ε₀・μ₀ は真空の誘電率・透磁率，Z はイオン電荷数．mᵢ = μmₚ（H⁺：μ = 1，D⁺：2，He⁺：4；質量比は近似値），nᵢ = nₑ/Z．
-          </p>
-          <p>
-            <strong>
-              温度の換算：
-            </strong>
-            式中の θₛ ≡ eTₛ は熱エネルギー [J]（通常の kB Tₛ に対応）．したがって T をeVの数値で入力するとき，kBをさらに掛けません．K ≡ e²/(4πε₀) と定義します．
-          </p>
-          <p>
-            <strong>
-              熱速度：
-            </strong>
-            vₜₛ = √(2θₛ/mₛ) に統一．Ωₛ = |qₛ|B/mₛ，qₑ = −e，qᵢ = Ze．
-          </p>
-        </div>
-        <p>
-          単一温度・等方Maxwell電子と単一イオン種，準中性 nᵢ = nₑ/Z を仮定．ここでは Z = 1．高温・低温電子の共存，中性粒子衝突，磁場形状とバウンス平均は未実装．
-        </p>
-        <p>
-          νₑᵢ：電子–イオンの運動量緩和率．τᴱₑᵢ：dTₑ/dt = (Tᵢ−Tₑ)/τᴱₑᵢ における電子温度平衡化時間．vₜ = √(2eT/m)，λₑ = vₜₑ/νₑᵢ，λᵢ = vₜᵢ/νᵢᵢ．ν は s⁻¹，f = Ω/(2π) は Hz．
-        </p>
-        <p>
-          νₑᵢは電子のイオンに対する運動量緩和率，νᵢᵢはNRLの同種イオン衝突率です．平均自由行程はこれらの率と上記の熱速度から定義し，全衝突過程を合計した輸送平均自由行程ではありません．τᴱₑᵢは相手の温度を固定した電子の温度平衡化時間で，両種が変化する温度差の瞬時緩和時間は τᴱₑᵢ/(1 + Z) です．
-        </p>
-        <p>
-          衝突率と自動Coulomb対数は Tₑ ≫ Tᵢmₑ/mᵢ の近似を使用．自動計算の分岐 Tₑ = 10Z² eV では高温側の式を使い，近似式の接続には小さな不連続があります．ln は自然対数です．
-        </p>
-        <p>
-          参考：A. Beresnyak,
-          <a href="https://homepage.physics.uiowa.edu/~ghowes/teach/phys4731/resources/NRL_Plasma_Formulary_2023.pdf">
-            2023 NRL Plasma Formulary
-          </a>
-          , pp. 28–34．非相対論・弱結合・等方分布を仮定します．
-        </p>
-      </details>
+        <details open class="parameter-definitions">
+            <summary>
+                表示中のパラメータの定義式
+            </summary>
+            <div class="formula-list">
+            </div>
+        </details>
+        <details>
+            <summary>
+                入力・記号・モデルの定義
+            </summary>
+            <div class="notation">
+                <p>
+                    <strong>
+                        入力値：
+                    </strong>
+                    \(n_{\mathrm{e}}\) は局所電子密度 [\(\mathrm{m}^{-3}\)]，\(T_{\mathrm{e}}\)・\(T_{\mathrm{i}}\) は電子・イオン温度
+                    [eV]，\(B\) は局所磁場の強さ
+                    [T]，\(L\) はユーザーが指定する代表長さ [m]．\(L\) は磁力線長や勾配長とは自動では対応しません．
+                </p>
+                <p>
+                    <strong>
+                        記号：
+                    </strong>
+                    \(e\) は正の素電荷，\(m_{\mathrm{e}}\)・\(m_{\mathrm{p}}\) は電子・陽子質量，\(\varepsilon_0\)・\(\mu_0\)
+                    は真空の誘電率・透磁率，\(Z\) はイオン電荷数．\(m_{\mathrm{i}} = \mu m_{\mathrm{p}}\)（H⁺：\(\mu =
+                    1\)，D⁺：2，He⁺：4；質量比は近似値），\(n_{\mathrm{i}} =
+                    n_{\mathrm{e}}/Z．\)
+                </p>
+                <p>
+                    <strong>
+                        温度の換算：
+                    </strong>
+                    式中の \(\theta_s \equiv eT_s\) は熱エネルギー [J]（通常の \(k_{\mathrm{B}} T_s\) に対応）．したがって \(T\)
+                    をeVの数値で入力するとき，\(k_{\mathrm{B}}\)をさらに掛けません．\(K \equiv e^{2}/(4\pi \varepsilon_0)\) と定義します．
+                </p>
+                <p>
+                    <strong>
+                        熱速度：
+                    </strong>
+                    \(v_{\mathrm{th},s} = \sqrt{2\theta_s/m_s}\) に統一．\(\Omega_s = |q_s|B/m_s\)，\(q_e = -e\)，\(q_i =
+                    Ze\)．
+                </p>
+            </div>
+            <p>
+                単一温度・等方Maxwell電子と単一イオン種，準中性 \(n_{\mathrm{i}} = n_{\mathrm{e}}/Z\) を仮定．ここでは \(Z =
+                1\)．高温・低温電子の共存，中性粒子衝突，磁場形状とバウンス平均は未実装．
+            </p>
+            <p>
+                \(\nu_{\mathrm{ei}}\)：電子–イオンの運動量緩和率．\(\tau_{\mathrm{ee}}\)：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
+                (T_{\mathrm{i}}−T_{\mathrm{e}})/\tau_{\mathrm{ee}}\) における電子温度平衡化時間．\(v_{\mathrm{th}} =
+                \sqrt{2eT/m}\)，\(\lambda_{\mathrm{e}} =
+                v_{\mathrm{th},\mathrm{e}}/\nu_{\mathrm{ei}}\)，\(\lambda_{\mathrm{i}} =
+                v_{\mathrm{th},\mathrm{i}}/\nu_{\mathrm{ii}}\)．\(\nu\) は
+                \(\mathrm{s}^{-1}\)，\(f = \Omega/(2\pi)\) は Hz．
+            </p>
+            <p>
+                \(\nu_{\mathrm{ei}}\)は電子のイオンに対する運動量緩和率，\(\nu_{\mathrm{ii}}\)はNRLの同種イオン衝突率です．平均自由行程はこれらの率と上記の熱速度から定義し，全衝突過程を合計した輸送平均自由行程ではありません．\(\tau_{\mathrm{ee}}\)は相手の温度を固定した電子の温度平衡化時間で，両種が変化する温度差の瞬時緩和時間は
+                \(\tau_{\mathrm{ee}}/(1 + Z)\) です．
+            </p>
+            <p>
+                参考：A. Beresnyak,
+                <a
+                    href="https://homepage.physics.uiowa.edu/~ghowes/teach/phys4731/resources/NRL_Plasma_Formulary_2023.pdf">
+                    2023 NRL Plasma Formulary
+                </a>
+                , pp. 28–34．非相対論・弱結合・等方分布を仮定します．
+            </p>
+        </details>
     </div>
-  </body>
+</body>
+
 </html>
