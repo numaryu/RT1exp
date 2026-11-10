@@ -452,75 +452,35 @@
                         \]
                     </div>
                 </section>
+                <!-- fce -->
+                <!-- fci -->
                 <section class="formula-item">
-                    <div class="formula-label">サイクロトロン角周波数: \(\Omega_{s}\) [\(\mathrm{s}^{-1}\)]　</div>
+                    <div class="formula-label">サイクロトロン角周波数: \(\omega_{\mathrm{c}s}\) [\(\mathrm{s}^{-1}\)]　</div>
                     <div class="formula-expression" aria-label="サイクロトロン角周波数の定義式">
                         \[
-                        \Omega_{s}
+                        \omega_{\mathrm{c}s}
                         = \frac{|q_s|B}{m_s}
                         \]
                     </div>
-                    <p class="formula-note">
-                        また，サイクロトロン周波数 \(f_s = \Omega_{s}/(2\pi)\) [\(\mathrm{Hz}\)]．
-                    </p>
-                </section>
-                <!-- fce -->
-                <section class="formula-item">
-                    <div class="formula-label">電子サイクロトロン周波数: \(f_{\mathrm{ce}}\) [\(\mathrm{s}^{-1}\)]</div>
-                    <div class="formula-expression" aria-label="電子サイクロトロン周波数の定義式">
-                        \[
-                        f_{\mathrm{ce}} = \frac{\Omega_{\mathrm{e}}}{2\pi} = \frac{eB}{2\pi m_{\mathrm{e}}}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        \(\Omega_{\mathrm{e}} = eB/m_{\mathrm{e}}\) は角周波数 [\(\mathrm{rad}\,\mathrm{s}^{-1}\)]．
-                    </p>
-                </section>
-                <!-- fci -->
-                <section class="formula-item">
-                    <div class="formula-label">イオンサイクロトロン周波数: \(f_{\mathrm{ci}}\) [\(\mathrm{s}^{-1}\)]</div>
-                    <div class="formula-expression" aria-label="イオンサイクロトロン周波数の定義式">
-                        \[
-                        f_{\mathrm{ci}} = \frac{\Omega_{\mathrm{i}}}{2\pi} = \frac{ZeB}{2\pi m_{\mathrm{i}}}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        \(\Omega_{\mathrm{i}} = ZeB/m_{\mathrm{i}}\) は角周波数 [\(\mathrm{rad}\,\mathrm{s}^{-1}\)]．
-                    </p>
                 </section>
                 <!-- fpe -->
                 <section class="formula-item">
-                    <div class="formula-label">電子プラズマ周波数: \(f_{\mathrm{pe}}\) [\(\mathrm{s}^{-1}\)]</div>
-                    <div class="formula-expression" aria-label="電子プラズマ周波数の定義式">
+                    <div class="formula-label">プラズマ周波数: \(\omega_{\mathrm{p}s}\) [\(\mathrm{s}^{-1}\)]</div>
+                    <div class="formula-expression" aria-label="プラズマ周波数の定義式">
                         \[
-                        f_{\mathrm{pe}} = \frac{1}{2\pi}\sqrt{\frac{n_{\mathrm{e}}e^2}{\varepsilon_0 m_{\mathrm{e}}}}
+                        \omega_{\mathrm{ps}} = \sqrt{\frac{n_{s}q_{s}^2}{\varepsilon_0
+                        m_{s}}}
                         \]
                     </div>
-                    <p class="formula-note">
-                        \(\omega_{\mathrm{pe}} = \sqrt{n_{\mathrm{e}}e^2/(\varepsilon_0
-                        m_{\mathrm{e}})}\)，\(f_{\mathrm{pe}} = \omega_{\mathrm{pe}}/(2\pi)\)．
-                    </p>
                 </section>
                 <!-- rhoe -->
-                <section class="formula-item">
-                    <div class="formula-label">電子ラーマ半径: \(\rho_{\mathrm{e}}\) [\(\mathrm{m}\)]</div>
-                    <div class="formula-expression" aria-label="電子ラーマ半径の定義式">
-                        \[
-                        \rho_{\mathrm{e}} = \frac{v_{\mathrm{th},\mathrm{e}}}{\Omega_{\mathrm{e}}} =
-                        \frac{\sqrt{2m_{\mathrm{e}}\theta_{\mathrm{e}}}}{eB}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        熱速度の定義に対応する代表ラーマ半径．
-                    </p>
-                </section>
                 <!-- rhoi -->
                 <section class="formula-item">
-                    <div class="formula-label">イオンラーマ半径: \(\rho_{\mathrm{i}}\) [\(\mathrm{m}\)]</div>
-                    <div class="formula-expression" aria-label="イオンラーマ半径の定義式">
+                    <div class="formula-label">ラーマ半径: \(\rho_{s}\) [\(\mathrm{m}\)]</div>
+                    <div class="formula-expression" aria-label="ラーマ半径の定義式">
                         \[
-                        \rho_{\mathrm{i}} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}} =
-                        \frac{\sqrt{2m_{\mathrm{i}}\theta_{\mathrm{i}}}}{ZeB}
+                        \rho_{s} = \frac{v_{\mathrm{th},s}}{\Omega_{s}} =
+                        \frac{\sqrt{2m_{s}T_{s}}}{|q_s|B}
                         \]
                     </div>
                     <p class="formula-note">
@@ -532,7 +492,7 @@
                     <div class="formula-label">電子Debye長: \(\lambda_{\mathrm{De}}\) [\(\mathrm{m}\)]</div>
                     <div class="formula-expression" aria-label="電子Debye長の定義式">
                         \[
-                        \lambda_{\mathrm{De}} = \sqrt{\frac{\varepsilon_0\theta_{\mathrm{e}}}{n_{\mathrm{e}}e^2}}
+                        \lambda_{\mathrm{De}} = \sqrt{\frac{\varepsilon_0 T_{\mathrm{e}}}{n_{\mathrm{e}}e^2}}
                         \]
                     </div>
                     <p class="formula-note">
