@@ -403,7 +403,7 @@
                     非相対論・弱結合を仮定する．電子–イオン衝突周波数と自動Coulomb対数は
                     電子熱速度優勢の近似 \(v_{\mathrm{th},\mathrm{e}} \gg v_{\mathrm{th},\mathrm{i}}\)
                     (\(T_{\mathrm{e}}/T_{\mathrm{i}} \gg
-                    m_{\mathrm{e}}/m_{\mathrm{i}}\)) を用いる．
+                    m_{\mathrm{e}}/m_{\mathrm{i}}\)) を用いる．（[1]はこの仮定をおかない．）
                     高温・低温電子の共存，温度異方性，中性粒子衝突，電荷交換，磁場形状とバウンス平均は含めない．
                 </p>
             </div>
@@ -417,13 +417,13 @@
                     <div class="formula-expression" aria-label="電子–イオン衝突周波数の定義式">
                         \[
                         \nu_{\mathrm{ei}}
-                        = \frac{4\sqrt{2\pi}}{3}
-                        \frac{n_{\mathrm{i}} Z^2 K^2 \ln\Lambda_{\mathrm{ei}}}
-                        {\sqrt{m_{\mathrm{e}}}\,\theta_{\mathrm{e}}^{3/2}}
+                        = \frac{\sqrt{2}}{12 \pi^{3/2}} \frac{n_{\mathrm{i}} Z^{2} e^{4}
+                        \ln\Lambda_{\mathrm{ei}}}{m_{\mathrm{e}}^{1/2} T_{\mathrm{e}}^{3/2} \varepsilon_0^2}
                         \]
                     </div>
                     <p class="formula-note">
-                        Maxwell電子のイオンに対する運動量緩和率．電子熱速度優勢の極限．
+                        Maxwell電子のイオンに対する運動量緩和率．電子熱速度優勢の極限．[3]で定義されている衝突時間の逆数（\(\nu_{\mathrm{ei}} =
+                        1/\tau_{\mathrm{ei}}\)）．（[1], [2]はcgs単位系なので注意．）
                     </p>
                 </section>
                 <!-- nuII -->
@@ -432,13 +432,14 @@
                     <div class="formula-expression" aria-label="イオン–イオン衝突周波数の定義式">
                         \[
                         \nu_{\mathrm{ii}}
-                        = \frac{4\sqrt{\pi}}{3}
-                        \frac{n_{\mathrm{i}} Z^4 K^2 \ln\Lambda_{\mathrm{ii}}}
-                        {\sqrt{m_{\mathrm{i}}}\,\theta_{\mathrm{i}}^{3/2}}
+                        = \frac{\sqrt{2}}{12 \pi^{3/2}} \frac{n_{\mathrm{i}} Z^{4} e^{4}
+                        \ln\Lambda_{\mathrm{ii}}}{m_{\mathrm{i}}^{1/2} T_{\mathrm{i}}^{3/2} \varepsilon_0^2}
                         \]
                     </div>
                     <p class="formula-note">
-                        同種イオンの衝突周波数（NRLの定義）．
+                        同種イオンの衝突周波数．[3]で定義されている衝突時間の逆数（\(\nu_{\mathrm{ii}} =
+                        1/\tau_{\mathrm{ii}}\)）．（[1],
+                        [2]はcgs単位系なので注意．また，[2]の定義とは \(\sqrt{2}\) の違いがある．）
                     </p>
                 </section>
                 <!-- tauE -->
@@ -446,19 +447,15 @@
                     <div class="formula-label">電子温度平衡化時間: \(\tau^{E}_{\mathrm{ei}}\) [\(\mathrm{s}\)]</div>
                     <div class="formula-expression" aria-label="電子温度平衡化時間の定義式">
                         \[
-                        \tau^{E}_{\mathrm{ei}}
-                        = \frac{3m_{\mathrm{e}}m_{\mathrm{i}}}
-                        {8\sqrt{2\pi}\,n_{\mathrm{i}}Z^2K^2\ln\Lambda_{\mathrm{ei}}}
-                        \left(
-                        \frac{\theta_{\mathrm{e}}}{m_{\mathrm{e}}}
-                        + \frac{\theta_{\mathrm{i}}}{m_{\mathrm{i}}}
-                        \right)^{3/2}
+                        \tau^{E}_{\mathrm{ei}} = \frac{m_{\mathrm{i}}}{2m_{\mathrm{e}}} \tau_{\mathrm{ei}}
                         \]
                     </div>
                     <p class="formula-note">
                         電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
-                        (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手の温度を固定したときの電子温度の平衡化時間を表す．両種が変化するとき，温度差の瞬時緩和時間は
-                        \(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．
+                        (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手のイオン温度を固定したときの電子温度の平衡化時間を表す．
+                        電子・イオンそれぞれにMaxwell分布を仮定し，両者の平均速度が等しい場合のLandau衝突演算子のエネルギーモーメントから，電子–イオン間のエネルギー交換率を求めることで導かれる．
+                        電子・イオン間の平均速度差はないと仮定している[1-3]．電子温度の変化率は，このエネルギー交換率を電子の単位体積あたりの熱容量で割ることで得られる．
+                        <!-- 両種が変化するとき，温度差の瞬時緩和時間は\(\tau^{E}_{\mathrm{ei}}/(1+Z)\)．-->
                     </p>
                 </section>
                 <!-- logEI -->
@@ -481,7 +478,7 @@
                         自動モードの式．ここでは，\(n_{\mathrm{e}}\)，\(T_{\mathrm{e}}\)はそれぞれ
                         \(\mathrm{cm}^{-3}\)と\(\mathrm{eV}\)単位の数値．\(T_{\mathrm{e}}/T_{\mathrm{i}} \gg
                         m_{\mathrm{e}}/m_{\mathrm{i}}\) を仮定している．
-                        手動モードでは入力値をそのまま使用．[1]による．
+                        手動モードでは入力値をそのまま使用．[1]による．（[2], [3]と評価式が若干異なる．）
                     </p>
                 </section>
                 <!-- logII -->
