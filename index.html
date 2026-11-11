@@ -702,25 +702,6 @@
             <!-- scale: 定義式と説明文はここで編集する． -->
             <div class="formula-list" data-group="scale" hidden>
                 <section class="formula-item">
-                    <div class="formula-label">反磁性ドリフト角周波数：\(\omega_{*s}\) [\(\mathrm{s}^{-1}\)]</div>
-                    <div class="formula-expression">
-                        \[
-                        \omega_{*s}
-                        = k_\perp\frac{T_s}{q_s B}\frac{d\ln n_s}{dr}
-                        = -\frac{2\pi}{\lambda_\perp}\frac{T_s}{q_s B L_n},
-                        \qquad L_n^{-1}=-\frac{d\ln n_{\mathrm e}}{dr}
-                        \]
-                    </div>
-                    <p class="formula-note">
-                        温度勾配なし．\(T_s\) はJ，\(q_{\mathrm e}=-e\)，\(q_{\mathrm i}=Ze\)．
-                        \(r\) を密度が変化する方向の座標とし，波数ベクトルを
-                        \(\boldsymbol k_\perp=(2\pi/\lambda_\perp)\boldsymbol b\times\hat{\boldsymbol r}\)
-                        とする（\(\boldsymbol b=\boldsymbol B/B\)）．入力波長はこの方向の波長．
-                        密度勾配長\(L_n\)は符号付きで，\(r\)方向に密度が減少する場合に正とする．ゼロは指定できない．
-                        一定の\(Z\)と準中性条件から，電子・イオンの対数密度勾配は等しい．
-                    </p>
-                </section>
-                <section class="formula-item">
                     <div class="formula-label">熱速度: \(v_{\mathrm{th},s}\) [\(\mathrm{m}/\mathrm{s}\)]</div>
                     <div class="formula-expression" aria-label="熱速度の定義式">
                         \[
@@ -728,6 +709,23 @@
                         = \sqrt{\frac{2T_s}{m_s}}
                         \]
                     </div>
+                </section>
+                <section class="formula-item">
+                    <div class="formula-label">反磁性ドリフト角周波数：\(\omega_{*s}\) [\(\mathrm{s}^{-1}\)]</div>
+                    <div class="formula-expression">
+                        \[
+                        \omega_{*s}
+                        = -\frac{k_\perp T_s}{q_s B L_n},
+                        \qquad L_n^{-1}=-\frac{d\ln n_{\mathrm e}}{dr}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        温度勾配なし．
+                        \(r\) を密度が変化する方向の座標とし，波数ベクトルを
+                        \(\mathbf{k}_\perp=k_{\perp} \mathbf{b} \times\hat{\mathbf{r}}\)
+                        とする（\(\mathbf{b}=\mathbf{B}/B\)）．入力波長（\(\lambda_\perp\)）はこの方向の波長で \(k_{\perp} =
+                        2\pi/\lambda_\perp\) ．
+                    </p>
                 </section>
                 <!-- fce -->
                 <!-- fci -->
@@ -875,4 +873,3 @@
 </body>
 
 </html>
-
