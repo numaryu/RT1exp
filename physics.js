@@ -78,10 +78,9 @@
             / (Math.sqrt(mi) * (e * Ti) ** 1.5);
         const nuIE = Z * me / mi * nuEI;
 
-        // Electron temperature equilibration time: dTe/dt = (Ti - Te) / tauE.
-        const tauE = 3 * me * mi
-            / (8 * Math.sqrt(2 * Math.PI) * ni * Z ** 2 * k * k * logEI)
-            * (e * Te / me + e * Ti / mi) ** 1.5;
+        // Electron temperature equilibration time in the electron-thermal-speed limit.
+        // HTML definition: tauE = (mi / (2 me)) tau_ei, tau_ei = 1 / nuEI.
+        const tauE = mi / (2 * me * nuEI);
 
         // Thermal speed convention: v_t = sqrt(2 e T / m).
         const vte = Math.sqrt(2 * e * Te / me);
