@@ -130,7 +130,7 @@
         // Perpendicular classical transport in the strong-magnetization limit.
         const temperatureE = e * Te; // Input eV -> SI energy [J].
         const temperatureI = e * Ti;
-        const diffusionPerp = (temperatureE + temperatureI) * nuEI / (me * oce ** 2);
+        const diffusionPerp = (temperatureE + temperatureI / Z) * nuEI / (me * oce ** 2);
         // q_perp = -(3/2) n chi_perp grad(T), with T in energy units.
         const chiEPerp = (2 / 3) * 4.66 * temperatureE * nuEI / (me * oce ** 2);
         const chiIPerp = (2 / 3) * 2 * temperatureI * nuII / (Math.sqrt(2) * mi * oci ** 2);
