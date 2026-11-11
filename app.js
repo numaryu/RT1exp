@@ -139,11 +139,9 @@
         try {
             const inputs = readInputs();
             const { values, warnings } = calculate(inputs);
-            find(".error").textContent = warnings.join(" ");
             updateValues(values);
             drawChart(inputs);
         } catch (error) {
-            find(".error").textContent = error.message;
             updateValues(null);
             find(".scan-chart").toggleAttribute("hidden", true);
             find(".chart-message").hidden = true;
