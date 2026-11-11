@@ -150,21 +150,12 @@
             tauBohm: L ** 2 / diffusionBohm,
             tauGB: L ** 2 / diffusionGB,
         });
-        if (Math.min(values.magE, values.magI) < 10) {
-            warnings.push("垂直の衝突輸送は強磁化近似（Ωₛτₛ ≫ 1）です．Ωₛτₛ < 10 の種があり，この近似の適用に注意してください．");
-        }
-        if (Z !== 1) {
-            warnings.push("垂直の衝突輸送係数は Z = 1 用です．現在の電荷数には対応していません．");
-        }
         values.beta = values.betaE + values.betaI;
 
         if (!Object.values(values).every(Number.isFinite)) {
             throw new Error("数値範囲を超えました．入力の桁数を確認してください．");
         }
-        if (Z !== 1) {
-            for (const key of ["diffusionPerp", "chiEPerp", "chiIPerp",
-                "tauDiffusionPerp", "tauChiEPerp", "tauChiIPerp"]) values[key] = null;
-        }
+
         return { values, warnings };
     }
 
