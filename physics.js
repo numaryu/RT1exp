@@ -127,8 +127,7 @@
             magI: oci / nuII,
             rhoStar: vti / oci / L,
         };
-        // Perpendicular classical transport: singly charged plasma, strong magnetization.
-        // nuII above is the inverse of Braginskii's ion collision time.
+        // Perpendicular classical transport in the strong-magnetization limit.
         const temperatureE = e * Te; // Input eV -> SI energy [J].
         const temperatureI = e * Ti;
         const diffusionPerp = (temperatureE + temperatureI) * nuEI / (me * oce ** 2);
