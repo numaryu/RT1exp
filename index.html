@@ -635,7 +635,7 @@
                         \[
                         \begin{aligned}
                         D_\perp &amp; =\frac{T_{\mathrm e}+T_{\mathrm i}/Z}
-                        {m_{\mathrm e}\omega_{\mathrm e}^{2}\tau_{\mathrm ei}}, \\
+                        {m_{\mathrm e}\omega_{\mathrm{ce}}^{2}\tau_{\mathrm ei}}, \\
                         \mathbf{\Gamma}_\perp &amp; =-D_\perp\nabla_\perp n
                         \end{aligned}
                         \]
@@ -653,9 +653,9 @@
                         \[
                         \begin{aligned}
                         \chi_{\mathrm e\perp}&amp;=\frac{2}{3}\frac{4.66\,T_{\mathrm e}}
-                        {m_{\mathrm e}\omega_{\mathrm e}^2\tau_{\mathrm ei}},\\
+                        {m_{\mathrm e}\omega_{\mathrm{ce}}^2\tau_{\mathrm ei}},\\
                         \chi_{\mathrm i\perp}&amp;=\frac{2}{3}\frac{2\,T_{\mathrm i}}
-                        {m_{\mathrm i}\omega_{\mathrm i}^2 \sqrt{2}\tau_{\mathrm ii}},\\
+                        {m_{\mathrm i}\omega_{\mathrm{ci}}^2 \sqrt{2}\tau_{\mathrm ii}},\\
                         \boldsymbol q_{s\perp}&amp;=-\kappa_{s\perp}\nabla_\perp T_s
                         =-\frac32n_s\chi_{s\perp}\nabla_\perp T_s.
                         \end{aligned}
@@ -811,7 +811,7 @@
                     <div class="formula-label">ベータ: \(\beta_{s}\)</div>
                     <div class="formula-expression" aria-label="ベータの定義式">
                         \[
-                        \beta_{s} = \frac{2\mu_0 n_{s}\theta_{s}}{B^2}
+                        \beta_{s} = \frac{2\mu_0 n_{s}T_{s}}{B^2}
                         \]
                     </div>
                 </section>
@@ -821,11 +821,11 @@
                     <div class="formula-label">磁化パラメータ: \(\omega_{s}/\nu_{s}\)</div>
                     <div class="formula-expression" aria-label="磁化パラメータの定義式">
                         \[
-                        \frac{\omega_{s}}{\nu_{s}} = \frac{q_{s}B}{m_{s}\nu_{s}}
+                        \frac{\omega_{\mathrm{c}s}}{\nu_{s}} = \frac{|q_{s}|B}{m_{s}\nu_{s}}
                         \]
                     </div>
                     <p class="formula-note">
-                        角周波数と衝突周波数の比．
+                        サイクロトロン角周波数と衝突周波数の比．
                     </p>
                 </section>
                 <!-- KnE -->
@@ -847,12 +847,9 @@
                     <div class="formula-label">規格化ラーマ半径: \(\rho_{\ast}\)</div>
                     <div class="formula-expression" aria-label="規格化ラーマ半径の定義式">
                         \[
-                        \rho_* = \frac{\rho_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\Omega_{\mathrm{i}}L}
+                        \rho_* = \frac{\rho_{\mathrm{i}}}{L} = \frac{v_{\mathrm{th},\mathrm{i}}}{\omega_{\mathrm{ci}}L}
                         \]
                     </div>
-                    <p class="formula-note">
-                        ここでは \(\rho_* = \rho_{\mathrm{i}}/L\) と定義．
-                    </p>
                 </section>
             </div>
 
