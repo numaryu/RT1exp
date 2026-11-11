@@ -74,7 +74,7 @@
         // Electron-ion momentum relaxation and same-species ion collision rate.
         const nuEI = 4 * Math.sqrt(2 * Math.PI) / 3 * ni * Z ** 2 * k * k * logEI
             / (Math.sqrt(me) * (e * Te) ** 1.5);
-        const nuII = 4 * Math.sqrt(Math.PI) / 3 * ni * Z ** 4 * k * k * logII
+        const nuII = 4 * Math.sqrt(2 * Math.PI) / 3 * ni * Z ** 4 * k * k * logII
             / (Math.sqrt(mi) * (e * Ti) ** 1.5);
         const nuIE = Z * me / mi * nuEI;
 
@@ -134,9 +134,7 @@
         const diffusionPerp = (temperatureE + temperatureI) * nuEI / (me * oce ** 2);
         // q_perp = -(3/2) n chi_perp grad(T), with T in energy units.
         const chiEPerp = (2 / 3) * 4.66 * temperatureE * nuEI / (me * oce ** 2);
-        const chiIPerp = (2 / 3) * 2 * temperatureI * nuII / (mi * oci ** 2);
-        const diffusionBohm = temperatureE / (16 * e * B); // SI: J / (C T).
-        const diffusionGB = values.rhoi ** 2 * vti / L;
+        const chiIPerp = (2 / 3) * 2 * temperatureI * nuII / (Math.sqrt(2) * mi * oci ** 2);
         Object.assign(values, {
             diffusionPerp,
             chiEPerp,
