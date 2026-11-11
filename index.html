@@ -102,7 +102,7 @@
             <section class="result">
                 <div class="tabs">
                     <button class="cursor-interaction" type="button" data-tab="collision" aria-pressed="true">
-                        衝突・緩和
+                        衝突
                     </button>
                     <button class="cursor-interaction" type="button" data-tab="transport" aria-pressed="false">
                         輸送
@@ -172,7 +172,9 @@
                     </tbody>
                     <!-- transport: 垂直輸送・熱交換・乱流輸送の基準値． -->
                     <tbody class="values" data-group="transport" aria-live="polite" hidden>
-                        <tr><th colspan="3" scope="colgroup">衝突による垂直輸送</th></tr>
+                        <tr>
+                            <th colspan="3" scope="colgroup">衝突による垂直輸送</th>
+                        </tr>
                         <tr>
                             <td>古典的粒子拡散<span class="symbol">\(D_\perp\)</span></td>
                             <td id="diffusionPerp" data-value>—</td>
@@ -188,7 +190,9 @@
                             <td id="chiIPerp" data-value>—</td>
                             <td id="tauChiIPerp" data-value>—</td>
                         </tr>
-                        <tr><th colspan="3" scope="colgroup">電子–イオン熱交換</th></tr>
+                        <tr>
+                            <th colspan="3" scope="colgroup">電子–イオン熱交換</th>
+                        </tr>
                         <tr>
                             <td>電子温度平衡化<span class="symbol">\(\tau^E_{\mathrm{ei}}\)</span></td>
                             <td>—</td>
@@ -199,7 +203,9 @@
                             <td>—</td>
                             <td id="tauDelta" data-value>—</td>
                         </tr>
-                        <tr><th colspan="3" scope="colgroup">乱流輸送の基準</th></tr>
+                        <tr>
+                            <th colspan="3" scope="colgroup">乱流輸送の基準</th>
+                        </tr>
                         <tr>
                             <td>Bohm<span class="symbol">\(D_{\mathrm B}\)</span></td>
                             <td id="diffusionBohm" data-value>—</td>
@@ -366,17 +372,28 @@
                                         font-size="70%">ei</tspan>
                                     <tspan baseline-shift="super" font-size="70%">E</tspan> [s]
                                 </text>
-                                <text class="chart-y-title" data-scan-result="diffusionPerp" hidden>D<tspan baseline-shift="sub" font-size="70%">⊥</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauDiffusionPerp" hidden>τ<tspan baseline-shift="sub" font-size="70%">D⊥</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="chiEPerp" hidden>χ<tspan baseline-shift="sub" font-size="70%">e⊥</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauChiEPerp" hidden>τ<tspan baseline-shift="sub" font-size="70%">χe⊥</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="chiIPerp" hidden>χ<tspan baseline-shift="sub" font-size="70%">i⊥</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauChiIPerp" hidden>τ<tspan baseline-shift="sub" font-size="70%">χi⊥</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="diffusionBohm" hidden>D<tspan baseline-shift="sub" font-size="70%">B</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauBohm" hidden>τ<tspan baseline-shift="sub" font-size="70%">B</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="diffusionGB" hidden>D<tspan baseline-shift="sub" font-size="70%">gB</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauGB" hidden>τ<tspan baseline-shift="sub" font-size="70%">gB</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="tauDelta" hidden>τ<tspan baseline-shift="sub" font-size="70%">ΔT</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionPerp" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">⊥</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauDiffusionPerp" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">D⊥</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="chiEPerp" hidden>χ<tspan
+                                        baseline-shift="sub" font-size="70%">e⊥</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauChiEPerp" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">χe⊥</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="chiIPerp" hidden>χ<tspan
+                                        baseline-shift="sub" font-size="70%">i⊥</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauChiIPerp" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">χi⊥</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionBohm" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">B</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauBohm" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">B</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionGB" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">gB</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauGB" hidden>τ<tspan baseline-shift="sub"
+                                        font-size="70%">gB</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="tauDelta" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">ΔT</tspan> [s]</text>
                                 <text class="chart-y-title" data-scan-result="logEI" hidden>ln Λ<tspan
                                         baseline-shift="sub" font-size="70%">ei</tspan></text>
                                 <text class="chart-y-title" data-scan-result="logII" hidden>ln Λ<tspan
@@ -450,7 +467,6 @@
                     \(\varepsilon_0=1/(c^2 \mu_{0}) \) [\(\mathrm{F}/\mathrm{m}\)]・\(\mu_0=4\pi\times10^{-7}\)
                     [\(\mathrm{H}/\mathrm{m}\)] は真空の誘電率・透磁率，\(c=2.998\times10^8\) [\(\mathrm{m}/\mathrm{s}\)] は光速,
                     \(k_{\mathrm{B}}=1.38\times10^{-23}\) [\(\mathrm{J}/\mathrm{K}\)] はボルツマン定数．
-                    衝突の式では \(K\equiv e^2/(4\pi\varepsilon_0)\) と略記する．
                 </p>
                 <p>
                     <strong>粒子種</strong>
@@ -468,7 +484,7 @@
                 </p>
                 <p>
                     <strong>温度の単位</strong>
-                    入力温度はeV．入力を読み取った後，\(T_s[\mathrm J]=e\,T_s[\mathrm{eV}]\) と換算する．以下の定義式では温度をエネルギー単位Jで表す．
+                    入力時のみ [eV] の単位で与えるが，以下の計算では [J] に換算する．
                 </p>
                 <p>
                     <strong>適用範囲</strong>
@@ -643,16 +659,13 @@
                     <div class="formula-expression" aria-label="電子温度平衡化時間の定義式">
                         \[
                         \tau^{E}_{\mathrm{ei}} = \frac{m_{\mathrm{i}}}{2m_{\mathrm{e}}} \tau_{\mathrm{ei}}
-                        \left(1+\frac{m_{\mathrm{e}}T_{\mathrm{i}}}{m_{\mathrm{i}}T_{\mathrm{e}}}\right)^{3/2}
                         \]
                     </div>
                     <p class="formula-note">
                         電子温度の変化率：\(\mathrm{d}T_{\mathrm{e}}/\mathrm{d}t =
                         (T_{\mathrm{i}}-T_{\mathrm{e}})/\tau^{E}_{\mathrm{ei}}\)．相手のイオン温度を固定したときの電子温度の平衡化時間を表す．
-                        電子・イオンそれぞれにMaxwell分布を仮定し，両者の平均速度が等しい場合のLandau衝突演算子のエネルギーモーメントから，電子–イオン間のエネルギー交換率を求めることで導かれる．
-                        電子・イオン間の平均速度差はないと仮定している[1-3]．電子温度の変化率は，このエネルギー交換率を電子の単位体積あたりの熱容量で割ることで得られる．
-                        \(\tau_{\mathrm{ei}}=1/\nu_{\mathrm{ei}}\)．電子熱速度優勢の極限では括弧内の補正は1となる．
-                        補正を残しても，自動Coulomb対数の適用範囲が広がるわけではない．
+                        電子・イオンそれぞれにMaxwell分布を仮定し，両者の平均速度が等しい場合のLandau衝突演算子のエネルギーモーメントから，電子–イオン間のエネルギー交換率を求めることで導かれる[1-3]．
+                        電子温度の変化率は，このエネルギー交換率を電子の単位体積あたりの熱容量で割ることで得られる．
                     </p>
                 </section>
                 <section class="formula-item">
