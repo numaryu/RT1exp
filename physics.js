@@ -17,6 +17,8 @@
         Ti: 1,
         B: 0.01,
         L: 1,
+        wavelength: 0.1,               // wavelength along b x e_r [m]
+        densityScaleLength: 1,          // signed Ln = -(d ln n / dr)^-1 [m]
         mass_number: 4,                 // ion mass / proton mass
         Z: 1,
         logMode: "auto",
@@ -25,10 +27,13 @@
     });
 
     function calculate(inputs) {
-        for (const key of ["ne", "Te", "Ti", "B", "L", "mass_number", "Z"]) {
+        for (const key of ["ne", "Te", "Ti", "B", "L", "mass_number", "Z", "wavelength"]) {
             if (!Number.isFinite(inputs[key]) || inputs[key] <= 0) {
                 throw new Error(`${key} は正の有限値を入力してください．`);
             }
+        }
+        if (!Number.isFinite(inputs.densityScaleLength) || inputs.densityScaleLength === 0) {
+            throw new Error("densityScaleLength はゼロ以外の有限値を入力してください．");
         }
         if (!Number.isInteger(inputs.Z)) {
             throw new Error("Z は正の整数で指定してください．");
@@ -38,7 +43,7 @@
         }
 
         const { e, me, mp, eps, mu0, c } = C;
-        const { ne, Te, Ti, B, L, mass_number, Z } = inputs;
+        const { ne, Te, Ti, B, L, mass_number, Z, wavelength, densityScaleLength } = inputs;
         const mi = mass_number * mp;
         const ni = ne / Z;
         const nc = ne / 1e6;     // electron density in cm^-3 (NRL logarithms only)
@@ -91,6 +96,12 @@
         const wpi = Math.sqrt(ni * (Z * e) ** 2 / (eps * mi));
         const debye = Math.sqrt(eps * e * Te / (ne * e * e));
 
+        // Signed diamagnetic frequencies: k is along b x e_r; T is converted to J.
+        const kPerp = 2 * Math.PI / wavelength;
+        const logDensityGradient = -1 / densityScaleLength;
+        const omegaStarE = kPerp * (e * Te) / (-e * B) * logDensityGradient;
+        const omegaStarI = kPerp * (e * Ti) / (Z * e * B) * logDensityGradient;
+
         const values = {
             ni,
             logEI,
@@ -110,6 +121,10 @@
             fci: oci / (2 * Math.PI),
             fpe: wpe / (2 * Math.PI),
             fpi: wpi / (2 * Math.PI),
+            omegaStarE,
+            omegaStarI,
+            fStarE: omegaStarE / (2 * Math.PI),
+            fStarI: omegaStarI / (2 * Math.PI),
             rhoe: vte / oce,
             rhoi: vti / oci,
             rhos: Math.sqrt(Z * e * Te / mi) / oci,
@@ -173,6 +188,7 @@
 
     window.RT1Physics = Object.freeze({ constants: C, defaults, calculate });
 })();
+
 
 
 

@@ -57,6 +57,16 @@
                             <input name="L" type="number" step="any" value="1">
                         </label>
                     </div>
+                    <div class="pair">
+                        <label>
+                            揺動の垂直波長 \(\lambda_\perp\) [\(\mathrm{m}\)]
+                            <input name="wavelength" type="number" step="any" value="0.1">
+                        </label>
+                        <label>
+                            密度勾配長 \(L_n\) [\(\mathrm{m}\)]
+                            <input name="densityScaleLength" type="number" step="any" value="1">
+                        </label>
+                    </div>
                     <label>
                         イオン種
                         <select name="ion">
@@ -219,6 +229,16 @@
                     </tbody>
                     <!-- scale: 固定の行・記号・単位．JSはidに対応する数値だけを更新する． -->
                     <tbody class="values" data-group="scale" aria-live="polite" hidden>
+                        <tr>
+                            <td>電子反磁性ドリフト周波数<span class="symbol">\(f_{*\mathrm e}\)</span></td>
+                            <td id="fStarE" data-value>—</td>
+                            <td>\(\mathrm{Hz}\)</td>
+                        </tr>
+                        <tr>
+                            <td>イオン反磁性ドリフト周波数<span class="symbol">\(f_{*\mathrm i}\)</span></td>
+                            <td id="fStarI" data-value>—</td>
+                            <td>\(\mathrm{Hz}\)</td>
+                        </tr>
                         <tr>
                             <td>電子サイクロトロン周波数<span class="symbol">\(f_{\mathrm{ce}}\)</span></td>
                             <td id="fce" data-value>—</td>
@@ -682,6 +702,25 @@
             <!-- scale: 定義式と説明文はここで編集する． -->
             <div class="formula-list" data-group="scale" hidden>
                 <section class="formula-item">
+                    <div class="formula-label">反磁性ドリフト角周波数：\(\omega_{*s}\) [\(\mathrm{s}^{-1}\)]</div>
+                    <div class="formula-expression">
+                        \[
+                        \omega_{*s}
+                        = k_\perp\frac{T_s}{q_s B}\frac{d\ln n_s}{dr}
+                        = -\frac{2\pi}{\lambda_\perp}\frac{T_s}{q_s B L_n},
+                        \qquad L_n^{-1}=-\frac{d\ln n_{\mathrm e}}{dr}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        温度勾配なし．\(T_s\) はJ，\(q_{\mathrm e}=-e\)，\(q_{\mathrm i}=Ze\)．
+                        \(r\) を密度が変化する方向の座標とし，波数ベクトルを
+                        \(\boldsymbol k_\perp=(2\pi/\lambda_\perp)\boldsymbol b\times\hat{\boldsymbol r}\)
+                        とする（\(\boldsymbol b=\boldsymbol B/B\)）．入力波長はこの方向の波長．
+                        密度勾配長\(L_n\)は符号付きで，\(r\)方向に密度が減少する場合に正とする．ゼロは指定できない．
+                        一定の\(Z\)と準中性条件から，電子・イオンの対数密度勾配は等しい．
+                    </p>
+                </section>
+                <section class="formula-item">
                     <div class="formula-label">熱速度: \(v_{\mathrm{th},s}\) [\(\mathrm{m}/\mathrm{s}\)]</div>
                     <div class="formula-expression" aria-label="熱速度の定義式">
                         \[
@@ -836,3 +875,4 @@
 </body>
 
 </html>
+
