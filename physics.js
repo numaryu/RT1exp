@@ -17,7 +17,7 @@
         Ti: 1,
         B: 0.01,
         L: 1,
-        densityScaleLength: 1,          // signed Ln = -(d ln n / dr)^-1 [m]
+        densityScaleLength: 0.1,          // signed Ln = -(d ln n / dr)^-1 [m]
         mass_number: 4,                 // ion mass / proton mass
         Z: 1,
         logMode: "auto",
