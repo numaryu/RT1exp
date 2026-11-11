@@ -17,7 +17,6 @@
         Ti: 1,
         B: 0.01,
         L: 1,
-        wavelength: 0.1,               // wavelength along b x e_r [m]
         densityScaleLength: 1,          // signed Ln = -(d ln n / dr)^-1 [m]
         mass_number: 4,                 // ion mass / proton mass
         Z: 1,
@@ -27,7 +26,7 @@
     });
 
     function calculate(inputs) {
-        for (const key of ["ne", "Te", "Ti", "B", "L", "mass_number", "Z", "wavelength"]) {
+        for (const key of ["ne", "Te", "Ti", "B", "L", "mass_number", "Z"]) {
             if (!Number.isFinite(inputs[key]) || inputs[key] <= 0) {
                 throw new Error(`${key} は正の有限値を入力してください．`);
             }
@@ -43,7 +42,7 @@
         }
 
         const { e, me, mp, eps, mu0, c } = C;
-        const { ne, Te, Ti, B, L, mass_number, Z, wavelength, densityScaleLength } = inputs;
+        const { ne, Te, Ti, B, L, mass_number, Z, densityScaleLength } = inputs;
         const mi = mass_number * mp;
         const ni = ne / Z;
         const nc = ne / 1e6;     // electron density in cm^-3 (NRL logarithms only)
@@ -97,7 +96,8 @@
         const debye = Math.sqrt(eps * e * Te / (ne * e * e));
 
         // Signed diamagnetic frequencies: k is along b x e_r; T is converted to J.
-        const kPerp = 2 * Math.PI / wavelength;
+        // Mixing-length reference scale k_perp rho_i ~ 1, shared by both species.
+        const kPerp = 1 / (vti / oci);
         const logDensityGradient = -1 / densityScaleLength;
         const omegaStarE = kPerp * (e * Te) / (-e * B) * logDensityGradient;
         const omegaStarI = kPerp * (e * Ti) / (Z * e * B) * logDensityGradient;
@@ -110,6 +110,8 @@
             nuIE,
             nuII,
             tauE,
+            // Order-of-magnitude turbulent exchange time; no temperature-ratio prefactor.
+            tauTurb: oci ** 2 / Math.abs(omegaStarI) ** 3,
             tauDelta: tauE / (1 + Z),
             vte,
             vti,
@@ -188,6 +190,7 @@
 
     window.RT1Physics = Object.freeze({ constants: C, defaults, calculate });
 })();
+
 
 
 

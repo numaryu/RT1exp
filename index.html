@@ -57,16 +57,10 @@
                             <input name="L" type="number" step="any" value="1">
                         </label>
                     </div>
-                    <div class="pair">
-                        <label>
-                            揺動の垂直波長 \(\lambda_\perp\) [\(\mathrm{m}\)]
-                            <input name="wavelength" type="number" step="any" value="0.1">
-                        </label>
-                        <label>
-                            密度勾配長 \(L_n\) [\(\mathrm{m}\)]
-                            <input name="densityScaleLength" type="number" step="any" value="1">
-                        </label>
-                    </div>
+                    <label>
+                        密度勾配長 \(L_n\) [\(\mathrm{m}\)]
+                        <input name="densityScaleLength" type="number" step="any" value="1">
+                    </label>
                     <label>
                         イオン種
                         <select name="ion">
@@ -205,6 +199,11 @@
                         </tr>
                         <tr>
                             <th colspan="3" scope="colgroup">乱流による輸送・熱交換</th>
+                        </tr>
+                        <tr>
+                            <td>乱流熱交換の代表時間<span class="symbol">\(\tau_{\mathrm{turb}}\)</span></td>
+                            <td>—</td>
+                            <td id="tauTurb" data-value>—</td>
                         </tr>
                         <tr>
                             <td>電子のBohm<span class="symbol">\(D_{\mathrm B,e}\)</span></td>
@@ -349,6 +348,7 @@
                                     <option value="chiIPerp">イオンの垂直熱拡散係数</option>
                                     <option value="tauChiIPerp">イオンの衝突熱拡散時間</option>
                                     <option value="tauE">電子温度平衡化時間</option>
+                                    <option value="tauTurb">乱流熱交換の代表時間</option>
                                     <option value="diffusionBohmE">電子のBohm拡散係数</option>
                                     <option value="tauBohmE">電子のBohm拡散時間</option>
                                     <option value="diffusionBohmI">イオンのBohm拡散係数</option>
@@ -395,6 +395,8 @@
                                         font-size="70%">ei</tspan>
                                     <tspan baseline-shift="super" font-size="70%">E</tspan> [s]
                                 </text>
+                                <text class="chart-y-title" data-scan-result="tauTurb" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">turb</tspan> [s]</text>
                                 <text class="chart-y-title" data-scan-result="diffusionPerp" hidden>D<tspan
                                         baseline-shift="sub" font-size="70%">⊥</tspan> [m²/s]</text>
                                 <text class="chart-y-title" data-scan-result="tauDiffusionPerp" hidden>τ<tspan
@@ -679,6 +681,19 @@
                     </p>
                 </section>
                 <section class="formula-item">
+                    <div class="formula-label">乱流熱交換の代表時間：\(\tau_{\mathrm{turb}}\) [\(\mathrm{s}\)]</div>
+                    <div class="formula-expression">
+                        \[
+                        \tau_{\mathrm{turb}}=\frac{\Omega_{\mathrm i}^{2}}{|\omega_{*\mathrm i}|^{3}}
+                        \]
+                    </div>
+                    <p class="formula-note">
+                        Numata (2025) の式 (26) による mixing length estimate [6] に基づき，
+                        乱流熱交換の代表時間をオーダーで見積もる．
+                        \(k_\perp\rho_{\mathrm i}\sim1\) として反磁性ドリフト角周波数を評価する．
+                    </p>
+                </section>
+                <section class="formula-item">
                     <div class="formula-label">Bohm拡散係数：\(D_{\mathrm{B},s}\)</div>
                     <div class="formula-expression">
                         \[
@@ -723,8 +738,9 @@
                         温度勾配なし．
                         \(r\) を密度が変化する方向の座標とし，波数ベクトルを
                         \(\mathbf{k}_\perp=k_{\perp} \mathbf{b} \times\hat{\mathbf{r}}\)
-                        とする（\(\mathbf{b}=\mathbf{B}/B\)）．入力波長（\(\lambda_\perp\)）はこの方向の波長で \(k_{\perp} =
-                        2\pi/\lambda_\perp\) ．
+                        とする（\(\mathbf{b}=\mathbf{B}/B\)）．
+                        \(k_\perp\rho_{\mathrm i}\sim1\) として，電子・イオンともに
+                        \(k_\perp=1/\rho_{\mathrm i}\) を用いて見積もる．
                     </p>
                 </section>
                 <!-- fce -->
@@ -866,6 +882,12 @@
                     [5] D. Bohm, “Qualitative Description of the Arc Plasma in a Magnetic Field,” in
                     The Characteristics of Electrical Discharges in Magnetic Fields,
                     edited by A. Guthrie and R. K. Wakerling (McGraw-Hill, New York, 1949), pp. 1–12.
+                </p>
+                <p>
+                    [6] R. Numata, “Thermal equilibration in collisionless magnetospheric plasmas via
+                    entropy-mode turbulence,” Monthly Notices of the Royal Astronomical Society:
+                    Letters 538, L94–L99 (2025),
+                    <a href="https://doi.org/10.1093/mnrasl/slaf010">doi:10.1093/mnrasl/slaf010</a>, Eq. (26).
                 </p>
             </div>
         </details>
