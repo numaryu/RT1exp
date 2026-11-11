@@ -197,14 +197,24 @@
                             <th colspan="3" scope="colgroup">乱流による輸送・熱交換</th>
                         </tr>
                         <tr>
-                            <td>Bohm<span class="symbol">\(D_{\mathrm B}\)</span></td>
-                            <td id="diffusionBohm" data-value>—</td>
-                            <td id="tauBohm" data-value>—</td>
+                            <td>電子のBohm<span class="symbol">\(D_{\mathrm B,e}\)</span></td>
+                            <td id="diffusionBohmE" data-value>—</td>
+                            <td id="tauBohmE" data-value>—</td>
                         </tr>
                         <tr>
-                            <td>ジャイロボーム<span class="symbol">\(D_{\mathrm{gB}}\)</span></td>
-                            <td id="diffusionGB" data-value>—</td>
-                            <td id="tauGB" data-value>—</td>
+                            <td>イオンのBohm<span class="symbol">\(D_{\mathrm B,i}\)</span></td>
+                            <td id="diffusionBohmI" data-value>—</td>
+                            <td id="tauBohmI" data-value>—</td>
+                        </tr>
+                        <tr>
+                            <td>電子のジャイロボーム<span class="symbol">\(D_{\mathrm{gB},e}\)</span></td>
+                            <td id="diffusionGBE" data-value>—</td>
+                            <td id="tauGBE" data-value>—</td>
+                        </tr>
+                        <tr>
+                            <td>イオンのジャイロボーム<span class="symbol">\(D_{\mathrm{gB},i}\)</span></td>
+                            <td id="diffusionGBI" data-value>—</td>
+                            <td id="tauGBI" data-value>—</td>
                         </tr>
                     </tbody>
                     <!-- scale: 固定の行・記号・単位．JSはidに対応する数値だけを更新する． -->
@@ -319,10 +329,14 @@
                                     <option value="chiIPerp">イオンの垂直熱拡散係数</option>
                                     <option value="tauChiIPerp">イオンの衝突熱拡散時間</option>
                                     <option value="tauE">電子温度平衡化時間</option>
-                                    <option value="diffusionBohm">Bohm拡散係数</option>
-                                    <option value="tauBohm">Bohm拡散時間</option>
-                                    <option value="diffusionGB">ジャイロボーム拡散係数</option>
-                                    <option value="tauGB">ジャイロボーム拡散時間</option>
+                                    <option value="diffusionBohmE">電子のBohm拡散係数</option>
+                                    <option value="tauBohmE">電子のBohm拡散時間</option>
+                                    <option value="diffusionBohmI">イオンのBohm拡散係数</option>
+                                    <option value="tauBohmI">イオンのBohm拡散時間</option>
+                                    <option value="diffusionGBE">電子のジャイロボーム拡散係数</option>
+                                    <option value="tauGBE">電子のジャイロボーム拡散時間</option>
+                                    <option value="diffusionGBI">イオンのジャイロボーム拡散係数</option>
+                                    <option value="tauGBI">イオンのジャイロボーム拡散時間</option>
                                 </optgroup>
                                 <optgroup label="周波数・長さ">
                                     <option value="fce">電子サイクロトロン周波数</option>
@@ -373,14 +387,22 @@
                                         baseline-shift="sub" font-size="70%">i⊥</tspan> [m²/s]</text>
                                 <text class="chart-y-title" data-scan-result="tauChiIPerp" hidden>τ<tspan
                                         baseline-shift="sub" font-size="70%">χi⊥</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="diffusionBohm" hidden>D<tspan
-                                        baseline-shift="sub" font-size="70%">B</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauBohm" hidden>τ<tspan
-                                        baseline-shift="sub" font-size="70%">B</tspan> [s]</text>
-                                <text class="chart-y-title" data-scan-result="diffusionGB" hidden>D<tspan
-                                        baseline-shift="sub" font-size="70%">gB</tspan> [m²/s]</text>
-                                <text class="chart-y-title" data-scan-result="tauGB" hidden>τ<tspan baseline-shift="sub"
-                                        font-size="70%">gB</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionBohmE" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">B,e</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauBohmE" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">B,e</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionBohmI" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">B,i</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauBohmI" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">B,i</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionGBE" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">gB,e</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauGBE" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">gB,e</tspan> [s]</text>
+                                <text class="chart-y-title" data-scan-result="diffusionGBI" hidden>D<tspan
+                                        baseline-shift="sub" font-size="70%">gB,i</tspan> [m²/s]</text>
+                                <text class="chart-y-title" data-scan-result="tauGBI" hidden>τ<tspan
+                                        baseline-shift="sub" font-size="70%">gB,i</tspan> [s]</text>
                                 <text class="chart-y-title" data-scan-result="tauDelta" hidden>τ<tspan
                                         baseline-shift="sub" font-size="70%">ΔT</tspan> [s]</text>
                                 <text class="chart-y-title" data-scan-result="logEI" hidden>ln Λ<tspan
