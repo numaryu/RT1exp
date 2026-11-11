@@ -134,12 +134,28 @@
         // q_perp = -(3/2) n chi_perp grad(T), with T in energy units.
         const chiEPerp = (2 / 3) * 4.66 * temperatureE * nuEI / (me * oce ** 2);
         const chiIPerp = (2 / 3) * 2 * temperatureI * nuII / (Math.sqrt(2) * mi * oci ** 2);
+        // Species-specific Bohm and gyro-Bohm reference diffusivities (SI).
+        const diffusionBohmE = temperatureE / (16 * e * B);
+        const diffusionBohmI = temperatureI / (16 * Z * e * B);
+        const diffusionGBE = values.rhoe ** 2 * vte / L;
+        const diffusionGBI = values.rhoi ** 2 * vti / L;
+        // Keep the existing result/graph keys: Bohm uses electrons, gyro-Bohm uses ions.
+        const diffusionBohm = diffusionBohmE;
+        const diffusionGB = diffusionGBI;
         Object.assign(values, {
             diffusionPerp,
             chiEPerp,
             chiIPerp,
             diffusionBohm,
             diffusionGB,
+            diffusionBohmE,
+            diffusionBohmI,
+            diffusionGBE,
+            diffusionGBI,
+            tauBohmE: L ** 2 / diffusionBohmE,
+            tauBohmI: L ** 2 / diffusionBohmI,
+            tauGBE: L ** 2 / diffusionGBE,
+            tauGBI: L ** 2 / diffusionGBI,
             tauDiffusionPerp: L ** 2 / diffusionPerp,
             tauChiEPerp: L ** 2 / chiEPerp,
             tauChiIPerp: L ** 2 / chiIPerp,
@@ -157,5 +173,6 @@
 
     window.RT1Physics = Object.freeze({ constants: C, defaults, calculate });
 })();
+
 
 
