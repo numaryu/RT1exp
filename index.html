@@ -173,7 +173,7 @@
                     <!-- transport: 垂直輸送・熱交換・乱流輸送の基準値． -->
                     <tbody class="values" data-group="transport" aria-live="polite" hidden>
                         <tr>
-                            <th colspan="3" scope="colgroup">衝突による垂直輸送</th>
+                            <th colspan="3" scope="colgroup">衝突による輸送・熱交換</th>
                         </tr>
                         <tr>
                             <td>古典的粒子拡散<span class="symbol">\(D_\perp\)</span></td>
@@ -191,20 +191,12 @@
                             <td id="tauChiIPerp" data-value>—</td>
                         </tr>
                         <tr>
-                            <th colspan="3" scope="colgroup">電子–イオン熱交換</th>
-                        </tr>
-                        <tr>
                             <td>電子温度平衡化<span class="symbol">\(\tau^E_{\mathrm{ei}}\)</span></td>
                             <td>—</td>
                             <td id="tauE" data-value>—</td>
                         </tr>
                         <tr>
-                            <td>電子–イオン温度差の緩和<span class="symbol">\(\tau_{\Delta T}\)</span></td>
-                            <td>—</td>
-                            <td id="tauDelta" data-value>—</td>
-                        </tr>
-                        <tr>
-                            <th colspan="3" scope="colgroup">乱流輸送の基準</th>
+                            <th colspan="3" scope="colgroup">乱流による輸送・熱交換</th>
                         </tr>
                         <tr>
                             <td>Bohm<span class="symbol">\(D_{\mathrm B}\)</span></td>
@@ -329,7 +321,6 @@
                                     <option value="chiIPerp">イオンの垂直熱拡散係数</option>
                                     <option value="tauChiIPerp">イオンの衝突熱拡散時間</option>
                                     <option value="tauE">電子温度平衡化時間</option>
-                                    <option value="tauDelta">電子–イオン温度差の緩和時間</option>
                                     <option value="diffusionBohm">Bohm拡散係数</option>
                                     <option value="tauBohm">Bohm拡散時間</option>
                                     <option value="diffusionGB">ジャイロボーム拡散係数</option>
@@ -494,6 +485,12 @@
                     m_{\mathrm{e}}/m_{\mathrm{i}}\)) を用いる．（[1]はこの仮定をおかない．）
                     高温・低温電子の共存，温度異方性，中性粒子衝突，電荷交換，磁場形状とバウンス平均は含めない．
                 </p>
+                <p>
+                    <strong>拡散時間</strong>
+                    拡散係数 \(D_{\mathrm{X}}\) に対して，代表長さ \(L\) での拡散時間 \(\tau_{\mathrm{X}}\) を
+                    \(\tau_{\mathrm{X}} =
+                    L^2/D_{\mathrm{X}}\) と定義する．（\(\mathrm{X}\)は過程に対応するラベル）
+                </p>
             </div>
 
             <h3>各パラメータの定義式</h3>
@@ -583,34 +580,9 @@
                         イオンについては，同種イオン衝突周波数 \(\nu_{s}=\nu_{\mathrm{ii}}\) に基づいて計算する．
                     </p>
                 </section>
-                <section class="formula-item">
-                    <div class="formula-label">熱速度: \(v_{\mathrm{th},s}\) [\(\mathrm{m}/\mathrm{s}\)]</div>
-                    <div class="formula-expression" aria-label="熱速度の定義式">
-                        \[
-                        v_{\mathrm{th},s}
-                        = \sqrt{\frac{2T_s}{m_s}}
-                        \]
-                    </div>
-                </section>
-
             </div>
             <!-- transport: 定義式と説明文は静的HTMLで編集する．温度TはJ． -->
             <div class="formula-list" data-group="transport" hidden>
-                <section class="formula-item">
-                    <div class="formula-label">衝突輸送に用いる時間・適用条件</div>
-                    <div class="formula-expression">
-                        \[
-                        \tau_{\mathrm{e}}^{\mathrm B}=\frac{1}{\nu_{\mathrm{ei}}},\qquad
-                        \tau_{\mathrm{i}}^{\mathrm B}
-                        =\frac{3\sqrt{m_{\mathrm{i}}}\,T_{\mathrm{i}}^{3/2}}
-                        {4\sqrt{\pi}\,n_{\mathrm{i}}Z^4K^2\ln\Lambda_{\mathrm{ii}}}
-                        \]
-                    </div>
-                    <p class="formula-note">[2]のBraginskii衝突時間を用いる．上付きBはBohmではなくBraginskiiの規約を示す．
-                        以下の衝突輸送は\(Z=1\)，\(\Omega_s\tau_s^{\mathrm B}\gg1\) の強磁化極限．
-                        局所的な古典輸送を評価し，磁場形状による新古典輸送は含めない．
-                        \(T_s\) はJ単位，\(K=e^2/(4\pi\varepsilon_0)\)，\(\Omega_s=|q_s|B/m_s\)．</p>
-                </section>
                 <section class="formula-item">
                     <div class="formula-label">古典的粒子拡散係数：\(D_\perp\)</div>
                     <div class="formula-expression">
@@ -642,17 +614,6 @@
                         温度拡散方程式の係数\(\chi_{s\perp}=2\kappa_{s\perp}/(3n_s)\)とする．
                         熱電効果や移流による熱流は含めない．</p>
                 </section>
-                <section class="formula-item">
-                    <div class="formula-label">拡散時間</div>
-                    <div class="formula-expression">
-                        \[
-                        \tau_{D\perp}=\frac{L^2}{D_\perp},\qquad
-                        \tau_{\chi s\perp}=\frac{L^2}{\chi_{s\perp}}
-                        \]
-                    </div>
-                    <p class="formula-note">既存の代表長さ\(L\)を全ての拡散時間に共通して用いる．
-                        係数が一定の場合の時間尺度の評価で，境界条件・幾何形状・分布による係数は含めない．</p>
-                </section>
                 <!-- tauE -->
                 <section class="formula-item">
                     <div class="formula-label">電子温度平衡化時間: \(\tau^{E}_{\mathrm{ei}}\) [\(\mathrm{s}\)]</div>
@@ -669,39 +630,24 @@
                     </p>
                 </section>
                 <section class="formula-item">
-                    <div class="formula-label">電子–イオン温度差の緩和時間：\(\tau_{\Delta T}\)</div>
+                    <div class="formula-label">Bohm拡散係数：\(D_{\mathrm B}\)</div>
                     <div class="formula-expression">
                         \[
-                        \frac{d(T_{\mathrm e}-T_{\mathrm i})}{dt}
-                        =-\frac{T_{\mathrm e}-T_{\mathrm i}}{\tau_{\Delta T}},\qquad
-                        \tau_{\Delta T}=\frac{\tau_{\mathrm{ei}}^E}{1+Z}
+                        D_{\mathrm B}=\frac{T_{\mathrm e}}{16eB}
                         \]
                     </div>
-                    <p class="formula-note">電子・イオンの両方の温度が変化する場合．エネルギー保存と\(n_{\mathrm e}=Zn_{\mathrm i}\)から得られる．
-                        温度によって緩和率が変わるため，表示値は入力温度での瞬時の時間尺度．</p>
-                </section>
-                <section class="formula-item">
-                    <div class="formula-label">Bohm拡散係数・拡散時間：\(D_{\mathrm B},\ \tau_{\mathrm B}\)</div>
-                    <div class="formula-expression">
-                        \[
-                        D_{\mathrm B}=\frac{T_{\mathrm e}}{16eB},\qquad
-                        \tau_{\mathrm B}=\frac{L^2}{D_{\mathrm B}}
-                        \]
-                    </div>
-                    <p class="formula-note">\(T_{\mathrm e}\)はJ，\(B\)はT．
+                    <p class="formula-note">
                         揺動電場による垂直輸送の経験的な基準値．係数\(1/16\)を採用する[2,4]．</p>
                 </section>
                 <section class="formula-item">
-                    <div class="formula-label">ジャイロボーム拡散係数・拡散時間：\(D_{\mathrm{gB}},\ \tau_{\mathrm{gB}}\)</div>
+                    <div class="formula-label">ジャイロボーム拡散係数：\(D_{\mathrm{gB}}\)</div>
                     <div class="formula-expression">
                         \[
-                        D_{\mathrm{gB}}=\frac{\rho_{\mathrm i}^2v_{\mathrm{th,i}}}{L},\qquad
-                        \tau_{\mathrm{gB}}=\frac{L^3}{\rho_{\mathrm i}^2v_{\mathrm{th,i}}},\qquad
-                        v_{\mathrm{th,i}}=\sqrt{\frac{2T_{\mathrm i}}{m_{\mathrm i}}}
+                        D_{\mathrm{gB}}=\frac{\rho_{\mathrm i}^2v_{\mathrm{th,i}}}{L}
                         \]
                     </div>
-                    <p class="formula-note">\(\rho_{\mathrm i}=v_{\mathrm{th,i}}/\Omega_{\mathrm i}\)．粒子・熱拡散係数の比較用規格化．
-                        未知の無次元係数は設けない．Bohm・ジャイロボームとも，実際の乱流輸送の予測値ではない．</p>
+                    <p class="formula-note">スケーリング則であり，実際の乱流輸送はジャイロボーム単位で測定する．
+                    </p>
                 </section>
             </div>
             <!-- scale: 定義式と説明文はここで編集する． -->
