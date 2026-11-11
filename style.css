@@ -334,3 +334,12 @@ summary {
     padding-bottom: 8px;
     border-bottom: 1px solid var(--edge);
 }
+
+
+/* 輸送表は拡散係数と時間を数値列として横に並べる． */
+#rt1-prototype tbody[data-group="transport"] td:nth-child(3) {
+    text-align: right;
+    font-family: ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+}
